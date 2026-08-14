@@ -67,3 +67,28 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
 
     particlesContainer.appendChild(particle);
 }
+/* =========================================
+   DoseCare
+   Welcome → Home
+========================================= */
+
+
+const welcomeScreen =
+    document.getElementById("welcome-screen");
+
+const homeScreen =
+    document.getElementById("home-screen");
+
+const enterButton =
+    document.getElementById("enter-button");
+
+
+/* ---------- Enter DoseCare ---------- */
+
+enterButton.addEventListener("click", () => {
+
+    welcomeScreen.classList.add("hide");
+
+    homeScreen.classList.add("show");
+
+});
