@@ -99,28 +99,24 @@ const homeScreen =
     );
 
 
-const enterButton =
-    document.getElementById(
-        "enter-button"
-    );
+/* =========================================
+   SPLASH SCREEN → HOME
+========================================= */
+
+const welcomeScreen =
+    document.getElementById("welcome-screen");
+
+const homeScreen =
+    document.getElementById("home-screen");
 
 
-enterButton.addEventListener(
-    "click",
-    () => {
+setTimeout(() => {
 
-        welcomeScreen.classList.add(
-            "hide"
-        );
+    welcomeScreen.classList.add("hide");
 
+    homeScreen.classList.add("show");
 
-        homeScreen.classList.add(
-            "show"
-        );
-
-    }
-);
-
+}, 4000);
 
 /* =========================================
    MENU
