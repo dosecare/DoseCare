@@ -67,6 +67,7 @@
             <button
                 class="back-button"
                 id="back-button"
+                type="button"
             >
 
                 <span>
@@ -114,9 +115,9 @@
 
 
             <p>
-                Calculate a pediatric medication dose
-                using the patient's information and
-                the selected medicine.
+                Select the medicine, enter the
+                patient's information, and calculate
+                the appropriate pediatric dose.
             </p>
 
         </section>
@@ -130,8 +131,9 @@
         <section class="calculator-card">
 
 
+
             <!-- =================================
-                 STEP 1 — PATIENT
+                 STEP 01 — MEDICINE
             ================================= -->
 
             <div class="calculator-section">
@@ -147,11 +149,192 @@
                     <div>
 
                         <h2>
+                            Select Medicine
+                        </h2>
+
+                        <p>
+                            Choose a medical condition
+                            and the medicine you want
+                            to calculate.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MEDICAL CONDITION -->
+
+                <div class="medicine-field">
+
+                    <label for="condition">
+
+                        Medical Condition
+
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+                        <select
+                            id="condition"
+                        >
+
+                            <option value="">
+                                Select a condition
+                            </option>
+
+                            <!-- Conditions will be
+                                 added dynamically -->
+
+                        </select>
+
+
+                        <span class="select-arrow">
+                            ▾
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MEDICINE -->
+
+                <div class="medicine-field">
+
+                    <label for="medicine-select">
+
+                        Medicine
+
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+                        <select
+                            id="medicine-select"
+                            disabled
+                        >
+
+                            <option value="">
+                                Select a medicine
+                            </option>
+
+                            <!-- Medicines will be
+                                 filtered dynamically -->
+
+                        </select>
+
+
+                        <span class="select-arrow">
+                            ▾
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DIRECT SEARCH -->
+
+                <div class="direct-search-label">
+
+                    <span>
+                        OR SEARCH DIRECTLY
+                    </span>
+
+                </div>
+
+
+
+                <div class="medicine-search">
+
+
+                    <label for="medicine">
+
+                        Search Medicine
+
+                    </label>
+
+
+                    <div class="search-wrapper">
+
+                        <span class="search-icon">
+                            ⌕
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="medicine"
+                            placeholder="Search medicine..."
+                            autocomplete="off"
+                        >
+
+
+                        <button
+                            class="clear-search"
+                            id="clear-medicine"
+                            type="button"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- Search results -->
+
+                    <div
+                        class="medicine-results"
+                        id="medicine-results"
+                    ></div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 DIVIDER
+            ================================= -->
+
+            <div class="calculator-divider"></div>
+
+
+
+            <!-- =================================
+                 STEP 02 — PATIENT
+            ================================= -->
+
+            <div class="calculator-section">
+
+
+                <div class="section-title">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+
+                    <div>
+
+                        <h2>
                             Patient Information
                         </h2>
 
                         <p>
                             Enter age, weight, or both.
+                            Requirements depend on
+                            the selected medicine.
                         </p>
 
                     </div>
@@ -168,10 +351,13 @@
                     <div class="input-group">
 
                         <label for="age">
+
                             Age
+
                             <span>
                                 Optional
                             </span>
+
                         </label>
 
 
@@ -200,10 +386,13 @@
                     <div class="input-group">
 
                         <label for="weight">
+
                             Weight
+
                             <span>
                                 Optional
                             </span>
+
                         </label>
 
 
@@ -237,9 +426,9 @@
                     </span>
 
                     <p>
-                        Age and weight are optional
-                        individually. The required
-                        information depends on the
+                        You do not always need to enter
+                        both age and weight. The required
+                        information will depend on the
                         dosing method of the selected
                         medicine.
                     </p>
@@ -260,95 +449,7 @@
 
 
             <!-- =================================
-                 STEP 2 — MEDICINE
-            ================================= -->
-
-            <div class="calculator-section">
-
-
-                <div class="section-title">
-
-                    <div class="step-number">
-                        02
-                    </div>
-
-
-                    <div>
-
-                        <h2>
-                            Select Medicine
-                        </h2>
-
-                        <p>
-                            Search for the medicine
-                            you want to calculate.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <div class="medicine-search">
-
-
-                    <label for="medicine">
-                        Medicine
-                    </label>
-
-
-                    <div class="search-wrapper">
-
-                        <span class="search-icon">
-                            ⌕
-                        </span>
-
-
-                        <input
-                            type="text"
-                            id="medicine"
-                            placeholder="Search medicine..."
-                            autocomplete="off"
-                        >
-
-
-                        <button
-                            class="clear-search"
-                            id="clear-medicine"
-                            type="button"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-
-                    <!-- Medicine results will appear here -->
-
-                    <div
-                        class="medicine-results"
-                        id="medicine-results"
-                    ></div>
-
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- =================================
-                 DIVIDER
-            ================================= -->
-
-            <div class="calculator-divider"></div>
-
-
-
-            <!-- =================================
-                 STEP 3 — CONCENTRATION
+                 STEP 03 — CONCENTRATION
             ================================= -->
 
             <div class="calculator-section">
@@ -382,7 +483,9 @@
 
 
                     <label>
+
                         Concentration
+
                     </label>
 
 
@@ -444,7 +547,7 @@
 
 
             <!-- =================================
-                 CALCULATE BUTTON
+                 CALCULATE
             ================================= -->
 
             <div class="calculate-area">
@@ -542,8 +645,8 @@
                         id="result-details"
                     >
 
-                        <!-- Result information
-                             will be inserted here -->
+                        <!-- Result details
+                             will appear here -->
 
                     </div>
 
@@ -576,7 +679,7 @@
 
 
         <!-- =================================
-             FOOTNOTE
+             FOOTER
         ================================= -->
 
         <p class="calculator-footer">
