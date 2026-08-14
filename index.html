@@ -1,67 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DoseCare | Pediatric Dose Calculator</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <title>DoseCare</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- Background -->
+
+    <!-- =================================
+         ANIMATED BACKGROUND
+    ================================= -->
+
     <div class="background">
 
-        <!-- Soft glowing areas -->
         <div class="glow glow-one"></div>
         <div class="glow glow-two"></div>
         <div class="glow glow-three"></div>
 
-        <!-- Floating bubbles -->
         <div class="bubble bubble-one"></div>
         <div class="bubble bubble-two"></div>
         <div class="bubble bubble-three"></div>
         <div class="bubble bubble-four"></div>
         <div class="bubble bubble-five"></div>
 
-        <!-- Small light particles -->
         <div id="particles"></div>
 
     </div>
 
 
-    <!-- DoseCare application -->
-<main id="app">
 
-    <!-- ================================
+    <!-- =================================
          WELCOME SCREEN
     ================================= -->
 
-    <section id="welcome-screen" class="welcome-screen">
+    <section
+        id="welcome-screen"
+        class="welcome-screen"
+    >
 
         <div class="welcome-content">
 
             <span class="welcome-label">
-                WELCOME
+                WELCOME TO
             </span>
+
 
             <h1 class="welcome-logo">
                 Dose<span>Care</span>
             </h1>
 
+
             <p class="welcome-description">
                 Pediatric Dose Calculator
             </p>
 
-            <p class="welcome-user">
-                Doaa Kareem
-            </p>
 
-            <button id="enter-button" class="enter-button">
+            <button
+                id="enter-button"
+                class="enter-button"
+            >
+
                 Enter DoseCare
+
                 <span>→</span>
+
             </button>
 
         </div>
@@ -69,143 +87,338 @@
     </section>
 
 
-    <!-- ================================
-         HOME DASHBOARD
+
+    <!-- =================================
+         MAIN APPLICATION
     ================================= -->
 
-    <section id="home-screen" class="home-screen">
+    <main
+        id="home-screen"
+        class="home-screen"
+    >
 
-        <!-- Sidebar -->
 
-        <aside class="sidebar">
+        <!-- =================================
+             TOP BAR
+        ================================= -->
 
-            <div class="logo-area">
+        <header class="top-bar">
 
-                <div class="logo-icon">
+
+            <!-- Logo -->
+
+            <div class="top-logo">
+
+                <div class="mini-logo">
                     +
                 </div>
 
-                <h2>
-                    Dose<span>Care</span>
-                </h2>
-
-                <p>
-                    Pediatric Dose Calculator
-                </p>
-
-            </div>
-
-
-            <nav class="menu">
-
-                <a class="active">
-                    <span>⌂</span>
-                    Home
-                </a>
-
-                <a>
-                    <span>✚</span>
-                    Dose Calculator
-                </a>
-
-                <a>
-                    <span>▣</span>
-                    Medicines
-                </a>
-
-                <a>
-                    <span>★</span>
-                    Favorites
-                </a>
-
-                <a>
-                    <span>◷</span>
-                    History
-                </a>
-
-                <a>
-                    <span>?</span>
-                    Ask / Help
-                </a>
-
-                <a>
-                    <span>▤</span>
-                    References
-                </a>
-
-                <a>
-                    <span>⚙</span>
-                    Settings
-                </a>
-
-            </nav>
-
-
-            <div class="appearance">
-
-                <span>☾</span>
-
                 <span>
-                    Dark Mode
+                    Dose<span>Care</span>
                 </span>
 
             </div>
 
-        </aside>
 
 
-        <!-- Dashboard -->
+            <!-- User -->
 
-        <section class="dashboard">
+            <div class="user-area">
 
-            <header class="top-bar">
+                <div class="user-name">
 
-                <div>
+                    <small>
+                        Welcome back
+                    </small>
 
-                    <p class="dashboard-label">
-                        DOSECARE
-                    </p>
-
-                    <h1>
-                        Welcome back, Doaa 👋
-                    </h1>
-
-                    <p>
-                        Safe dosing starts with accurate information.
-                    </p>
+                    <strong id="user-name">
+                        User
+                    </strong>
 
                 </div>
 
 
                 <div class="profile">
-                    DK
+                    <span id="profile-initials">
+                        U
+                    </span>
                 </div>
 
-            </header>
 
 
-            <div class="hero-card">
+                <!-- Menu Button -->
+
+                <button
+                    id="menu-button"
+                    class="menu-button"
+                    aria-label="Open menu"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================
+             MENU OVERLAY
+        ================================= -->
+
+        <div
+            id="menu-overlay"
+            class="menu-overlay"
+        ></div>
+
+
+
+        <!-- =================================
+             SIDE MENU
+        ================================= -->
+
+        <aside
+            id="side-menu"
+            class="side-menu"
+        >
+
+
+            <div class="menu-header">
 
                 <div>
 
-                    <span class="hero-label">
-                        PEDIATRIC CARE
-                    </span>
+                    <small>
+                        DOSECARE
+                    </small>
 
                     <h2>
-                        Calculate pediatric doses
+                        Menu
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="close-menu"
+                    class="close-menu"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <nav class="menu-list">
+
+
+                <button class="menu-item active">
+
+                    <span class="menu-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Home
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        Dose Calculator
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ◈
+                    </span>
+
+                    <span>
+                        Medicines
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ★
+                    </span>
+
+                    <span>
+                        Favorites
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ◷
+                    </span>
+
+                    <span>
+                        History
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ?
+                    </span>
+
+                    <span>
+                        Ask / Help
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        References
+                    </span>
+
+                </button>
+
+
+
+                <button class="menu-item">
+
+                    <span class="menu-icon">
+                        ⚙
+                    </span>
+
+                    <span>
+                        Settings
+                    </span>
+
+                </button>
+
+
+            </nav>
+
+
+
+            <!-- Appearance -->
+
+            <div class="menu-bottom">
+
+                <button class="appearance-button">
+
+                    <span>
+                        ☾
+                    </span>
+
+                    <span>
+                        Dark Mode
+                    </span>
+
+                    <span class="toggle active">
+                        <span></span>
+                    </span>
+
+                </button>
+
+            </div>
+
+
+        </aside>
+
+
+
+        <!-- =================================
+             DASHBOARD
+        ================================= -->
+
+        <section class="dashboard">
+
+
+            <div class="dashboard-heading">
+
+                <span>
+                    PEDIATRIC CARE
+                </span>
+
+                <h1>
+                    Safe dosing starts
+                    with accurate information.
+                </h1>
+
+                <p>
+                    Calculate pediatric medication doses
+                    using age, weight, and medicine
+                    concentration.
+                </p>
+
+            </div>
+
+
+
+            <!-- Main Calculator Card -->
+
+            <div class="hero-card">
+
+
+                <div class="hero-content">
+
+                    <span class="hero-label">
+                        DOSE CALCULATOR
+                    </span>
+
+
+                    <h2>
+                        Calculate a pediatric dose
                         with confidence.
                     </h2>
 
+
                     <p>
-                        Quickly calculate medication doses
-                        using the child's age, weight,
-                        and medicine concentration.
+                        Enter the child's information
+                        and select the medicine to
+                        calculate the appropriate dose.
                     </p>
 
+
                     <button class="primary-button">
+
                         Start Dose Calculator
-                        <span>→</span>
+
+                        <span>
+                            →
+                        </span>
+
                     </button>
 
                 </div>
@@ -215,14 +428,19 @@
                     +
                 </div>
 
+
             </div>
 
 
-            <div class="cards">
 
-                <div class="card">
+            <!-- Quick Access -->
 
-                    <div class="card-icon">
+            <div class="quick-grid">
+
+
+                <div class="quick-card">
+
+                    <div class="quick-icon">
                         ✚
                     </div>
 
@@ -232,15 +450,16 @@
 
                     <p>
                         Calculate pediatric doses
-                        based on clinical dosing rules.
+                        quickly and safely.
                     </p>
 
                 </div>
 
 
-                <div class="card">
 
-                    <div class="card-icon">
+                <div class="quick-card">
+
+                    <div class="quick-icon">
                         ◈
                     </div>
 
@@ -249,16 +468,17 @@
                     </h3>
 
                     <p>
-                        Explore medicine information,
-                        concentrations and references.
+                        Browse medicines,
+                        concentrations and information.
                     </p>
 
                 </div>
 
 
-                <div class="card">
 
-                    <div class="card-icon">
+                <div class="quick-card">
+
+                    <div class="quick-icon">
                         ◷
                     </div>
 
@@ -268,36 +488,25 @@
 
                     <p>
                         Review your previous
-                        dose calculations.
+                        calculations.
                     </p>
 
                 </div>
 
+
             </div>
+
 
         </section>
 
-    </section>
-
-</main>
-        <!--
-            The main interface will be added here later.
-
-            We are building DoseCare step by step:
-            1. Background
-            2. Welcome screen
-            3. Navigation
-            4. Dose calculator
-            5. Medicines
-            6. History
-            7. References
-            8. Settings
-        -->
 
     </main>
 
 
+
     <script src="script.js"></script>
 
+
 </body>
+
 </html>
