@@ -1063,3 +1063,629 @@ body {
     }
 
 }
+/* =========================================
+   WELCOME SCREEN
+========================================= */
+
+.welcome-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    background: transparent;
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+
+}
+
+
+.welcome-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    animation:
+        welcomeAppear 2.5s ease forwards;
+
+}
+
+
+.welcome-label {
+
+    font-size: 20px;
+
+    letter-spacing: 10px;
+
+    color:
+        rgba(190, 225, 255, 0.82);
+
+    margin-left: 10px;
+
+}
+
+
+.welcome-logo {
+
+    margin-top: 20px;
+
+    font-size:
+        clamp(70px, 13vw, 150px);
+
+    line-height: 1;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    background:
+        linear-gradient(
+            100deg,
+            #ffffff,
+            #78dcff,
+            #9c91ff,
+            #ffffff
+        );
+
+    background-size: 250% auto;
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+        logoGradient 7s linear infinite;
+
+}
+
+
+.welcome-logo span {
+
+    color: transparent;
+
+}
+
+
+.welcome-description {
+
+    margin-top: 25px;
+
+    font-size: 19px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(205, 230, 250, 0.75);
+
+}
+
+
+.welcome-user {
+
+    margin-top: 16px;
+
+    font-size: 16px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(170, 215, 245, 0.65);
+
+}
+
+
+/* ---------- Enter Button ---------- */
+
+.enter-button {
+
+    margin-top: 45px;
+
+    padding:
+        15px 27px;
+
+    border-radius: 40px;
+
+    border:
+        1px solid
+        rgba(120, 215, 255, 0.32);
+
+    background:
+        rgba(50, 145, 220, 0.12);
+
+    color: white;
+
+    font-size: 15px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    backdrop-filter:
+        blur(12px);
+
+    transition:
+        0.35s ease;
+
+}
+
+
+.enter-button span {
+
+    display: inline-block;
+
+    margin-left: 10px;
+
+    transition:
+        0.3s ease;
+
+}
+
+
+.enter-button:hover {
+
+    background:
+        rgba(70, 170, 240, 0.23);
+
+    border-color:
+        rgba(130, 225, 255, 0.55);
+
+    box-shadow:
+        0 0 30px
+        rgba(60, 180, 255, 0.16);
+
+    transform:
+        translateY(-3px);
+
+}
+
+
+.enter-button:hover span {
+
+    transform:
+        translateX(5px);
+
+}
+
+
+/* ---------- Welcome Animations ---------- */
+
+@keyframes welcomeAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(0.97);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+@keyframes logoGradient {
+
+    0% {
+
+        background-position:
+            0% center;
+
+    }
+
+    100% {
+
+        background-position:
+            250% center;
+
+    }
+
+}
+
+
+/* =========================================
+   HOME SCREEN
+========================================= */
+
+.home-screen {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    gap: 0;
+
+    padding: 25px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(15px);
+
+    transition:
+        opacity 1s ease,
+        visibility 1s ease,
+        transform 1s ease;
+
+}
+
+
+/* When active */
+
+.home-screen.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* Welcome disappears */
+
+.welcome-screen.hide {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================
+   HOME HERO
+========================================= */
+
+.hero-card {
+
+    min-height: 260px;
+
+    padding: 40px;
+
+    border-radius: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(47, 140, 210, 0.16),
+            rgba(80, 70, 170, 0.10)
+        );
+
+    border:
+        1px solid
+        rgba(140, 215, 255, 0.17);
+
+    backdrop-filter:
+        blur(18px);
+
+    position: relative;
+
+    margin-bottom: 25px;
+
+}
+
+
+.hero-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+
+    height: 250px;
+
+    right: -80px;
+
+    top: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(70, 190, 255, 0.09);
+
+    filter:
+        blur(20px);
+
+}
+
+
+.hero-label {
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    color:
+        #75d9ff;
+
+}
+
+
+.hero-card h2 {
+
+    max-width: 650px;
+
+    margin-top: 15px;
+
+    font-size:
+        clamp(30px, 4vw, 48px);
+
+    line-height: 1.15;
+
+}
+
+
+.hero-card p {
+
+    max-width: 620px;
+
+    margin-top: 18px;
+
+    line-height: 1.7;
+
+    color:
+        rgba(220, 237, 250, 0.68);
+
+}
+
+
+.hero-symbol {
+
+    width: 140px;
+
+    height: 140px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 80px;
+
+    color:
+        #7bdfff;
+
+    border:
+        1px solid
+        rgba(120, 220, 255, 0.22);
+
+    background:
+        rgba(80, 170, 240, 0.08);
+
+    box-shadow:
+        0 0 50px
+        rgba(60, 190, 255, 0.09);
+
+}
+
+
+/* =========================================
+   PRIMARY BUTTON
+========================================= */
+
+.primary-button {
+
+    margin-top: 25px;
+
+    padding:
+        14px 23px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #279bd5,
+            #4d75d8
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px
+        rgba(30, 130, 210, 0.18);
+
+    transition:
+        0.3s ease;
+
+}
+
+
+.primary-button span {
+
+    margin-left: 8px;
+
+}
+
+
+.primary-button:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 30px
+        rgba(40, 150, 230, 0.28);
+
+}
+
+
+/* =========================================
+   DASHBOARD LABEL
+========================================= */
+
+.dashboard-label {
+
+    font-size: 11px !important;
+
+    letter-spacing: 4px;
+
+    color:
+        #6ed7ff !important;
+
+    margin-bottom: 7px;
+
+}
+
+
+/* =========================================
+   CARD ICON
+========================================= */
+
+.card-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    margin-bottom: 20px;
+
+    color:
+        #78ddff;
+
+    background:
+        rgba(70, 170, 240, 0.10);
+
+    border:
+        1px solid
+        rgba(110, 210, 255, 0.14);
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .welcome-label {
+
+        font-size: 15px;
+
+        letter-spacing: 6px;
+
+    }
+
+    .welcome-logo {
+
+        font-size: 70px;
+
+    }
+
+    .home-screen {
+
+        flex-direction: column;
+
+        padding: 15px;
+
+    }
+
+    .sidebar {
+
+        width: 100%;
+
+        min-height: auto;
+
+    }
+
+    .hero-symbol {
+
+        display: none;
+
+    }
+
+    .hero-card {
+
+        padding: 28px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .welcome-description {
+
+        font-size: 15px;
+
+        letter-spacing: 2px;
+
+    }
+
+    .welcome-user {
+
+        font-size: 13px;
+
+    }
+
+    .hero-card h2 {
+
+        font-size: 30px;
+
+    }
+
+}
