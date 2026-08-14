@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DoseCare | Pediatric Dose Calculator</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="calculator.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         BACKGROUND
+    ================================= -->
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+        <div class="bubble bubble-two"></div>
+        <div class="bubble bubble-three"></div>
+        <div class="bubble bubble-four"></div>
+        <div class="bubble bubble-five"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+
+    <!-- =================================
+         CALCULATOR PAGE
+    ================================= -->
+
+    <main class="calculator-page">
+
+
+        <!-- =================================
+             TOP BAR
+        ================================= -->
+
+        <header class="calculator-topbar">
+
+
+            <button
+                class="back-button"
+                id="back-button"
+            >
+
+                <span>
+                    ←
+                </span>
+
+                Back
+
+            </button>
+
+
+
+            <div class="calculator-logo">
+
+                <div class="mini-logo">
+                    +
+                </div>
+
+                <span>
+                    Dose<span>Care</span>
+                </span>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================
+             PAGE HEADER
+        ================================= -->
+
+        <section class="calculator-header">
+
+            <span class="section-label">
+                PEDIATRIC CARE
+            </span>
+
+
+            <h1>
+                Pediatric Dose
+                <span>Calculator</span>
+            </h1>
+
+
+            <p>
+                Calculate a pediatric medication dose
+                using the patient's information and
+                the selected medicine.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================
+             CALCULATOR CARD
+        ================================= -->
+
+        <section class="calculator-card">
+
+
+            <!-- =================================
+                 STEP 1 — PATIENT
+            ================================= -->
+
+            <div class="calculator-section">
+
+
+                <div class="section-title">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Patient Information
+                        </h2>
+
+                        <p>
+                            Enter age, weight, or both.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="input-grid">
+
+
+                    <!-- AGE -->
+
+                    <div class="input-group">
+
+                        <label for="age">
+                            Age
+                            <span>
+                                Optional
+                            </span>
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="number"
+                                id="age"
+                                placeholder="Enter age"
+                                min="0"
+                                step="0.1"
+                            >
+
+                            <span>
+                                years
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- WEIGHT -->
+
+                    <div class="input-group">
+
+                        <label for="weight">
+                            Weight
+                            <span>
+                                Optional
+                            </span>
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <input
+                                type="number"
+                                id="weight"
+                                placeholder="Enter weight"
+                                min="0"
+                                step="0.1"
+                            >
+
+                            <span>
+                                kg
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="information-note">
+
+                    <span class="note-icon">
+                        i
+                    </span>
+
+                    <p>
+                        Age and weight are optional
+                        individually. The required
+                        information depends on the
+                        dosing method of the selected
+                        medicine.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 DIVIDER
+            ================================= -->
+
+            <div class="calculator-divider"></div>
+
+
+
+            <!-- =================================
+                 STEP 2 — MEDICINE
+            ================================= -->
+
+            <div class="calculator-section">
+
+
+                <div class="section-title">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Select Medicine
+                        </h2>
+
+                        <p>
+                            Search for the medicine
+                            you want to calculate.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="medicine-search">
+
+
+                    <label for="medicine">
+                        Medicine
+                    </label>
+
+
+                    <div class="search-wrapper">
+
+                        <span class="search-icon">
+                            ⌕
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="medicine"
+                            placeholder="Search medicine..."
+                            autocomplete="off"
+                        >
+
+
+                        <button
+                            class="clear-search"
+                            id="clear-medicine"
+                            type="button"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+
+                    <!-- Medicine results will appear here -->
+
+                    <div
+                        class="medicine-results"
+                        id="medicine-results"
+                    ></div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 DIVIDER
+            ================================= -->
+
+            <div class="calculator-divider"></div>
+
+
+
+            <!-- =================================
+                 STEP 3 — CONCENTRATION
+            ================================= -->
+
+            <div class="calculator-section">
+
+
+                <div class="section-title">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Medicine Concentration
+                        </h2>
+
+                        <p>
+                            Enter the concentration
+                            written on the medicine package.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="concentration-area">
+
+
+                    <label>
+                        Concentration
+                    </label>
+
+
+                    <div class="concentration-inputs">
+
+
+                        <div class="concentration-box">
+
+                            <input
+                                type="number"
+                                id="concentration-value"
+                                placeholder="125"
+                                min="0"
+                                step="0.01"
+                            >
+
+                            <span>
+                                mg
+                            </span>
+
+                        </div>
+
+
+                        <span class="concentration-slash">
+                            /
+                        </span>
+
+
+                        <div class="concentration-box">
+
+                            <input
+                                type="number"
+                                id="concentration-volume"
+                                placeholder="5"
+                                min="0"
+                                step="0.01"
+                            >
+
+                            <span>
+                                mL
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <p class="input-hint">
+                        Example: 125 mg / 5 mL
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 CALCULATE BUTTON
+            ================================= -->
+
+            <div class="calculate-area">
+
+                <button
+                    id="calculate-button"
+                    class="calculate-button"
+                    type="button"
+                >
+
+                    <span>
+                        Calculate Dose
+                    </span>
+
+                    <strong>
+                        →
+                    </strong>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================
+                 VALIDATION MESSAGE
+            ================================= -->
+
+            <div
+                id="validation-message"
+                class="validation-message"
+            >
+
+                <span>
+                    !
+                </span>
+
+                <p></p>
+
+            </div>
+
+
+
+            <!-- =================================
+                 RESULT
+            ================================= -->
+
+            <div
+                id="result-card"
+                class="result-card"
+            >
+
+
+                <div class="result-header">
+
+                    <div>
+
+                        <span>
+                            CALCULATED DOSE
+                        </span>
+
+                        <h2>
+                            Your Result
+                        </h2>
+
+                    </div>
+
+
+                    <div class="result-check">
+                        ✓
+                    </div>
+
+                </div>
+
+
+
+                <div class="result-main">
+
+
+                    <div class="result-value">
+
+                        <strong id="dose-result">
+                            —
+                        </strong>
+
+                        <span id="dose-unit">
+                            mL
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="result-details"
+                        id="result-details"
+                    >
+
+                        <!-- Result information
+                             will be inserted here -->
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="result-warning">
+
+                    <span>
+                        ⚠
+                    </span>
+
+                    <p>
+                        Always verify the calculated
+                        dose against the medicine's
+                        approved pediatric dosing
+                        guidelines before administration.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             FOOTNOTE
+        ================================= -->
+
+        <p class="calculator-footer">
+
+            DoseCare is a clinical support tool and
+            does not replace professional clinical
+            judgment or approved prescribing information.
+
+        </p>
+
+
+    </main>
+
+
+
+    <script src="script.js"></script>
+
+    <script src="calculator.js"></script>
+
+
+</body>
+
+</html>
