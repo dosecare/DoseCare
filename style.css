@@ -1595,3 +1595,16 @@ body {
     }
 
 }
+.developer-name {
+
+    margin-top: 14px;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    color: rgba(180, 220, 245, 0.58);
+
+    font-weight: 400;
+
+}
