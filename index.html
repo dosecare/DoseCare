@@ -33,160 +33,251 @@
 
 
     <!-- DoseCare application -->
-    <main id="app">
+<main id="app">
 
-    <!-- Sidebar Menu -->
+    <!-- ================================
+         WELCOME SCREEN
+    ================================= -->
 
-    <aside class="sidebar">
+    <section id="welcome-screen" class="welcome-screen">
 
-        <div class="logo-area">
+        <div class="welcome-content">
 
-            <div class="logo-icon">
-                +
-            </div>
+            <span class="welcome-label">
+                WELCOME
+            </span>
 
-            <h2>
+            <h1 class="welcome-logo">
                 Dose<span>Care</span>
-            </h2>
+            </h1>
 
-            <p>
+            <p class="welcome-description">
                 Pediatric Dose Calculator
             </p>
 
-        </div>
+            <p class="welcome-user">
+                Doaa Kareem
+            </p>
 
-
-        <nav class="menu">
-
-            <a class="active">
-                🏠 Home
-            </a>
-
-            <a>
-                🧮 Dose Calculator
-            </a>
-
-            <a>
-                💊 Medicines
-            </a>
-
-            <a>
-                ⭐ Favorites
-            </a>
-
-            <a>
-                🕘 History
-            </a>
-
-            <a>
-                ❓ Ask / Help
-            </a>
-
-            <a>
-                📚 References
-            </a>
-
-            <a>
-                ⚙️ Settings
-            </a>
-
-        </nav>
-
-
-        <div class="appearance">
-
-            🌙 Dark Mode
+            <button id="enter-button" class="enter-button">
+                Enter DoseCare
+                <span>→</span>
+            </button>
 
         </div>
-
-
-    </aside>
-
-
-
-    <!-- Main Content -->
-
-    <section class="dashboard">
-
-
-        <!-- Top Bar -->
-
-        <header class="top-bar">
-
-            <div>
-                <h1>
-                    Welcome Back 👋
-                </h1>
-
-                <p>
-                    Doaa Kareem
-                </p>
-            </div>
-
-
-            <div class="profile">
-
-                DK
-
-            </div>
-
-
-        </header>
-
-
-
-        <!-- Home Cards -->
-
-        <div class="cards">
-
-
-            <div class="card">
-
-                <h3>
-                    🧮 Calculate Dose
-                </h3>
-
-                <p>
-                    Calculate safe pediatric doses based on age and weight.
-                </p>
-
-            </div>
-
-
-
-            <div class="card">
-
-                <h3>
-                    💊 Medicines
-                </h3>
-
-                <p>
-                    Browse drug information and pediatric guidelines.
-                </p>
-
-            </div>
-
-
-
-            <div class="card">
-
-                <h3>
-                    📋 History
-                </h3>
-
-                <p>
-                    Review previous calculations.
-                </p>
-
-            </div>
-
-
-        </div>
-
-
 
     </section>
 
+
+    <!-- ================================
+         HOME DASHBOARD
+    ================================= -->
+
+    <section id="home-screen" class="home-screen">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="logo-area">
+
+                <div class="logo-icon">
+                    +
+                </div>
+
+                <h2>
+                    Dose<span>Care</span>
+                </h2>
+
+                <p>
+                    Pediatric Dose Calculator
+                </p>
+
+            </div>
+
+
+            <nav class="menu">
+
+                <a class="active">
+                    <span>⌂</span>
+                    Home
+                </a>
+
+                <a>
+                    <span>✚</span>
+                    Dose Calculator
+                </a>
+
+                <a>
+                    <span>▣</span>
+                    Medicines
+                </a>
+
+                <a>
+                    <span>★</span>
+                    Favorites
+                </a>
+
+                <a>
+                    <span>◷</span>
+                    History
+                </a>
+
+                <a>
+                    <span>?</span>
+                    Ask / Help
+                </a>
+
+                <a>
+                    <span>▤</span>
+                    References
+                </a>
+
+                <a>
+                    <span>⚙</span>
+                    Settings
+                </a>
+
+            </nav>
+
+
+            <div class="appearance">
+
+                <span>☾</span>
+
+                <span>
+                    Dark Mode
+                </span>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Dashboard -->
+
+        <section class="dashboard">
+
+            <header class="top-bar">
+
+                <div>
+
+                    <p class="dashboard-label">
+                        DOSECARE
+                    </p>
+
+                    <h1>
+                        Welcome back, Doaa 👋
+                    </h1>
+
+                    <p>
+                        Safe dosing starts with accurate information.
+                    </p>
+
+                </div>
+
+
+                <div class="profile">
+                    DK
+                </div>
+
+            </header>
+
+
+            <div class="hero-card">
+
+                <div>
+
+                    <span class="hero-label">
+                        PEDIATRIC CARE
+                    </span>
+
+                    <h2>
+                        Calculate pediatric doses
+                        with confidence.
+                    </h2>
+
+                    <p>
+                        Quickly calculate medication doses
+                        using the child's age, weight,
+                        and medicine concentration.
+                    </p>
+
+                    <button class="primary-button">
+                        Start Dose Calculator
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+                <div class="hero-symbol">
+                    +
+                </div>
+
+            </div>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ✚
+                    </div>
+
+                    <h3>
+                        Dose Calculator
+                    </h3>
+
+                    <p>
+                        Calculate pediatric doses
+                        based on clinical dosing rules.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        Medicines
+                    </h3>
+
+                    <p>
+                        Explore medicine information,
+                        concentrations and references.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-icon">
+                        ◷
+                    </div>
+
+                    <h3>
+                        Recent History
+                    </h3>
+
+                    <p>
+                        Review your previous
+                        dose calculations.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
 
 </main>
         <!--
