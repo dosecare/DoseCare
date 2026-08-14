@@ -8,84 +8,82 @@
    PARTICLES
 ========================================= */
 
-
 const particlesContainer =
     document.getElementById("particles");
-
 
 const PARTICLE_COUNT = 32;
 
 
-for (
-    let i = 0;
-    i < PARTICLE_COUNT;
-    i++
-) {
+if (particlesContainer) {
 
-    const particle =
-        document.createElement("span");
+    for (
+        let i = 0;
+        i < PARTICLE_COUNT;
+        i++
+    ) {
 
+        const particle =
+            document.createElement("span");
 
-    particle.classList.add(
-        "particle"
-    );
-
-
-    particle.style.left =
-        `${Math.random() * 100}%`;
+        particle.classList.add("particle");
 
 
-    particle.style.top =
-        `${Math.random() * 100}%`;
+        particle.style.left =
+            `${Math.random() * 100}%`;
 
 
-    const size =
-        Math.random() * 2.5 + 1.5;
+        particle.style.top =
+            `${Math.random() * 100}%`;
 
 
-    particle.style.width =
-        `${size}px`;
+        const size =
+            Math.random() * 2.5 + 1.5;
 
 
-    particle.style.height =
-        `${size}px`;
+        particle.style.width =
+            `${size}px`;
 
 
-    const movementDuration =
-        Math.random() * 8 + 8;
+        particle.style.height =
+            `${size}px`;
 
 
-    const glowDuration =
-        Math.random() * 3 + 2;
+        const movementDuration =
+            Math.random() * 8 + 8;
 
 
-    particle.style.animationDuration =
-        `${movementDuration}s, ${glowDuration}s`;
+        const glowDuration =
+            Math.random() * 3 + 2;
 
 
-    const movementDelay =
-        Math.random() * 8;
+        particle.style.animationDuration =
+            `${movementDuration}s, ${glowDuration}s`;
 
 
-    const glowDelay =
-        Math.random() * 3;
+        const movementDelay =
+            Math.random() * 8;
 
 
-    particle.style.animationDelay =
-        `${movementDelay}s, ${glowDelay}s`;
+        const glowDelay =
+            Math.random() * 3;
 
 
-    particlesContainer.appendChild(
-        particle
-    );
+        particle.style.animationDelay =
+            `${movementDelay}s, ${glowDelay}s`;
+
+
+        particlesContainer.appendChild(
+            particle
+        );
+
+    }
 
 }
 
 
 /* =========================================
-   WELCOME → HOME
+   SPLASH SCREEN → HOME
 ========================================= */
-
 
 const welcomeScreen =
     document.getElementById(
@@ -99,29 +97,31 @@ const homeScreen =
     );
 
 
-/* =========================================
-   SPLASH SCREEN → HOME
-========================================= */
-
-const welcomeScreen =
-    document.getElementById("welcome-screen");
-
-const homeScreen =
-    document.getElementById("home-screen");
-
-
 setTimeout(() => {
 
-    welcomeScreen.classList.add("hide");
+    if (welcomeScreen) {
 
-    homeScreen.classList.add("show");
+        welcomeScreen.classList.add(
+            "hide"
+        );
+
+    }
+
+
+    if (homeScreen) {
+
+        homeScreen.classList.add(
+            "show"
+        );
+
+    }
 
 }, 4000);
+
 
 /* =========================================
    MENU
 ========================================= */
-
 
 const menuButton =
     document.getElementById(
@@ -149,107 +149,180 @@ const menuOverlay =
 
 function openMenu() {
 
-    sideMenu.classList.add(
-        "open"
-    );
+    if (sideMenu) {
 
-    menuOverlay.classList.add(
-        "open"
-    );
+        sideMenu.classList.add(
+            "open"
+        );
+
+    }
+
+
+    if (menuOverlay) {
+
+        menuOverlay.classList.add(
+            "open"
+        );
+
+    }
 
 }
 
 
 function closeSideMenu() {
 
-    sideMenu.classList.remove(
-        "open"
-    );
+    if (sideMenu) {
 
-    menuOverlay.classList.remove(
-        "open"
-    );
-
-}
-
-
-menuButton.addEventListener(
-    "click",
-    openMenu
-);
-
-
-closeMenu.addEventListener(
-    "click",
-    closeSideMenu
-);
-
-
-menuOverlay.addEventListener(
-    "click",
-    closeSideMenu
-);
-
-
-/* =========================================
-   USER NAME
-========================================= */
-
-
-/*
-    Temporary user name.
-
-    Later this value will come
-    automatically from the login system.
-*/
-
-
-const currentUser = "User";
-
-
-const userName =
-    document.getElementById(
-        "user-name"
-    );
-
-
-const profileInitials =
-    document.getElementById(
-        "profile-initials"
-    );
-
-
-userName.textContent =
-    currentUser;
-
-
-profileInitials.textContent =
-    getInitials(currentUser);
-
-
-/* =========================================
-   GET INITIALS
-========================================= */
-
-
-function getInitials(name) {
-
-    const words =
-        name.trim().split(/\s+/);
-
-
-    if (words.length === 1) {
-
-        return words[0]
-            .substring(0, 2)
-            .toUpperCase();
+        sideMenu.classList.remove(
+            "open"
+        );
 
     }
 
 
-    return (
-        words[0][0] +
-        words[words.length - 1][0]
-    ).toUpperCase();
+    if (menuOverlay) {
+
+        menuOverlay.classList.remove(
+            "open"
+        );
+
+    }
 
 }
+
+
+if (menuButton) {
+
+    menuButton.addEventListener(
+        "click",
+        openMenu
+    );
+
+}
+
+
+if (closeMenu) {
+
+    closeMenu.addEventListener(
+        "click",
+        closeSideMenu
+    );
+
+}
+
+
+if (menuOverlay) {
+
+    menuOverlay.addEventListener(
+        "click",
+        closeSideMenu
+    );
+
+}
+
+
+/* =========================================
+   DOSE CALCULATOR BUTTONS
+========================================= */
+
+
+/*
+    Temporary navigation.
+
+    We will connect these buttons
+    to the real calculator page
+    when we create it.
+*/
+
+
+const startCalculator =
+    document.getElementById(
+        "start-calculator"
+    );
+
+
+const calculatorMenuButton =
+    document.getElementById(
+        "calculator-menu-button"
+    );
+
+
+function openCalculator() {
+
+    /*
+        Calculator page will be created next.
+
+        For now this checks whether
+        calculator.html exists.
+    */
+
+    window.location.href =
+        "calculator.html";
+
+}
+
+
+if (startCalculator) {
+
+    startCalculator.addEventListener(
+        "click",
+        openCalculator
+    );
+
+}
+
+
+if (calculatorMenuButton) {
+
+    calculatorMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            window.location.href =
+                "calculator.html";
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   MENU ITEM ACTIVE STATE
+========================================= */
+
+const menuItems =
+    document.querySelectorAll(
+        ".menu-item"
+    );
+
+
+menuItems.forEach(
+    (item) => {
+
+        item.addEventListener(
+            "click",
+            () => {
+
+                menuItems.forEach(
+                    (otherItem) => {
+
+                        otherItem.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
+    }
+);
