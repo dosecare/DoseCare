@@ -1,0 +1,382 @@
+/* =========================================
+   DoseCare
+   Global Styles & Animated Background
+========================================= */
+
+
+/* ---------- Reset ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ---------- Page ---------- */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #07172f;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(38, 119, 190, 0.16),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(83, 71, 175, 0.12),
+            transparent 34%
+        ),
+        linear-gradient(
+            135deg,
+            #06142c 0%,
+            #081c3b 50%,
+            #06152f 100%
+        );
+}
+
+
+/* =========================================
+   SOFT GLOW
+========================================= */
+
+.glow {
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    opacity: 0.22;
+
+    pointer-events: none;
+
+    animation:
+        glowMove 16s ease-in-out infinite alternate;
+}
+
+
+/* Blue glow */
+
+.glow-one {
+    top: -140px;
+    left: -120px;
+
+    background: #1686d9;
+}
+
+
+/* Purple glow */
+
+.glow-two {
+    right: -140px;
+    bottom: 5%;
+
+    background: #6254c7;
+
+    animation-delay: -5s;
+}
+
+
+/* Soft teal glow */
+
+.glow-three {
+    left: 38%;
+    bottom: -190px;
+
+    background: #159eac;
+
+    animation-delay: -9s;
+}
+
+
+/* Glow movement */
+
+@keyframes glowMove {
+
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(35px, -25px, 0) scale(1.06);
+    }
+
+    100% {
+        transform: translate3d(-25px, 30px, 0) scale(0.96);
+    }
+}
+
+
+/* =========================================
+   FLOATING BUBBLES
+========================================= */
+
+.bubble {
+    position: absolute;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255, 255, 255, 0.18),
+            rgba(76, 156, 238, 0.08) 38%,
+            rgba(76, 156, 238, 0.015) 72%
+        );
+
+    border: 1px solid rgba(112, 191, 255, 0.13);
+
+    box-shadow:
+        inset 0 0 25px rgba(92, 186, 255, 0.06),
+        0 0 25px rgba(54, 143, 220, 0.04);
+
+    animation:
+        bubbleFloat 14s ease-in-out infinite;
+}
+
+
+/* Bubble 1 */
+
+.bubble-one {
+    width: 90px;
+    height: 90px;
+
+    top: 14%;
+    left: 12%;
+}
+
+
+/* Bubble 2 */
+
+.bubble-two {
+    width: 52px;
+    height: 52px;
+
+    top: 24%;
+    right: 13%;
+
+    animation-delay: -3s;
+}
+
+
+/* Bubble 3 */
+
+.bubble-three {
+    width: 115px;
+    height: 115px;
+
+    bottom: 13%;
+    left: 8%;
+
+    animation-delay: -6s;
+}
+
+
+/* Bubble 4 */
+
+.bubble-four {
+    width: 68px;
+    height: 68px;
+
+    right: 10%;
+    bottom: 24%;
+
+    animation-delay: -9s;
+}
+
+
+/* Bubble 5 */
+
+.bubble-five {
+    width: 34px;
+    height: 34px;
+
+    top: 58%;
+    left: 46%;
+
+    animation-delay: -12s;
+}
+
+
+/* Bubble movement */
+
+@keyframes bubbleFloat {
+
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(16px, -22px, 0);
+    }
+
+    100% {
+        transform: translate3d(-10px, 14px, 0);
+    }
+}
+
+
+/* =========================================
+   LIGHT PARTICLES
+========================================= */
+
+#particles {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+}
+
+
+.particle {
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: rgba(130, 215, 255, 0.8);
+
+    box-shadow:
+        0 0 7px rgba(91, 198, 255, 0.75),
+        0 0 14px rgba(91, 198, 255, 0.22);
+
+    animation:
+        particleMove linear infinite,
+        particlePulse ease-in-out infinite alternate;
+}
+
+
+/* Particle movement */
+
+@keyframes particleMove {
+
+    from {
+        transform: translateY(15px);
+    }
+
+    to {
+        transform: translateY(-35px);
+    }
+}
+
+
+/* Particle glow */
+
+@keyframes particlePulse {
+
+    from {
+        opacity: 0.2;
+    }
+
+    to {
+        opacity: 0.9;
+    }
+}
+
+
+/* =========================================
+   APPLICATION LAYER
+========================================= */
+
+#app {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .glow {
+        width: 220px;
+        height: 220px;
+
+        filter: blur(70px);
+    }
+
+    .bubble-one {
+        width: 65px;
+        height: 65px;
+    }
+
+    .bubble-two {
+        width: 40px;
+        height: 40px;
+    }
+
+    .bubble-three {
+        width: 80px;
+        height: 80px;
+    }
+
+    .bubble-four {
+        width: 50px;
+        height: 50px;
+    }
+
+    .bubble-five {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .glow,
+    .bubble,
+    .particle {
+        animation: none;
+    }
+}
