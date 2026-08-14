@@ -607,3 +607,459 @@ body {
         font-size: 14px;
     }
 }
+/* =========================================
+   DoseCare Dashboard Layout
+========================================= */
+
+
+/* ---------- Main App ---------- */
+
+#app {
+    min-height: 100vh;
+
+    display: flex;
+
+    position: relative;
+
+    padding: 25px;
+}
+
+
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+
+    width: 270px;
+
+    min-height: calc(100vh - 50px);
+
+    padding: 30px 20px;
+
+    border-radius: 28px;
+
+
+    background:
+        rgba(10, 30, 65, 0.45);
+
+
+    border:
+        1px solid rgba(130, 200, 255, 0.15);
+
+
+    backdrop-filter: blur(18px);
+
+
+    display: flex;
+
+    flex-direction: column;
+
+
+    box-shadow:
+        0 0 35px rgba(0, 120, 220, 0.08);
+
+}
+
+
+
+/* ---------- Logo ---------- */
+
+.logo-area {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+
+}
+
+
+
+.logo-icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+    border-radius: 50%;
+
+
+    font-size: 35px;
+
+    font-weight: bold;
+
+
+    color: #7be1ff;
+
+
+    border:
+        1px solid rgba(120,220,255,0.4);
+
+
+    background:
+        rgba(40,130,220,0.15);
+
+}
+
+
+
+.logo-area h2 {
+
+    margin-top: 15px;
+
+    font-size: 30px;
+
+    letter-spacing: 1px;
+
+}
+
+
+
+.logo-area h2 span {
+
+    color: #66d8ff;
+
+}
+
+
+
+.logo-area p {
+
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    color:
+        rgba(220,235,255,0.7);
+
+}
+
+
+
+/* ---------- Menu ---------- */
+
+.menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+
+.menu a {
+
+    padding: 14px 18px;
+
+
+    border-radius: 16px;
+
+
+    color:
+    rgba(230,240,255,0.85);
+
+
+    text-decoration: none;
+
+
+    font-size: 16px;
+
+
+    transition: 0.3s;
+
+
+    cursor: pointer;
+
+}
+
+
+
+.menu a:hover,
+.menu .active {
+
+
+    background:
+    rgba(60,150,240,0.18);
+
+
+    color:white;
+
+
+    transform:
+    translateX(5px);
+
+
+    border:
+    1px solid rgba(100,200,255,0.25);
+
+}
+
+
+
+/* ---------- Appearance ---------- */
+
+
+.appearance {
+
+
+    margin-top: auto;
+
+
+    padding: 15px;
+
+
+    border-radius: 18px;
+
+
+    background:
+    rgba(255,255,255,0.05);
+
+
+    color:
+    rgba(230,240,255,0.9);
+
+
+    text-align:center;
+
+}
+
+
+
+/* =========================================
+   Dashboard
+========================================= */
+
+
+.dashboard {
+
+
+    flex:1;
+
+
+    padding: 20px 35px;
+
+
+}
+
+
+
+/* ---------- Top Bar ---------- */
+
+
+.top-bar {
+
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+
+    margin-bottom:45px;
+
+}
+
+
+
+.top-bar h1 {
+
+
+    font-size:36px;
+
+
+}
+
+
+
+.top-bar p {
+
+
+    margin-top:8px;
+
+
+    color:
+    rgba(210,230,255,0.7);
+
+
+}
+
+
+
+.profile {
+
+
+    width:55px;
+
+    height:55px;
+
+
+    border-radius:50%;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    background:
+    rgba(70,160,240,0.18);
+
+
+    border:
+    1px solid rgba(120,220,255,0.25);
+
+
+    color:white;
+
+
+    font-weight:bold;
+
+}
+
+
+
+/* =========================================
+   Cards
+========================================= */
+
+
+.cards {
+
+
+    display:grid;
+
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+
+    gap:25px;
+
+}
+
+
+
+.card {
+
+
+    padding:30px;
+
+
+    min-height:180px;
+
+
+    border-radius:25px;
+
+
+    background:
+    rgba(255,255,255,0.06);
+
+
+    border:
+    1px solid rgba(150,210,255,0.15);
+
+
+    backdrop-filter:
+    blur(15px);
+
+
+    transition:
+    0.35s;
+
+
+}
+
+
+
+.card:hover {
+
+
+    transform:
+    translateY(-8px);
+
+
+    background:
+    rgba(80,170,255,0.12);
+
+
+}
+
+
+
+.card h3 {
+
+
+    font-size:22px;
+
+
+    margin-bottom:18px;
+
+}
+
+
+
+.card p {
+
+
+    color:
+    rgba(220,235,255,0.7);
+
+
+    line-height:1.6;
+
+}
+
+
+
+/* =========================================
+   Mobile
+========================================= */
+
+
+@media(max-width:900px){
+
+
+    #app {
+
+        flex-direction:column;
+
+    }
+
+
+    .sidebar {
+
+        width:100%;
+
+        min-height:auto;
+
+    }
+
+
+    .cards {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .dashboard {
+
+        padding:20px 0;
+
+    }
+
+}
