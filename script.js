@@ -1,46 +1,59 @@
 /* =========================================
    DoseCare
-   Animated Background Particles
+   Main Application Logic
 ========================================= */
 
 
-/* ---------- Particle Container ---------- */
+/* =========================================
+   PARTICLES
+========================================= */
 
-const particlesContainer = document.getElementById("particles");
 
+const particlesContainer =
+    document.getElementById("particles");
 
-/* ---------- Settings ---------- */
 
 const PARTICLE_COUNT = 32;
 
 
-/* ---------- Create Particles ---------- */
+for (
+    let i = 0;
+    i < PARTICLE_COUNT;
+    i++
+) {
 
-for (let i = 0; i < PARTICLE_COUNT; i++) {
-
-    const particle = document.createElement("span");
-
-    particle.classList.add("particle");
-
-
-    /* Random position */
-
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = `${Math.random() * 100}%`;
+    const particle =
+        document.createElement("span");
 
 
-    /* Random size */
-
-    const size = Math.random() * 2.5 + 1.5;
-
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
+    particle.classList.add(
+        "particle"
+    );
 
 
-    /* Random movement speed */
+    particle.style.left =
+        `${Math.random() * 100}%`;
+
+
+    particle.style.top =
+        `${Math.random() * 100}%`;
+
+
+    const size =
+        Math.random() * 2.5 + 1.5;
+
+
+    particle.style.width =
+        `${size}px`;
+
+
+    particle.style.height =
+        `${size}px`;
+
 
     const movementDuration =
         Math.random() * 8 + 8;
+
 
     const glowDuration =
         Math.random() * 3 + 2;
@@ -50,10 +63,9 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
         `${movementDuration}s, ${glowDuration}s`;
 
 
-    /* Random animation delay */
-
     const movementDelay =
         Math.random() * 8;
+
 
     const glowDelay =
         Math.random() * 3;
@@ -63,32 +75,185 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
         `${movementDelay}s, ${glowDelay}s`;
 
 
-    /* Add particle */
+    particlesContainer.appendChild(
+        particle
+    );
 
-    particlesContainer.appendChild(particle);
 }
+
+
 /* =========================================
-   DoseCare
-   Welcome → Home
+   WELCOME → HOME
 ========================================= */
 
 
 const welcomeScreen =
-    document.getElementById("welcome-screen");
+    document.getElementById(
+        "welcome-screen"
+    );
+
 
 const homeScreen =
-    document.getElementById("home-screen");
+    document.getElementById(
+        "home-screen"
+    );
+
 
 const enterButton =
-    document.getElementById("enter-button");
+    document.getElementById(
+        "enter-button"
+    );
 
 
-/* ---------- Enter DoseCare ---------- */
+enterButton.addEventListener(
+    "click",
+    () => {
 
-enterButton.addEventListener("click", () => {
+        welcomeScreen.classList.add(
+            "hide"
+        );
 
-    welcomeScreen.classList.add("hide");
 
-    homeScreen.classList.add("show");
+        homeScreen.classList.add(
+            "show"
+        );
 
-});
+    }
+);
+
+
+/* =========================================
+   MENU
+========================================= */
+
+
+const menuButton =
+    document.getElementById(
+        "menu-button"
+    );
+
+
+const sideMenu =
+    document.getElementById(
+        "side-menu"
+    );
+
+
+const closeMenu =
+    document.getElementById(
+        "close-menu"
+    );
+
+
+const menuOverlay =
+    document.getElementById(
+        "menu-overlay"
+    );
+
+
+function openMenu() {
+
+    sideMenu.classList.add(
+        "open"
+    );
+
+    menuOverlay.classList.add(
+        "open"
+    );
+
+}
+
+
+function closeSideMenu() {
+
+    sideMenu.classList.remove(
+        "open"
+    );
+
+    menuOverlay.classList.remove(
+        "open"
+    );
+
+}
+
+
+menuButton.addEventListener(
+    "click",
+    openMenu
+);
+
+
+closeMenu.addEventListener(
+    "click",
+    closeSideMenu
+);
+
+
+menuOverlay.addEventListener(
+    "click",
+    closeSideMenu
+);
+
+
+/* =========================================
+   USER NAME
+========================================= */
+
+
+/*
+    Temporary user name.
+
+    Later this value will come
+    automatically from the login system.
+*/
+
+
+const currentUser = "User";
+
+
+const userName =
+    document.getElementById(
+        "user-name"
+    );
+
+
+const profileInitials =
+    document.getElementById(
+        "profile-initials"
+    );
+
+
+userName.textContent =
+    currentUser;
+
+
+profileInitials.textContent =
+    getInitials(currentUser);
+
+
+/* =========================================
+   GET INITIALS
+========================================= */
+
+
+function getInitials(name) {
+
+    const words =
+        name.trim().split(/\s+/);
+
+
+    if (words.length === 1) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
+
+}
