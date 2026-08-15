@@ -405,3 +405,28 @@ if (calculatorMenuButton) {
     );
 
 }
+/* =========================================
+   MEDICINES
+========================================= */
+
+const medicinesMenuButton =
+    document.getElementById(
+        "medicines-menu-button"
+    );
+
+
+if (medicinesMenuButton) {
+
+    medicinesMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            window.location.href =
+                "medicines.html";
+
+        }
+    );
+
+}
