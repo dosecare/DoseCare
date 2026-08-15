@@ -1734,3 +1734,109 @@
     }
 
 }
+/* =========================================
+   AGE INPUT
+========================================= */
+
+.age-input-row {
+
+    display: flex;
+
+    gap: 10px;
+
+    width: 100%;
+
+}
+
+
+.age-input-row input {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.age-input-row select {
+
+    width: 125px;
+
+    height: 55px;
+
+    padding: 0 14px;
+
+    border-radius: 15px;
+
+    border:
+        1px solid
+        rgba(145, 210, 245, 0.12);
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color:
+        rgba(235, 247, 255, 0.9);
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    transition: 0.25s ease;
+
+}
+
+
+.age-input-row select:hover {
+
+    border-color:
+        rgba(110, 215, 255, 0.22);
+
+}
+
+
+.age-input-row select:focus {
+
+    border-color:
+        rgba(105, 210, 255, 0.4);
+
+    box-shadow:
+        0 0 25px
+        rgba(50, 170, 240, 0.06);
+
+}
+
+
+.age-input-row select option {
+
+    background: #102d50;
+
+    color: #eef9ff;
+
+}
+
+
+@media (max-width: 500px) {
+
+    .age-input-row {
+
+        gap: 8px;
+
+    }
+
+
+    .age-input-row select {
+
+        width: 110px;
+
+        font-size: 13px;
+
+    }
+
+}
