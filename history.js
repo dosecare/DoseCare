@@ -8,33 +8,34 @@
    ELEMENTS
 ========================================= */
 
-const historyContainer =
+const historyList =
     document.getElementById(
-        "history-container"
+        "history-list"
     );
 
-
-const emptyHistory =
+const historyEmpty =
     document.getElementById(
-        "empty-history"
+        "history-empty"
     );
 
+const historyCount =
+    document.getElementById(
+        "history-count"
+    );
 
 const clearHistoryButton =
     document.getElementById(
         "clear-history"
     );
 
-
-const backHome =
+const backButton =
     document.getElementById(
-        "back-home"
+        "back-button"
     );
 
-
-const startCalculator =
+const goCalculator =
     document.getElementById(
-        "start-calculator"
+        "go-calculator"
     );
 
 
@@ -42,15 +43,15 @@ const startCalculator =
    GET HISTORY
 ========================================= */
 
-function getHistory() {
+function getDoseHistory() {
 
-    const savedHistory =
+    const saved =
         localStorage.getItem(
             "dosecareHistory"
         );
 
 
-    if (!savedHistory) {
+    if (!saved) {
 
         return [];
 
@@ -59,11 +60,11 @@ function getHistory() {
 
     try {
 
-        return JSON.parse(
-            savedHistory
-        );
+        return JSON.parse(saved);
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(
             "History loading error:",
@@ -81,9 +82,7 @@ function getHistory() {
    SAVE HISTORY
 ========================================= */
 
-function saveHistory(
-    history
-) {
+function saveDoseHistory(history) {
 
     localStorage.setItem(
         "dosecareHistory",
@@ -97,35 +96,67 @@ function saveHistory(
    FORMAT DATE
 ========================================= */
 
-function formatDate(
-    dateValue
-) {
+function formatHistoryDate(dateValue) {
 
     const date =
         new Date(dateValue);
 
 
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
+    if (Number.isNaN(date.getTime())) {
 
-        return "";
+        return {
+            date: "Unknown date",
+            time: ""
+        };
 
     }
 
 
-    return date.toLocaleString(
-        "en-US",
-        {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        }
-    );
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const year =
+        date.getFullYear();
+
+
+    let hours =
+        date.getHours();
+
+
+    const minutes =
+        String(
+            date.getMinutes()
+        ).padStart(2, "0");
+
+
+    const period =
+        hours >= 12
+            ? "PM"
+            : "AM";
+
+
+    hours =
+        hours % 12 || 12;
+
+
+    return {
+
+        date:
+            `${day}/${month}/${year}`,
+
+        time:
+            `${hours}:${minutes} ${period}`
+
+    };
 
 }
 
@@ -137,37 +168,44 @@ function formatDate(
 function renderHistory() {
 
     const history =
-        getHistory();
+        getDoseHistory();
 
 
-    historyContainer.innerHTML =
-        "";
+    historyList.innerHTML = "";
 
 
-    if (
-        history.length === 0
-    ) {
+    historyCount.textContent =
+        `${history.length} ${
+            history.length === 1
+                ? "calculation"
+                : "calculations"
+        }`;
 
-        emptyHistory.style.display =
-            "flex";
 
-        clearHistoryButton.style.display =
-            "none";
+    if (history.length === 0) {
+
+        historyEmpty.classList.add(
+            "show"
+        );
 
         return;
 
     }
 
 
-    emptyHistory.style.display =
-        "none";
-
-    clearHistoryButton.style.display =
-        "block";
+    historyEmpty.classList.remove(
+        "show"
+    );
 
 
     history.forEach(
-        (record, index) => {
+        (item, index) => {
+
+            const date =
+                formatHistoryDate(
+                    item.date
+                );
+
 
             const card =
                 document.createElement(
@@ -182,56 +220,53 @@ function renderHistory() {
             card.innerHTML = `
 
                 <div class="history-icon">
-                    💊
+                    +
                 </div>
 
 
-                <div class="history-info">
+                <div class="history-main">
 
-                    <div class="history-title-row">
+                    <h3>
+                        ${item.medicine || "Medicine"}
+                    </h3>
 
-                        <h3>
-                            ${record.medicine || "Medicine"}
-                        </h3>
 
-                        <span class="history-date">
-                            ${formatDate(record.date)}
-                        </span>
-
-                    </div>
+                    <span class="history-class">
+                        ${item.class || "Pediatric medicine"}
+                    </span>
 
 
                     <div class="history-details">
 
                         ${
-                            record.age
+                            item.age
                                 ? `
-                                <span>
-                                    👶 ${record.age}
-                                </span>
-                                `
+                                    <span class="history-detail">
+                                        Age: ${item.age}
+                                    </span>
+                                  `
                                 : ""
                         }
 
 
                         ${
-                            record.weight
+                            item.weight
                                 ? `
-                                <span>
-                                    ⚖ ${record.weight} kg
-                                </span>
-                                `
+                                    <span class="history-detail">
+                                        Weight: ${item.weight} kg
+                                    </span>
+                                  `
                                 : ""
                         }
 
 
                         ${
-                            record.concentration
+                            item.concentration
                                 ? `
-                                <span>
-                                    🧪 ${record.concentration}
-                                </span>
-                                `
+                                    <span class="history-detail">
+                                        ${item.concentration}
+                                    </span>
+                                  `
                                 : ""
                         }
 
@@ -239,37 +274,47 @@ function renderHistory() {
 
 
                     ${
-                        record.result
+                        item.dose
                             ? `
-                            <div class="history-result">
-                                <small>
-                                    Calculated Dose
-                                </small>
-
-                                <strong>
-                                    ${record.result}
-                                </strong>
-                            </div>
-                            `
+                                <div class="history-dose">
+                                    Dose: ${item.dose}
+                                </div>
+                              `
                             : ""
                     }
+
+
+                    <button
+                        class="delete-history"
+                        type="button"
+                        data-index="${index}"
+                    >
+                        Delete
+                    </button>
 
                 </div>
 
 
-                <button
-                    class="delete-history"
-                    type="button"
-                    data-index="${index}"
-                    aria-label="Delete calculation"
-                >
-                    ×
-                </button>
+                <div class="history-date">
+
+                    <small>
+                        Calculated on
+                    </small>
+
+                    <strong>
+                        ${date.date}
+                    </strong>
+
+                    <small>
+                        ${date.time}
+                    </small>
+
+                </div>
 
             `;
 
 
-            historyContainer.appendChild(
+            historyList.appendChild(
                 card
             );
 
@@ -283,65 +328,52 @@ function renderHistory() {
 
 
 /* =========================================
-   DELETE ONE RECORD
+   DELETE ONE ITEM
 ========================================= */
 
 function attachDeleteEvents() {
 
-    document
-        .querySelectorAll(
+    const buttons =
+        document.querySelectorAll(
             ".delete-history"
-        )
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const index =
-                            Number(
-                                button.dataset.index
-                            );
-
-
-                        deleteHistoryItem(
-                            index
-                        );
-
-                    }
-                );
-
-            }
         );
 
-}
+
+    buttons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const index =
+                        Number(
+                            button.dataset.index
+                        );
 
 
-/* =========================================
-   DELETE HISTORY ITEM
-========================================= */
-
-function deleteHistoryItem(
-    index
-) {
-
-    const history =
-        getHistory();
+                    const history =
+                        getDoseHistory();
 
 
-    history.splice(
-        index,
-        1
+                    history.splice(
+                        index,
+                        1
+                    );
+
+
+                    saveDoseHistory(
+                        history
+                    );
+
+
+                    renderHistory();
+
+                }
+            );
+
+        }
     );
-
-
-    saveHistory(
-        history
-    );
-
-
-    renderHistory();
 
 }
 
@@ -350,21 +382,17 @@ function deleteHistoryItem(
    CLEAR ALL HISTORY
 ========================================= */
 
-if (
-    clearHistoryButton
-) {
+if (clearHistoryButton) {
 
     clearHistoryButton.addEventListener(
         "click",
         () => {
 
             const history =
-                getHistory();
+                getDoseHistory();
 
 
-            if (
-                history.length === 0
-            ) {
+            if (history.length === 0) {
 
                 return;
 
@@ -398,12 +426,12 @@ if (
 
 
 /* =========================================
-   BACK TO HOME
+   BACK
 ========================================= */
 
-if (backHome) {
+if (backButton) {
 
-    backHome.addEventListener(
+    backButton.addEventListener(
         "click",
         () => {
 
@@ -417,12 +445,12 @@ if (backHome) {
 
 
 /* =========================================
-   START CALCULATOR
+   GO TO CALCULATOR
 ========================================= */
 
-if (startCalculator) {
+if (goCalculator) {
 
-    startCalculator.addEventListener(
+    goCalculator.addEventListener(
         "click",
         () => {
 
@@ -431,6 +459,72 @@ if (startCalculator) {
 
         }
     );
+
+}
+
+
+/* =========================================
+   PARTICLES
+========================================= */
+
+const particlesContainer =
+    document.getElementById(
+        "particles"
+    );
+
+
+if (particlesContainer) {
+
+    for (
+        let i = 0;
+        i < 55;
+        i++
+    ) {
+
+        const particle =
+            document.createElement(
+                "span"
+            );
+
+
+        particle.classList.add(
+            "particle"
+        );
+
+
+        const size =
+            Math.random() * 2.5 + 1.5;
+
+
+        particle.style.width =
+            `${size}px`;
+
+
+        particle.style.height =
+            `${size}px`;
+
+
+        particle.style.left =
+            `${Math.random() * 100}%`;
+
+
+        particle.style.top =
+            `${Math.random() * 100}%`;
+
+
+        particle.style.animationDuration =
+            `${Math.random() * 8 + 8}s, ${Math.random() * 3 + 2}s`;
+
+
+        particle.style.animationDelay =
+            `${Math.random() * 8}s, ${Math.random() * 3}s`;
+
+
+        particlesContainer.appendChild(
+            particle
+        );
+
+    }
 
 }
 
