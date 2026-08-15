@@ -354,3 +354,28 @@ menuItems.forEach(
 
     }
 );
+/* =========================================
+   HISTORY NAVIGATION
+========================================= */
+
+const historyMenuButton =
+    document.getElementById(
+        "history-menu-button"
+    );
+
+
+if (historyMenuButton) {
+
+    historyMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            window.location.href =
+                "history.html";
+
+        }
+    );
+
+}
