@@ -1007,7 +1007,168 @@ if (backButton) {
     );
 
 }
+/* =========================================
+   DOSECARE
+   HISTORY SYSTEM
+========================================= */
 
+
+/* =========================================
+   GET HISTORY
+========================================= */
+
+function getDoseHistory() {
+
+    const saved =
+        localStorage.getItem(
+            "dosecareHistory"
+        );
+
+
+    if (!saved) {
+
+        return [];
+
+    }
+
+
+    try {
+
+        return JSON.parse(saved);
+
+    } catch (error) {
+
+        console.error(
+            "History loading error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   SAVE HISTORY
+========================================= */
+
+function saveDoseHistory(
+    history
+) {
+
+    localStorage.setItem(
+        "dosecareHistory",
+        JSON.stringify(history)
+    );
+
+}
+
+
+/* =========================================
+   ADD CALCULATION TO HISTORY
+========================================= */
+
+function addToDoseHistory(
+    data
+) {
+
+    const history =
+        getDoseHistory();
+
+
+    const now =
+        new Date();
+
+
+    const historyItem = {
+
+        id:
+            Date.now(),
+
+
+        medicine:
+            data.medicine,
+
+
+        dose:
+            data.dose,
+
+
+        unit:
+            data.unit,
+
+
+        age:
+            data.age,
+
+
+        ageUnit:
+            data.ageUnit,
+
+
+        weight:
+            data.weight,
+
+
+        concentrationMg:
+            data.concentrationMg,
+
+
+        concentrationMl:
+            data.concentrationMl,
+
+
+        date:
+            now.toLocaleDateString(
+                "en-GB"
+            ),
+
+
+        time:
+            now.toLocaleTimeString(
+                "en-US",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ),
+
+
+        timestamp:
+            now.toISOString()
+
+    };
+
+
+    /*
+        Newest calculation appears first.
+    */
+
+    history.unshift(
+        historyItem
+    );
+
+
+    /*
+        Keep the latest 50 calculations.
+    */
+
+    if (history.length > 50) {
+
+        history.splice(
+            50
+        );
+
+    }
+
+
+    saveDoseHistory(
+        history
+    );
+
+}
 
 /* =========================================
    INITIALIZE
