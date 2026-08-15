@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DoseCare — Favorites</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        .favorites-page {
+
+            min-height: 100vh;
+
+            padding: 25px;
+
+        }
+
+
+        .favorites-container {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: 40px auto;
+
+        }
+
+
+        .page-back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 10px 15px;
+
+            border-radius: 12px;
+
+            border: 1px solid
+                rgba(130,205,255,0.13);
+
+            background:
+                rgba(255,255,255,0.045);
+
+            color:
+                rgba(225,240,255,0.78);
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            transition: 0.3s ease;
+
+        }
+
+
+        .page-back:hover {
+
+            background:
+                rgba(70,170,240,0.10);
+
+            transform:
+                translateX(-3px);
+
+        }
+
+
+        .favorites-heading {
+
+            margin-top: 35px;
+
+        }
+
+
+        .favorites-heading span {
+
+            font-size: 11px;
+
+            letter-spacing: 4px;
+
+            color: #6ed9ff;
+
+        }
+
+
+        .favorites-heading h1 {
+
+            margin-top: 10px;
+
+            font-size:
+                clamp(35px,5vw,55px);
+
+            line-height: 1.1;
+
+        }
+
+
+        .favorites-heading p {
+
+            margin-top: 14px;
+
+            max-width: 650px;
+
+            color:
+                rgba(215,233,250,0.62);
+
+            line-height: 1.7;
+
+        }
+
+
+        .favorites-list {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap: 18px;
+
+            margin-top: 35px;
+
+        }
+
+
+        .favorite-card {
+
+            position: relative;
+
+            padding: 25px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid
+                rgba(150,210,255,0.12);
+
+            backdrop-filter:
+                blur(15px);
+
+            transition: 0.3s ease;
+
+        }
+
+
+        .favorite-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            background:
+                rgba(70,170,240,0.08);
+
+        }
+
+
+        .favorite-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 14px;
+
+            color: #78ddff;
+
+            background:
+                rgba(70,170,240,0.09);
+
+            border:
+                1px solid
+                rgba(110,210,255,0.13);
+
+            font-size: 22px;
+
+        }
+
+
+        .favorite-card h3 {
+
+            margin-top: 18px;
+
+            font-size: 20px;
+
+        }
+
+
+        .favorite-card p {
+
+            margin-top: 8px;
+
+            color:
+                rgba(220,235,255,0.58);
+
+            line-height: 1.6;
+
+            font-size: 13px;
+
+        }
+
+
+        .remove-favorite {
+
+            position: absolute;
+
+            top: 20px;
+
+            right: 20px;
+
+            width: 35px;
+
+            height: 35px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            color: #78ddff;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+        }
+
+
+        .empty-favorites {
+
+            margin-top: 35px;
+
+            padding: 55px 25px;
+
+            text-align: center;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(150,210,255,0.10);
+
+        }
+
+
+        .empty-favorites .empty-icon {
+
+            font-size: 45px;
+
+            opacity: 0.75;
+
+        }
+
+
+        .empty-favorites h2 {
+
+            margin-top: 18px;
+
+            font-size: 24px;
+
+        }
+
+
+        .empty-favorites p {
+
+            margin-top: 10px;
+
+            color:
+                rgba(220,235,255,0.55);
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .favorites-page {
+
+                padding: 16px;
+
+            }
+
+
+            .favorites-container {
+
+                margin-top: 25px;
+
+            }
+
+
+            .favorites-list {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         BACKGROUND
+    ================================= -->
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+
+        <div class="glow glow-two"></div>
+
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+
+        <div class="bubble bubble-two"></div>
+
+        <div class="bubble bubble-three"></div>
+
+        <div class="bubble bubble-four"></div>
+
+        <div class="bubble bubble-five"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+
+    <!-- =================================
+         FAVORITES PAGE
+    ================================= -->
+
+    <main class="favorites-page">
+
+        <div class="favorites-container">
+
+
+            <button
+                class="page-back"
+                id="back-home"
+                type="button"
+            >
+
+                ←
+
+                <span>
+                    Back to Home
+                </span>
+
+            </button>
+
+
+
+            <section class="favorites-heading">
+
+                <span>
+                    DOSECARE
+                </span>
+
+                <h1>
+                    Favorite Medicines
+                </h1>
+
+                <p>
+                    Keep your most frequently used
+                    medicines here for quick access.
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 FAVORITES
+            ================================= -->
+
+            <section
+                id="favorites-list"
+                class="favorites-list"
+            ></section>
+
+
+
+            <!-- =================================
+                 EMPTY STATE
+            ================================= -->
+
+            <section
+                id="empty-favorites"
+                class="empty-favorites"
+            >
+
+                <div class="empty-icon">
+                    ★
+                </div>
+
+                <h2>
+                    No favorite medicines yet
+                </h2>
+
+                <p>
+                    Add medicines to your favorites
+                    and they will appear here.
+                </p>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <script src="script.js"></script>
+
+
+    <script>
+
+        /* =========================================
+           FAVORITES PAGE
+        ========================================= */
+
+        const backHome =
+            document.getElementById(
+                "back-home"
+            );
+
+
+        if (backHome) {
+
+            backHome.addEventListener(
+                "click",
+                () => {
+
+                    window.location.href =
+                        "index.html";
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           LOAD FAVORITES
+        ========================================= */
+
+        const favoritesList =
+            document.getElementById(
+                "favorites-list"
+            );
+
+
+        const emptyFavorites =
+            document.getElementById(
+                "empty-favorites"
+            );
+
+
+        function loadFavorites() {
+
+            const favorites =
+                JSON.parse(
+                    localStorage.getItem(
+                        "dosecareFavorites"
+                    )
+                ) || [];
+
+
+            favoritesList.innerHTML = "";
+
+
+            if (favorites.length === 0) {
+
+                emptyFavorites.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            emptyFavorites.style.display =
+                "none";
+
+
+            favorites.forEach(
+                (medicine, index) => {
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    card.className =
+                        "favorite-card";
+
+
+                    card.innerHTML = `
+
+                        <button
+                            class="remove-favorite"
+                            data-index="${index}"
+                            title="Remove from favorites"
+                        >
+                            ★
+                        </button>
+
+                        <div class="favorite-icon">
+                            ✚
+                        </div>
+
+                        <h3>
+                            ${medicine.name}
+                        </h3>
+
+                        <p>
+                            ${medicine.description || "Medicine information"}
+                        </p>
+
+                    `;
+
+
+                    favoritesList.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+
+            document
+                .querySelectorAll(
+                    ".remove-favorite"
+                )
+                .forEach(
+                    (button) => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                removeFavorite(
+                                    Number(
+                                        button.dataset.index
+                                    )
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =========================================
+           REMOVE FAVORITE
+        ========================================= */
+
+        function removeFavorite(index) {
+
+            const favorites =
+                JSON.parse(
+                    localStorage.getItem(
+                        "dosecareFavorites"
+                    )
+                ) || [];
+
+
+            favorites.splice(
+                index,
+                1
+            );
+
+
+            localStorage.setItem(
+                "dosecareFavorites",
+                JSON.stringify(
+                    favorites
+                )
+            );
+
+
+            loadFavorites();
+
+        }
+
+
+        loadFavorites();
+
+    </script>
+
+
+</body>
+
+</html>
