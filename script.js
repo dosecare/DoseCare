@@ -13,7 +13,6 @@ const particlesContainer =
 
 const PARTICLE_COUNT = 32;
 
-
 if (particlesContainer) {
 
     for (
@@ -27,50 +26,38 @@ if (particlesContainer) {
 
         particle.classList.add("particle");
 
-
         particle.style.left =
             `${Math.random() * 100}%`;
-
 
         particle.style.top =
             `${Math.random() * 100}%`;
 
-
         const size =
             Math.random() * 2.5 + 1.5;
-
 
         particle.style.width =
             `${size}px`;
 
-
         particle.style.height =
             `${size}px`;
-
 
         const movementDuration =
             Math.random() * 8 + 8;
 
-
         const glowDuration =
             Math.random() * 3 + 2;
-
 
         particle.style.animationDuration =
             `${movementDuration}s, ${glowDuration}s`;
 
-
         const movementDelay =
             Math.random() * 8;
-
 
         const glowDelay =
             Math.random() * 3;
 
-
         particle.style.animationDelay =
             `${movementDelay}s, ${glowDelay}s`;
-
 
         particlesContainer.appendChild(
             particle
@@ -90,7 +77,6 @@ const welcomeScreen =
         "welcome-screen"
     );
 
-
 const homeScreen =
     document.getElementById(
         "home-screen"
@@ -107,7 +93,6 @@ setTimeout(() => {
 
     }
 
-
     if (homeScreen) {
 
         homeScreen.classList.add(
@@ -120,7 +105,7 @@ setTimeout(() => {
 
 
 /* =========================================
-   MENU
+   MENU ELEMENTS
 ========================================= */
 
 const menuButton =
@@ -128,24 +113,25 @@ const menuButton =
         "menu-button"
     );
 
-
 const sideMenu =
     document.getElementById(
         "side-menu"
     );
-
 
 const closeMenu =
     document.getElementById(
         "close-menu"
     );
 
-
 const menuOverlay =
     document.getElementById(
         "menu-overlay"
     );
 
+
+/* =========================================
+   OPEN MENU
+========================================= */
 
 function openMenu() {
 
@@ -156,7 +142,6 @@ function openMenu() {
         );
 
     }
-
 
     if (menuOverlay) {
 
@@ -169,6 +154,10 @@ function openMenu() {
 }
 
 
+/* =========================================
+   CLOSE MENU
+========================================= */
+
 function closeSideMenu() {
 
     if (sideMenu) {
@@ -178,7 +167,6 @@ function closeSideMenu() {
         );
 
     }
-
 
     if (menuOverlay) {
 
@@ -190,6 +178,10 @@ function closeSideMenu() {
 
 }
 
+
+/* =========================================
+   MENU EVENTS
+========================================= */
 
 if (menuButton) {
 
@@ -222,116 +214,6 @@ if (menuOverlay) {
 
 
 /* =========================================
-   DOSE CALCULATOR BUTTONS
-========================================= */
-
-
-/*
-    Temporary navigation.
-
-    We will connect these buttons
-    to the real calculator page
-    when we create it.
-*/
-
-
-const startCalculator =
-    document.getElementById(
-        "start-calculator"
-    );
-
-
-const calculatorMenuButton =
-    document.getElementById(
-        "calculator-menu-button"
-    );
-
-
-function openCalculator() {
-
-    /*
-        Calculator page will be created next.
-
-        For now this checks whether
-        calculator.html exists.
-    */
-
-    window.location.href =
-        "calculator.html";
-
-}
-
-
-if (startCalculator) {
-
-    startCalculator.addEventListener(
-        "click",
-        openCalculator
-    );
-
-}
-
-
-if (calculatorMenuButton) {
-
-    calculatorMenuButton.addEventListener(
-        "click",
-        () => {
-
-            closeSideMenu();
-
-            window.location.href =
-                "calculator.html";
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   MENU ITEM ACTIVE STATE
-========================================= */
-
-const menuItems =
-    document.querySelectorAll(
-        ".menu-item"
-    );
-
-
-menuItems.forEach(
-    (item) => {
-
-        item.addEventListener(
-            "click",
-            () => {
-
-                menuItems.forEach(
-                    (otherItem) => {
-
-                        otherItem.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                item.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-    }
-);
-/* =========================================
-   MENU NAVIGATION
-========================================= */
-
-
-/* =========================================
    HOME
 ========================================= */
 
@@ -347,19 +229,7 @@ if (homeMenuButton) {
         "click",
         () => {
 
-            /*
-                Home is the main page.
-                Close the menu first.
-            */
-
             closeSideMenu();
-
-
-            /*
-                If the user is already on
-                the home page, simply scroll
-                to the top.
-            */
 
             window.scrollTo({
                 top: 0,
@@ -370,6 +240,8 @@ if (homeMenuButton) {
     );
 
 }
+
+
 /* =========================================
    DOSE CALCULATOR
 ========================================= */
@@ -379,6 +251,19 @@ const calculatorMenuButton =
         "calculator-menu-button"
     );
 
+const startCalculator =
+    document.getElementById(
+        "start-calculator"
+    );
+
+
+function openCalculator() {
+
+    window.location.href =
+        "calculator.html";
+
+}
+
 
 if (calculatorMenuButton) {
 
@@ -386,25 +271,26 @@ if (calculatorMenuButton) {
         "click",
         () => {
 
-            /*
-                Close the side menu first.
-            */
-
             closeSideMenu();
 
-
-            /*
-                Open the pediatric
-                dose calculator.
-            */
-
-            window.location.href =
-                "calculator.html";
+            openCalculator();
 
         }
     );
 
 }
+
+
+if (startCalculator) {
+
+    startCalculator.addEventListener(
+        "click",
+        openCalculator
+    );
+
+}
+
+
 /* =========================================
    MEDICINES
 ========================================= */
@@ -430,25 +316,41 @@ if (medicinesMenuButton) {
     );
 
 }
+
+
 /* =========================================
-   START CALCULATOR BUTTON
+   MENU ACTIVE STATE
 ========================================= */
 
-const startCalculator =
-    document.getElementById(
-        "start-calculator"
+const menuItems =
+    document.querySelectorAll(
+        ".menu-item"
     );
 
-if (startCalculator) {
 
-    startCalculator.addEventListener(
-        "click",
-        () => {
+menuItems.forEach(
+    (item) => {
 
-            window.location.href =
-                "calculator.html";
+        item.addEventListener(
+            "click",
+            () => {
 
-        }
-    );
+                menuItems.forEach(
+                    (otherItem) => {
 
-}
+                        otherItem.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
+    }
+);
