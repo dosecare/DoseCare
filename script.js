@@ -430,3 +430,25 @@ if (medicinesMenuButton) {
     );
 
 }
+/* =========================================
+   START CALCULATOR BUTTON
+========================================= */
+
+const startCalculator =
+    document.getElementById(
+        "start-calculator"
+    );
+
+if (startCalculator) {
+
+    startCalculator.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "calculator.html";
+
+        }
+    );
+
+}
