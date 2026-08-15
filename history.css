@@ -1,0 +1,571 @@
+/* =========================================
+   DoseCare
+   History Page
+========================================= */
+
+
+.history-page {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 1150px;
+
+    min-height: 100vh;
+
+    margin: auto;
+
+    padding: 35px 25px 60px;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.history-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding-bottom: 30px;
+
+    border-bottom:
+        1px solid
+        rgba(150,210,255,0.10);
+
+}
+
+
+.history-header > div {
+
+    flex: 1;
+
+}
+
+
+.history-back {
+
+    width: 48px;
+
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        rgba(130,210,255,0.16);
+
+    background:
+        rgba(255,255,255,0.045);
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+}
+
+
+.history-back:hover {
+
+    transform:
+        translateX(-3px);
+
+    background:
+        rgba(70,170,240,0.12);
+
+}
+
+
+.history-label {
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    color: #70d9ff;
+
+}
+
+
+.history-header h1 {
+
+    margin-top: 7px;
+
+    font-size:
+        clamp(30px,5vw,48px);
+
+}
+
+
+.history-header p {
+
+    margin-top: 8px;
+
+    color:
+        rgba(215,233,250,0.58);
+
+    line-height: 1.6;
+
+}
+
+
+.clear-history {
+
+    padding:
+        11px 16px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(255,130,130,0.15);
+
+    background:
+        rgba(255,100,100,0.05);
+
+    color:
+        rgba(255,205,205,0.8);
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+}
+
+
+.clear-history:hover {
+
+    background:
+        rgba(255,100,100,0.11);
+
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.history-summary {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin:
+        25px 0 15px;
+
+}
+
+
+.history-summary span {
+
+    color:
+        rgba(220,237,250,0.55);
+
+    font-size: 13px;
+
+}
+
+
+.history-summary strong {
+
+    color: #75dcff;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================
+   HISTORY LIST
+========================================= */
+
+.history-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+}
+
+
+/* =========================================
+   HISTORY CARD
+========================================= */
+
+.history-card {
+
+    display: grid;
+
+    grid-template-columns:
+        auto 1fr auto;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    border:
+        1px solid
+        rgba(150,210,255,0.10);
+
+    backdrop-filter:
+        blur(15px);
+
+    transition: 0.3s ease;
+
+}
+
+
+.history-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(120,210,255,0.20);
+
+    background:
+        rgba(70,170,240,0.065);
+
+}
+
+
+.history-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 15px;
+
+    color: #78ddff;
+
+    font-size: 24px;
+
+    background:
+        rgba(70,170,240,0.08);
+
+    border:
+        1px solid
+        rgba(110,210,255,0.12);
+
+}
+
+
+/* =========================================
+   MEDICINE INFO
+========================================= */
+
+.history-main h3 {
+
+    font-size: 19px;
+
+}
+
+
+.history-class {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: #72d9ff;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+}
+
+
+.history-details {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 9px;
+
+}
+
+
+.history-detail {
+
+    padding:
+        5px 9px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    color:
+        rgba(220,238,255,0.65);
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   DATE
+========================================= */
+
+.history-date {
+
+    min-width: 145px;
+
+    text-align: right;
+
+}
+
+
+.history-date small {
+
+    display: block;
+
+    color:
+        rgba(205,230,250,0.45);
+
+    font-size: 10px;
+
+}
+
+
+.history-date strong {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        rgba(230,245,255,0.82);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================
+   DOSE
+========================================= */
+
+.history-dose {
+
+    margin-top: 10px;
+
+    color: #80e1ff;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================
+   DELETE
+========================================= */
+
+.delete-history {
+
+    margin-top: 8px;
+
+    border: none;
+
+    background: transparent;
+
+    color:
+        rgba(255,150,150,0.65);
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+}
+
+
+.delete-history:hover {
+
+    color:
+        rgba(255,170,170,1);
+
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.history-empty {
+
+    display: none;
+
+    min-height: 420px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    text-align: center;
+
+}
+
+
+.history-empty.show {
+
+    display: flex;
+
+}
+
+
+.empty-icon {
+
+    width: 72px;
+
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 22px;
+
+    font-size: 32px;
+
+    color: #75dcff;
+
+    background:
+        rgba(70,170,240,0.08);
+
+    border:
+        1px solid
+        rgba(110,210,255,0.14);
+
+}
+
+
+.history-empty h2 {
+
+    margin-top: 20px;
+
+    font-size: 25px;
+
+}
+
+
+.history-empty p {
+
+    max-width: 430px;
+
+    margin-top: 9px;
+
+    color:
+        rgba(215,233,250,0.55);
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .history-page {
+
+        padding:
+            20px 16px 40px;
+
+    }
+
+
+    .history-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .history-header h1 {
+
+        font-size: 29px;
+
+    }
+
+
+    .history-header p {
+
+        font-size: 12px;
+
+    }
+
+
+    .clear-history {
+
+        padding:
+            9px 11px;
+
+        font-size: 10px;
+
+    }
+
+
+    .history-card {
+
+        grid-template-columns:
+            auto 1fr;
+
+    }
+
+
+    .history-date {
+
+        grid-column: 2;
+
+        min-width: 0;
+
+        text-align: left;
+
+        padding-top: 3px;
+
+    }
+
+}
