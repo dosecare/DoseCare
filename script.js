@@ -5,7 +5,7 @@
 
 
 /* =========================================
-   PARTICLES
+   PARTICLES / STARS
 ========================================= */
 
 const particlesContainer =
@@ -256,6 +256,11 @@ const startCalculator =
         "start-calculator"
     );
 
+const quickCalculator =
+    document.getElementById(
+        "quick-calculator"
+    );
+
 
 function openCalculator() {
 
@@ -291,6 +296,16 @@ if (startCalculator) {
 }
 
 
+if (quickCalculator) {
+
+    quickCalculator.addEventListener(
+        "click",
+        openCalculator
+    );
+
+}
+
+
 /* =========================================
    MEDICINES
 ========================================= */
@@ -299,6 +314,19 @@ const medicinesMenuButton =
     document.getElementById(
         "medicines-menu-button"
     );
+
+const quickMedicines =
+    document.getElementById(
+        "quick-medicines"
+    );
+
+
+function openMedicines() {
+
+    window.location.href =
+        "medicines.html";
+
+}
 
 
 if (medicinesMenuButton) {
@@ -309,8 +337,174 @@ if (medicinesMenuButton) {
 
             closeSideMenu();
 
-            window.location.href =
-                "medicines.html";
+            openMedicines();
+
+        }
+    );
+
+}
+
+
+if (quickMedicines) {
+
+    quickMedicines.addEventListener(
+        "click",
+        openMedicines
+    );
+
+}
+
+
+/* =========================================
+   FAVORITES
+========================================= */
+
+const favoritesMenuButton =
+    document.getElementById(
+        "favorites-menu-button"
+    );
+
+
+function openFavorites() {
+
+    window.location.href =
+        "favorites.html";
+
+}
+
+
+if (favoritesMenuButton) {
+
+    favoritesMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            openFavorites();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   HISTORY
+========================================= */
+
+const historyMenuButton =
+    document.getElementById(
+        "history-menu-button"
+    );
+
+const quickHistory =
+    document.getElementById(
+        "quick-history"
+    );
+
+
+function openHistory() {
+
+    window.location.href =
+        "history.html";
+
+}
+
+
+if (historyMenuButton) {
+
+    historyMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            openHistory();
+
+        }
+    );
+
+}
+
+
+if (quickHistory) {
+
+    quickHistory.addEventListener(
+        "click",
+        openHistory
+    );
+
+}
+
+
+/* =========================================
+   OTHER MENU ITEMS
+========================================= */
+
+const helpMenuButton =
+    document.getElementById(
+        "help-menu-button"
+    );
+
+const referencesMenuButton =
+    document.getElementById(
+        "references-menu-button"
+    );
+
+const settingsMenuButton =
+    document.getElementById(
+        "settings-menu-button"
+    );
+
+
+if (helpMenuButton) {
+
+    helpMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            alert(
+                "Ask / Help will be available soon."
+            );
+
+        }
+    );
+
+}
+
+
+if (referencesMenuButton) {
+
+    referencesMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            alert(
+                "References section will be available soon."
+            );
+
+        }
+    );
+
+}
+
+
+if (settingsMenuButton) {
+
+    settingsMenuButton.addEventListener(
+        "click",
+        () => {
+
+            closeSideMenu();
+
+            alert(
+                "Settings will be available soon."
+            );
 
         }
     );
@@ -354,28 +548,82 @@ menuItems.forEach(
 
     }
 );
+
+
 /* =========================================
-   HISTORY NAVIGATION
+   USER NAME
 ========================================= */
 
-const historyMenuButton =
+/*
+    Temporary account name.
+
+    Later this can be replaced
+    with the real logged-in account.
+*/
+
+const currentUser =
+    localStorage.getItem(
+        "dosecareUser"
+    ) || "User";
+
+
+const userName =
     document.getElementById(
-        "history-menu-button"
+        "user-name"
     );
 
 
-if (historyMenuButton) {
-
-    historyMenuButton.addEventListener(
-        "click",
-        () => {
-
-            closeSideMenu();
-
-            window.location.href =
-                "history.html";
-
-        }
+const profileInitials =
+    document.getElementById(
+        "profile-initials"
     );
+
+
+if (userName) {
+
+    userName.textContent =
+        currentUser;
+
+}
+
+
+if (profileInitials) {
+
+    profileInitials.textContent =
+        getInitials(currentUser);
+
+}
+
+
+/* =========================================
+   GET INITIALS
+========================================= */
+
+function getInitials(name) {
+
+    if (!name) {
+
+        return "U";
+
+    }
+
+
+    const words =
+        name.trim().split(/\s+/);
+
+
+    if (words.length === 1) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
 
 }
