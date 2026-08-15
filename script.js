@@ -370,3 +370,38 @@ if (homeMenuButton) {
     );
 
 }
+/* =========================================
+   DOSE CALCULATOR
+========================================= */
+
+const calculatorMenuButton =
+    document.getElementById(
+        "calculator-menu-button"
+    );
+
+
+if (calculatorMenuButton) {
+
+    calculatorMenuButton.addEventListener(
+        "click",
+        () => {
+
+            /*
+                Close the side menu first.
+            */
+
+            closeSideMenu();
+
+
+            /*
+                Open the pediatric
+                dose calculator.
+            */
+
+            window.location.href =
+                "calculator.html";
+
+        }
+    );
+
+}
