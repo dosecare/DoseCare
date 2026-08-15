@@ -5,137 +5,19 @@
 ========================================= */
 
 
-/* =========================================
-   MEDICINE DATABASE
-========================================= */
-
 /*
-    This is the structure of our medicine database.
+    IMPORTANT
+    ----------
+    The medicine database is stored separately
+    in medicines.js.
 
-    We will expand this later with verified
-    pediatric dosing information and references.
+    calculator.html must load:
 
-    For now, the sample medicines are only
-    used to test the interface and filtering.
+    1. medicines.js
+    2. calculator.js
+
+    in this exact order.
 */
-
-const medicines = [
-
-    {
-        id: "paracetamol",
-        name: "Paracetamol",
-        category: "Analgesic / Antipyretic",
-
-        conditions: [
-            "fever",
-            "pain"
-        ],
-
-        dosingMethod: "weight",
-
-        reference: ""
-    },
-
-
-    {
-        id: "ibuprofen",
-        name: "Ibuprofen",
-        category: "NSAID",
-
-        conditions: [
-            "fever",
-            "pain",
-            "inflammation"
-        ],
-
-        dosingMethod: "weight",
-
-        reference: ""
-    },
-
-
-    {
-        id: "amoxicillin",
-        name: "Amoxicillin",
-        category: "Antibiotic",
-
-        conditions: [
-            "bacterial infection",
-            "respiratory infection",
-            "otitis media"
-        ],
-
-        dosingMethod: "weight",
-
-        reference: ""
-    },
-
-
-    {
-        id: "cetirizine",
-        name: "Cetirizine",
-        category: "Antihistamine",
-
-        conditions: [
-            "allergy",
-            "urticaria"
-        ],
-
-        dosingMethod: "age",
-
-        reference: ""
-    }
-
-];
-
-
-/* =========================================
-   CONDITIONS
-========================================= */
-
-const conditions = [
-
-    {
-        id: "fever",
-        name: "Fever"
-    },
-
-    {
-        id: "pain",
-        name: "Pain"
-    },
-
-    {
-        id: "inflammation",
-        name: "Inflammation"
-    },
-
-    {
-        id: "allergy",
-        name: "Allergy"
-    },
-
-    {
-        id: "urticaria",
-        name: "Urticaria"
-    },
-
-    {
-        id: "bacterial infection",
-        name: "Bacterial Infection"
-    },
-
-    {
-        id: "respiratory infection",
-        name: "Respiratory Infection"
-    },
-
-    {
-        id: "otitis media",
-        name: "Otitis Media"
-    }
-
-];
 
 
 /* =========================================
@@ -143,99 +25,67 @@ const conditions = [
 ========================================= */
 
 const conditionSelect =
-    document.getElementById(
-        "condition"
-    );
+    document.getElementById("condition");
 
 
 const medicineSelect =
-    document.getElementById(
-        "medicine-select"
-    );
+    document.getElementById("medicine-select");
 
 
 const medicineSearch =
-    document.getElementById(
-        "medicine"
-    );
+    document.getElementById("medicine");
 
 
 const medicineResults =
-    document.getElementById(
-        "medicine-results"
-    );
+    document.getElementById("medicine-results");
 
 
 const clearMedicine =
-    document.getElementById(
-        "clear-medicine"
-    );
+    document.getElementById("clear-medicine");
 
 
 const ageInput =
-    document.getElementById(
-        "age"
-    );
+    document.getElementById("age");
 
 
 const weightInput =
-    document.getElementById(
-        "weight"
-    );
+    document.getElementById("weight");
 
 
 const concentrationValue =
-    document.getElementById(
-        "concentration-value"
-    );
+    document.getElementById("concentration-value");
 
 
 const concentrationVolume =
-    document.getElementById(
-        "concentration-volume"
-    );
+    document.getElementById("concentration-volume");
 
 
 const calculateButton =
-    document.getElementById(
-        "calculate-button"
-    );
+    document.getElementById("calculate-button");
 
 
 const validationMessage =
-    document.getElementById(
-        "validation-message"
-    );
+    document.getElementById("validation-message");
 
 
 const resultCard =
-    document.getElementById(
-        "result-card"
-    );
+    document.getElementById("result-card");
 
 
 const doseResult =
-    document.getElementById(
-        "dose-result"
-    );
+    document.getElementById("dose-result");
 
 
 const doseUnit =
-    document.getElementById(
-        "dose-unit"
-    );
+    document.getElementById("dose-unit");
 
 
 const resultDetails =
-    document.getElementById(
-        "result-details"
-    );
+    document.getElementById("result-details");
 
 
 const backButton =
-    document.getElementById(
-        "back-button"
-    );
+    document.getElementById("back-button");
 
 
 /* =========================================
@@ -243,6 +93,54 @@ const backButton =
 ========================================= */
 
 let selectedMedicine = null;
+
+
+/* =========================================
+   CONDITIONS
+========================================= */
+
+/*
+    Conditions are generated automatically
+    from the medicine database.
+
+    This means when we add a new medicine
+    with a new condition, the condition can
+    be added automatically later.
+*/
+
+function getAllConditions() {
+
+    const conditionSet =
+        new Set();
+
+
+    medicines.forEach(
+        (medicine) => {
+
+            if (!medicine.conditions) {
+                return;
+            }
+
+
+            medicine.conditions.forEach(
+                (condition) => {
+
+                    conditionSet.add(
+                        condition
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    return Array.from(
+        conditionSet
+    ).sort();
+
+}
 
 
 /* =========================================
@@ -256,7 +154,11 @@ function initializeConditions() {
     }
 
 
-    conditions.forEach(
+    const allConditions =
+        getAllConditions();
+
+
+    allConditions.forEach(
         (condition) => {
 
             const option =
@@ -264,11 +166,16 @@ function initializeConditions() {
                     "option"
                 );
 
+
             option.value =
-                condition.id;
+                condition;
+
 
             option.textContent =
-                condition.name;
+                formatConditionName(
+                    condition
+                );
+
 
             conditionSelect.appendChild(
                 option
@@ -276,6 +183,26 @@ function initializeConditions() {
 
         }
     );
+
+}
+
+
+/* =========================================
+   FORMAT CONDITION NAME
+========================================= */
+
+function formatConditionName(
+    condition
+) {
+
+    return condition
+        .split(" ")
+        .map(
+            word =>
+                word.charAt(0).toUpperCase() +
+                word.slice(1)
+        )
+        .join(" ");
 
 }
 
@@ -293,8 +220,9 @@ function getFilteredMedicines() {
 
 
     /*
-        No condition selected:
-        return ALL medicines.
+        No condition selected.
+
+        Show ALL medicines.
     */
 
     if (!selectedCondition) {
@@ -305,16 +233,20 @@ function getFilteredMedicines() {
 
 
     /*
-        Condition selected:
-        filter medicines according
-        to their condition list.
+        Condition selected.
+
+        Show only medicines associated
+        with that condition.
     */
 
     return medicines.filter(
         (medicine) => {
 
-            return medicine.conditions.includes(
-                selectedCondition
+            return (
+                medicine.conditions &&
+                medicine.conditions.includes(
+                    selectedCondition
+                )
             );
 
         }
@@ -349,6 +281,7 @@ function populateMedicineSelect() {
 
     defaultOption.value = "";
 
+
     defaultOption.textContent =
         "Select a medicine";
 
@@ -366,11 +299,14 @@ function populateMedicineSelect() {
                     "option"
                 );
 
+
             option.value =
                 medicine.id;
 
+
             option.textContent =
-                medicine.name;
+                medicine.genericName;
+
 
             medicineSelect.appendChild(
                 option
@@ -381,10 +317,9 @@ function populateMedicineSelect() {
 
 
     /*
-        Medicine is ALWAYS available.
+        Medicine is always available.
 
-        The user does NOT need to choose
-        a medical condition first.
+        Condition is optional.
     */
 
     medicineSelect.disabled = false;
@@ -404,7 +339,22 @@ if (conditionSelect) {
 
             populateMedicineSelect();
 
-            clearSelectedMedicine();
+            /*
+                If the current medicine does not
+                belong to the selected condition,
+                clear it.
+            */
+
+            if (
+                selectedMedicine &&
+                !selectedMedicine.conditions.includes(
+                    conditionSelect.value
+                )
+            ) {
+
+                clearSelectedMedicine();
+
+            }
 
         }
     );
@@ -413,7 +363,7 @@ if (conditionSelect) {
 
 
 /* =========================================
-   MEDICINE SELECT
+   MEDICINE SELECT CHANGE
 ========================================= */
 
 if (medicineSelect) {
@@ -469,8 +419,28 @@ function selectMedicine(
         medicine;
 
 
-    medicineSearch.value =
-        medicine.name;
+    /*
+        Synchronize search field.
+    */
+
+    if (medicineSearch) {
+
+        medicineSearch.value =
+            medicine.genericName;
+
+    }
+
+
+    /*
+        Synchronize select field.
+    */
+
+    if (medicineSelect) {
+
+        medicineSelect.value =
+            medicine.id;
+
+    }
 
 
     if (clearMedicine) {
@@ -483,7 +453,6 @@ function selectMedicine(
 
     hideSearchResults();
 
-
     hideValidation();
 
     hideResult();
@@ -492,7 +461,7 @@ function selectMedicine(
 
 
 /* =========================================
-   CLEAR MEDICINE
+   CLEAR SELECTED MEDICINE
 ========================================= */
 
 function clearSelectedMedicine() {
@@ -526,7 +495,7 @@ function clearSelectedMedicine() {
 
 
 /* =========================================
-   SEARCH MEDICINES
+   MEDICINE SEARCH
 ========================================= */
 
 if (medicineSearch) {
@@ -560,20 +529,50 @@ if (medicineSearch) {
             }
 
 
-            const filtered =
+            /*
+                Search ALL medicines.
+
+                Condition does not block
+                direct searching.
+            */
+
+            const filteredMedicines =
                 medicines.filter(
                     (medicine) => {
 
-                        return medicine.name
-                            .toLowerCase()
-                            .includes(searchTerm);
+                        const name =
+                            medicine.genericName
+                                .toLowerCase();
+
+
+                        const brands =
+                            medicine.brandNames || [];
+
+
+                        const brandMatch =
+                            brands.some(
+                                (brand) =>
+                                    brand
+                                        .toLowerCase()
+                                        .includes(
+                                            searchTerm
+                                        )
+                            );
+
+
+                        return (
+                            name.includes(
+                                searchTerm
+                            ) ||
+                            brandMatch
+                        );
 
                     }
                 );
 
 
             showSearchResults(
-                filtered
+                filteredMedicines
             );
 
         }
@@ -604,6 +603,7 @@ function showSearchResults(
             document.createElement(
                 "div"
             );
+
 
         empty.className =
             "medicine-result-item";
@@ -645,11 +645,13 @@ function showSearchResults(
 
             item.innerHTML = `
                 <strong>
-                    ${medicine.name}
+                    ${medicine.genericName}
                 </strong>
 
                 <span>
-                    ${medicine.category}
+                    ${(medicine.drugClass || []).join(
+                        " · "
+                    )}
                 </span>
             `;
 
@@ -661,19 +663,6 @@ function showSearchResults(
                     selectMedicine(
                         medicine
                     );
-
-
-                    /*
-                        Keep the select box
-                        synchronized.
-                    */
-
-                    if (medicineSelect) {
-
-                        medicineSelect.value =
-                            medicine.id;
-
-                    }
 
                 }
             );
@@ -711,7 +700,7 @@ function hideSearchResults() {
 
 
 /* =========================================
-   CLEAR SEARCH BUTTON
+   CLEAR SEARCH
 ========================================= */
 
 if (clearMedicine) {
@@ -731,7 +720,7 @@ if (clearMedicine) {
 
 
 /* =========================================
-   CLOSE SEARCH WHEN CLICKING OUTSIDE
+   CLOSE SEARCH
 ========================================= */
 
 document.addEventListener(
@@ -834,7 +823,7 @@ function showResult() {
 
 
 /* =========================================
-   CALCULATE
+   CALCULATE DOSE
 ========================================= */
 
 if (calculateButton) {
@@ -855,7 +844,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       Medicine
+       1. MEDICINE
     ------------------------------------- */
 
     if (!selectedMedicine) {
@@ -870,7 +859,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       Patient information
+       2. PATIENT INFORMATION
     ------------------------------------- */
 
     const age =
@@ -886,16 +875,15 @@ function calculateDose() {
 
 
     const hasAge =
-        !isNaN(age);
+        Number.isFinite(age);
 
 
     const hasWeight =
-        !isNaN(weight);
+        Number.isFinite(weight);
 
 
     /*
-        At least ONE patient value
-        must be provided.
+        At least one value is required.
     */
 
     if (!hasAge && !hasWeight) {
@@ -909,8 +897,30 @@ function calculateDose() {
     }
 
 
+    if (hasAge && age < 0) {
+
+        showValidation(
+            "Please enter a valid age."
+        );
+
+        return;
+
+    }
+
+
+    if (hasWeight && weight <= 0) {
+
+        showValidation(
+            "Please enter a valid weight."
+        );
+
+        return;
+
+    }
+
+
     /* -------------------------------------
-       Concentration
+       3. CONCENTRATION
     ------------------------------------- */
 
     const concentrationMg =
@@ -926,8 +936,12 @@ function calculateDose() {
 
 
     if (
-        isNaN(concentrationMg) ||
-        isNaN(concentrationMl) ||
+        !Number.isFinite(
+            concentrationMg
+        ) ||
+        !Number.isFinite(
+            concentrationMl
+        ) ||
         concentrationMg <= 0 ||
         concentrationMl <= 0
     ) {
@@ -942,12 +956,34 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       IMPORTANT
-       Dosing engine comes later.
+       4. CHECK DOSING METHOD
     ------------------------------------- */
 
+    const dosing =
+        selectedMedicine.dosing;
+
+
+    if (!dosing) {
+
+        showValidation(
+            "A dosing method has not been configured for this medicine yet."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        We are intentionally NOT calculating
+        a clinical dose yet.
+
+        The next stage will connect the verified
+        dosing rules to this engine.
+    */
+
     showValidation(
-        "The selected medicine is ready. The verified dosing rule will be applied after the medicine database is connected."
+        "The medicine and patient information are ready. The verified dosing rule will be applied once the dosing data for this medicine is configured."
     );
 
 }
