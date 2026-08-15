@@ -46,7 +46,8 @@ const clearMedicine =
 
 const ageInput =
     document.getElementById("age");
-
+const ageUnit =
+    document.getElementById("age-unit");
 
 const weightInput =
     document.getElementById("weight");
