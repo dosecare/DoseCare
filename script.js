@@ -11,7 +11,7 @@
 const particlesContainer =
     document.getElementById("particles");
 
-const PARTICLE_COUNT = 32;
+const PARTICLE_COUNT = 70;
 
 if (particlesContainer) {
 
