@@ -704,3 +704,259 @@ document.addEventListener(
 buildFilters();
 
 renderMedicines(medicines);
+/* =========================================
+   DOSECARE
+   FAVORITES SYSTEM
+========================================= */
+
+
+/* =========================================
+   GET SAVED FAVORITES
+========================================= */
+
+function getFavoriteMedicines() {
+
+    const saved =
+        localStorage.getItem(
+            "dosecareFavorites"
+        );
+
+
+    if (!saved) {
+
+        return [];
+
+    }
+
+
+    try {
+
+        return JSON.parse(saved);
+
+    } catch (error) {
+
+        console.error(
+            "Favorites loading error:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   SAVE FAVORITES
+========================================= */
+
+function saveFavoriteMedicines(
+    favorites
+) {
+
+    localStorage.setItem(
+        "dosecareFavorites",
+        JSON.stringify(favorites)
+    );
+
+}
+
+
+/* =========================================
+   ADD / REMOVE FAVORITE
+========================================= */
+
+function toggleFavoriteMedicine(
+    medicine
+) {
+
+    let favorites =
+        getFavoriteMedicines();
+
+
+    const existingIndex =
+        favorites.findIndex(
+            (item) =>
+                item.name === medicine.name
+        );
+
+
+    /* Remove */
+
+    if (existingIndex !== -1) {
+
+        favorites.splice(
+            existingIndex,
+            1
+        );
+
+    }
+
+
+    /* Add */
+
+    else {
+
+        favorites.push({
+
+            name:
+                medicine.name,
+
+            class:
+                medicine.class ||
+                "Medicine"
+
+        });
+
+    }
+
+
+    saveFavoriteMedicines(
+        favorites
+    );
+
+
+    updateFavoriteButtons();
+
+}
+
+
+/* =========================================
+   CHECK FAVORITE
+========================================= */
+
+function isFavoriteMedicine(
+    medicineName
+) {
+
+    const favorites =
+        getFavoriteMedicines();
+
+
+    return favorites.some(
+        (medicine) =>
+            medicine.name === medicineName
+    );
+
+}
+
+
+/* =========================================
+   UPDATE STAR BUTTONS
+========================================= */
+
+function updateFavoriteButtons() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".favorite-button"
+        );
+
+
+    buttons.forEach(
+        (button) => {
+
+            const medicineName =
+                button.dataset.medicine;
+
+
+            if (
+                isFavoriteMedicine(
+                    medicineName
+                )
+            ) {
+
+                button.classList.add(
+                    "favorite-active"
+                );
+
+                button.textContent =
+                    "★";
+
+            }
+
+            else {
+
+                button.classList.remove(
+                    "favorite-active"
+                );
+
+                button.textContent =
+                    "☆";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   FAVORITE BUTTON EVENTS
+========================================= */
+
+function initializeFavoriteButtons() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".favorite-button"
+        );
+
+
+    buttons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    const medicineName =
+                        button.dataset.medicine;
+
+
+                    const medicineClass =
+                        button.dataset.class ||
+                        "Medicine";
+
+
+                    toggleFavoriteMedicine({
+
+                        name:
+                            medicineName,
+
+                        class:
+                            medicineClass
+
+                    });
+
+                }
+            );
+
+        }
+    );
+
+
+    updateFavoriteButtons();
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initializeFavoriteButtons();
+
+    }
+);
