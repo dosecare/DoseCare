@@ -342,38 +342,37 @@
 
 
                     <!-- AGE -->
+<div class="input-group age-group">
 
-                    <div class="input-group">
+    <label for="age">
+        Age
+    </label>
 
-                        <label for="age">
+    <div class="age-input-row">
 
-                            Age
+        <input
+            type="number"
+            id="age"
+            min="0"
+            step="1"
+            placeholder="Enter age"
+        >
 
-                            <span>
-                                Optional
-                            </span>
+        <select id="age-unit">
 
-                        </label>
+            <option value="months">
+                Months
+            </option>
 
+            <option value="years">
+                Years
+            </option>
 
-                        <div class="input-wrapper">
+        </select>
 
-                            <input
-                                type="number"
-                                id="age"
-                                placeholder="Enter age"
-                                min="0"
-                                step="0.1"
-                            >
+    </div>
 
-                            <span>
-                                years
-                            </span>
-
-                        </div>
-
-                    </div>
-
+</div>
 
 
                     <!-- WEIGHT -->
