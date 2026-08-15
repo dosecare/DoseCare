@@ -106,6 +106,8 @@
         <header class="top-bar">
 
 
+            <!-- LOGO -->
+
             <div class="top-logo">
 
                 <div class="mini-logo">
@@ -120,9 +122,10 @@
 
 
 
-            <!-- User -->
+            <!-- USER AREA -->
 
             <div class="user-area">
+
 
                 <div class="user-name">
 
@@ -130,26 +133,30 @@
                         Welcome
                     </small>
 
-                    <strong>
-                        Doaa
+                    <strong id="user-name">
+                        User
                     </strong>
 
                 </div>
 
 
+
                 <div class="profile">
-                    <span>
-                        D
+
+                    <span id="profile-initials">
+                        U
                     </span>
+
                 </div>
 
 
 
-                <!-- Menu Button -->
+                <!-- MENU BUTTON -->
 
                 <button
                     id="menu-button"
                     class="menu-button"
+                    type="button"
                     aria-label="Open menu"
                 >
 
@@ -158,6 +165,7 @@
                     <span></span>
 
                 </button>
+
 
             </div>
 
@@ -186,6 +194,8 @@
         >
 
 
+            <!-- MENU HEADER -->
+
             <div class="menu-header">
 
                 <div>
@@ -204,6 +214,8 @@
                 <button
                     id="close-menu"
                     class="close-menu"
+                    type="button"
+                    aria-label="Close menu"
                 >
                     ×
                 </button>
@@ -212,66 +224,78 @@
 
 
 
+            <!-- MENU ITEMS -->
+
             <nav class="menu-list">
 
 
-             <button
-    class="menu-item active"
-    id="home-menu-button"
-    type="button"
->
-
-    <span class="menu-icon">
-        ⌂
-    </span>
-
-    <span>
-        Home
-    </span>
-
-</button>
-
-
-
-            <button
-    class="menu-item"
-    id="calculator-menu-button"
-    type="button"
->
-
-    <span class="menu-icon">
-        ✚
-    </span>
-
-    <span>
-        Dose Calculator
-    </span>
-
-</button>
-
-            <button
-    class="menu-item"
-    id="medicines-menu-button"
-    type="button"
->
-
-    <span class="menu-icon">
-        ◈
-    </span>
-
-    <span>
-        Medicines
-    </span>
-
-</button>
-
-
+                <!-- HOME -->
 
                 <button
-    class="menu-item"
-    id="favorites-menu-button"
-    type="button"
->
+                    class="menu-item active"
+                    id="home-menu-button"
+                    type="button"
+                >
+
+                    <span class="menu-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Home
+                    </span>
+
+                </button>
+
+
+
+                <!-- DOSE CALCULATOR -->
+
+                <button
+                    class="menu-item"
+                    id="calculator-menu-button"
+                    type="button"
+                >
+
+                    <span class="menu-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        Dose Calculator
+                    </span>
+
+                </button>
+
+
+
+                <!-- MEDICINES -->
+
+                <button
+                    class="menu-item"
+                    id="medicines-menu-button"
+                    type="button"
+                >
+
+                    <span class="menu-icon">
+                        ◈
+                    </span>
+
+                    <span>
+                        Medicines
+                    </span>
+
+                </button>
+
+
+
+                <!-- FAVORITES -->
+
+                <button
+                    class="menu-item"
+                    id="favorites-menu-button"
+                    type="button"
+                >
 
                     <span class="menu-icon">
                         ★
@@ -285,7 +309,13 @@
 
 
 
-                <button class="menu-item">
+                <!-- HISTORY -->
+
+                <button
+                    class="menu-item"
+                    id="history-menu-button"
+                    type="button"
+                >
 
                     <span class="menu-icon">
                         ◷
@@ -299,7 +329,13 @@
 
 
 
-                <button class="menu-item">
+                <!-- ASK / HELP -->
+
+                <button
+                    class="menu-item"
+                    id="help-menu-button"
+                    type="button"
+                >
 
                     <span class="menu-icon">
                         ?
@@ -313,7 +349,13 @@
 
 
 
-                <button class="menu-item">
+                <!-- REFERENCES -->
+
+                <button
+                    class="menu-item"
+                    id="references-menu-button"
+                    type="button"
+                >
 
                     <span class="menu-icon">
                         ▤
@@ -327,7 +369,13 @@
 
 
 
-                <button class="menu-item">
+                <!-- SETTINGS -->
+
+                <button
+                    class="menu-item"
+                    id="settings-menu-button"
+                    type="button"
+                >
 
                     <span class="menu-icon">
                         ⚙
@@ -344,11 +392,17 @@
 
 
 
-            <!-- Appearance -->
+            <!-- =================================
+                 APPEARANCE
+            ================================= -->
 
             <div class="menu-bottom">
 
-                <button class="appearance-button">
+                <button
+                    class="appearance-button"
+                    id="appearance-button"
+                    type="button"
+                >
 
                     <span>
                         ☾
@@ -359,7 +413,9 @@
                     </span>
 
                     <span class="toggle active">
+
                         <span></span>
+
                     </span>
 
                 </button>
@@ -378,16 +434,22 @@
         <section class="dashboard">
 
 
+            <!-- =================================
+                 DASHBOARD HEADING
+            ================================= -->
+
             <div class="dashboard-heading">
 
                 <span>
                     PEDIATRIC CARE
                 </span>
 
+
                 <h1>
                     Safe dosing starts
                     with accurate information.
                 </h1>
+
 
                 <p>
                     Calculate pediatric medication doses
@@ -399,12 +461,15 @@
 
 
 
-            <!-- Main Calculator Card -->
+            <!-- =================================
+                 MAIN CALCULATOR CARD
+            ================================= -->
 
             <div class="hero-card">
 
 
                 <div class="hero-content">
+
 
                     <span class="hero-label">
                         DOSE CALCULATOR
@@ -427,6 +492,7 @@
                     <button
                         class="primary-button"
                         id="start-calculator"
+                        type="button"
                     >
 
                         Start Dose Calculator
@@ -437,7 +503,9 @@
 
                     </button>
 
+
                 </div>
+
 
 
                 <div class="hero-symbol">
@@ -449,65 +517,91 @@
 
 
 
-            <!-- Quick Access -->
+            <!-- =================================
+                 QUICK ACCESS
+            ================================= -->
 
             <div class="quick-grid">
 
 
-                <div class="quick-card">
+                <!-- DOSE CALCULATOR -->
+
+                <button
+                    class="quick-card"
+                    id="quick-calculator"
+                    type="button"
+                >
 
                     <div class="quick-icon">
                         ✚
                     </div>
 
+
                     <h3>
                         Dose Calculator
                     </h3>
+
 
                     <p>
                         Calculate pediatric doses
                         quickly and safely.
                     </p>
 
-                </div>
+                </button>
 
 
 
-                <div class="quick-card">
+                <!-- MEDICINES -->
+
+                <button
+                    class="quick-card"
+                    id="quick-medicines"
+                    type="button"
+                >
 
                     <div class="quick-icon">
                         ◈
                     </div>
 
+
                     <h3>
                         Medicines
                     </h3>
+
 
                     <p>
                         Browse medicines,
                         concentrations and information.
                     </p>
 
-                </div>
+                </button>
 
 
 
-                <div class="quick-card">
+                <!-- HISTORY -->
+
+                <button
+                    class="quick-card"
+                    id="quick-history"
+                    type="button"
+                >
 
                     <div class="quick-icon">
                         ◷
                     </div>
 
+
                     <h3>
                         Recent History
                     </h3>
+
 
                     <p>
                         Review your previous
                         calculations.
                     </p>
 
-                </div>
+                </button>
 
 
             </div>
@@ -519,6 +613,10 @@
     </main>
 
 
+
+    <!-- =================================
+         MAIN SCRIPT
+    ================================= -->
 
     <script src="script.js"></script>
 
