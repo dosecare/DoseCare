@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DoseCare | Medicines</title>
+
+    <link
+        rel="stylesheet"
+        href="medicines.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =================================
+         BACKGROUND
+    ================================= -->
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+        <div class="bubble bubble-two"></div>
+        <div class="bubble bubble-three"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+    <!-- =================================
+         HEADER
+    ================================= -->
+
+    <header class="medicines-header">
+
+        <button
+            id="back-button"
+            class="back-button"
+            type="button"
+        >
+            ←
+        </button>
+
+
+        <div class="header-title">
+
+            <span>
+                DOSECARE
+            </span>
+
+            <h1>
+                Medicine Library
+            </h1>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================
+         MAIN
+    ================================= -->
+
+    <main class="medicines-page">
+
+
+        <!-- INTRO -->
+
+        <section class="library-intro">
+
+            <span class="section-label">
+                MEDICINE DATABASE
+            </span>
+
+            <h2>
+                Explore medicines
+            </h2>
+
+            <p>
+                Search and explore medicine information,
+                indications, mechanism of action,
+                precautions and more.
+            </p>
+
+        </section>
+
+
+        <!-- =================================
+             SEARCH
+        ================================= -->
+
+        <section class="medicine-search-box">
+
+            <span class="search-icon">
+                ⌕
+            </span>
+
+            <input
+                type="search"
+                id="medicine-library-search"
+                placeholder="Search medicine..."
+                autocomplete="off"
+            >
+
+        </section>
+
+
+        <!-- =================================
+             FILTER
+        ================================= -->
+
+        <section class="library-filter">
+
+            <select id="medicine-class-filter">
+
+                <option value="">
+                    All drug classes
+                </option>
+
+            </select>
+
+
+            <select id="medicine-condition-filter">
+
+                <option value="">
+                    All conditions
+                </option>
+
+            </select>
+
+        </section>
+
+
+        <!-- =================================
+             MEDICINE COUNT
+        ================================= -->
+
+        <div class="medicine-count">
+
+            <span id="medicine-count">
+                0 medicines
+            </span>
+
+        </div>
+
+
+        <!-- =================================
+             MEDICINE GRID
+        ================================= -->
+
+        <section
+            id="medicine-grid"
+            class="medicine-grid"
+        ></section>
+
+
+        <!-- =================================
+             EMPTY STATE
+        ================================= -->
+
+        <section
+            id="empty-state"
+            class="empty-state"
+        >
+
+            <div class="empty-icon">
+                ◈
+            </div>
+
+            <h3>
+                No medicines found
+            </h3>
+
+            <p>
+                Try another medicine name,
+                class or condition.
+            </p>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =================================
+         MEDICINE DETAILS MODAL
+    ================================= -->
+
+    <div
+        id="medicine-modal"
+        class="medicine-modal"
+    >
+
+        <div
+            class="modal-overlay"
+            id="modal-overlay"
+        ></div>
+
+
+        <article class="medicine-details">
+
+            <button
+                id="close-modal"
+                class="close-modal"
+                type="button"
+            >
+                ×
+            </button>
+
+
+            <div
+                id="medicine-details-content"
+                class="medicine-details-content"
+            ></div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================
+         SCRIPTS
+    ================================= -->
+
+    <script src="medicines.js"></script>
+
+    <script src="medicines-page.js"></script>
+
+
+</body>
+
+</html>
