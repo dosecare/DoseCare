@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>History | DoseCare</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         ANIMATED BACKGROUND
+    ================================= -->
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+        <div class="bubble bubble-two"></div>
+        <div class="bubble bubble-three"></div>
+        <div class="bubble bubble-four"></div>
+        <div class="bubble bubble-five"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+    <!-- =================================
+         HISTORY PAGE
+    ================================= -->
+
+    <main class="history-page">
+
+
+        <!-- =================================
+             HEADER
+        ================================= -->
+
+        <header class="page-header">
+
+            <button
+                class="back-button"
+                id="back-home"
+                type="button"
+                aria-label="Back to Home"
+            >
+                ←
+            </button>
+
+
+            <div>
+
+                <span class="page-label">
+                    DOSECARE
+                </span>
+
+                <h1>
+                    History
+                </h1>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================
+             INTRO
+        ================================= -->
+
+        <section class="page-intro">
+
+            <div>
+
+                <h2>
+                    Recent calculations
+                </h2>
+
+                <p>
+                    Review your previous pediatric
+                    dose calculations.
+                </p>
+
+            </div>
+
+
+            <button
+                id="clear-history"
+                class="clear-history-button"
+                type="button"
+            >
+                Clear History
+            </button>
+
+        </section>
+
+
+        <!-- =================================
+             HISTORY LIST
+        ================================= -->
+
+        <section
+            id="history-container"
+            class="history-container"
+        >
+
+            <!-- History cards
+                 will be created by JavaScript -->
+
+        </section>
+
+
+        <!-- =================================
+             EMPTY STATE
+        ================================= -->
+
+        <section
+            id="empty-history"
+            class="empty-history"
+        >
+
+            <div class="empty-history-icon">
+                ◷
+            </div>
+
+
+            <h2>
+                No calculations yet
+            </h2>
+
+
+            <p>
+                Your recent dose calculations
+                will appear here.
+            </p>
+
+
+            <button
+                id="start-calculator"
+                class="primary-button"
+                type="button"
+            >
+
+                Start Dose Calculator
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="history.js"></script>
+
+</body>
+
+</html>
