@@ -356,6 +356,7 @@ function renderMedicines(list) {
 
 
     attachCardEvents();
+initializeFavoriteButtons();
 
 }
 
