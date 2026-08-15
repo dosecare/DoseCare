@@ -1,463 +1,706 @@
 /* =========================================
    DoseCare
-   Medicine Database
+   Medicine Library Logic
 ========================================= */
 
 
-/*
-    IMPORTANT
-
-    This file contains the structure of the
-    medicine database.
-
-    Verified pediatric dosing data will be
-    added medicine by medicine from reliable
-    references.
-*/
-
+/* =========================================
+   MEDICINE DATABASE
+========================================= */
 
 const medicines = [
 
-    /* =====================================
-       PARACETAMOL
-    ===================================== */
-
     {
+        id: 1,
 
-        id: "paracetamol",
+        name: "Paracetamol",
 
-        genericName: "Paracetamol",
+        class: "Analgesic · Antipyretic",
 
-        brandNames: [],
+        condition: "Fever · Mild to moderate pain",
 
-        drugClass: [
-            "Analgesic",
-            "Antipyretic"
-        ],
+        route: "Oral · IV · Rectal",
 
+        indications:
+            "Used for fever and mild to moderate pain.",
 
-        /* ================================
-           MEDICAL CONDITIONS
-        ================================= */
+        moa:
+            "Reduces prostaglandin synthesis mainly in the central nervous system, producing analgesic and antipyretic effects.",
 
-        conditions: [
-            "fever",
-            "pain"
-        ],
-
-
-        /* ================================
-           MECHANISM OF ACTION
-        ================================= */
-
-        mechanismOfAction:
-            "Produces analgesic and antipyretic effects primarily through inhibition of prostaglandin synthesis in the central nervous system.",
-
-
-        /* ================================
-           INDICATIONS
-        ================================= */
-
-        indications: [
-            "Fever",
-            "Mild to moderate pain"
-        ],
-
-
-        /* ================================
-           DOSING INFORMATION
-        ================================= */
-
-        dosing: {
-
-            method: "weight",
-
-            unit: "mg/kg/dose",
-
-            frequency: "",
-
-            minimumAge: null,
-
-            maximumAge: null,
-
-            maximumSingleDose: null,
-
-            maximumDailyDose: null
-
-        },
-
-
-        /* ================================
-           AVAILABLE CONCENTRATIONS
-        ================================= */
-
-        concentrations: [],
-
-
-        /* ================================
-           ROUTES
-        ================================= */
-
-        routes: [
-            "Oral"
-        ],
-
-
-        /* ================================
-           DOSAGE FORMS
-        ================================= */
-
-        dosageForms: [
-            "Oral suspension",
-            "Tablet"
-        ],
-
-
-        /* ================================
-           CONTRAINDICATIONS
-        ================================= */
-
-        contraindications: [],
-
-
-        /* ================================
-           WARNINGS & PRECAUTIONS
-        ================================= */
-
-        precautions: [],
-
-
-        /* ================================
-           COMMON SIDE EFFECTS
-        ================================= */
-
-        sideEffects: [],
-
-
-        /* ================================
-           DRUG INTERACTIONS
-        ================================= */
-
-        interactions: [],
-
-
-        /* ================================
-           PREGNANCY / LACTATION
-        ================================= */
-
-        pregnancy: "",
-
-        lactation: "",
-
-
-        /* ================================
-           RENAL / HEPATIC
-        ================================= */
-
-        renalAdjustment: "",
-
-        hepaticAdjustment: "",
-
-
-        /* ================================
-           PEDIATRIC NOTES
-        ================================= */
-
-        pediatricNotes: "",
-
-
-        /* ================================
-           REFERENCES
-        ================================= */
-
-        references: []
-
+        pediatric:
+            "Pediatric dosing should be calculated according to the child's weight and the specific formulation concentration."
     },
 
 
-    /* =====================================
-       IBUPROFEN
-    ===================================== */
-
     {
+        id: 2,
 
-        id: "ibuprofen",
+        name: "Ibuprofen",
 
-        genericName: "Ibuprofen",
+        class: "NSAID · Analgesic",
 
-        brandNames: [],
+        condition: "Fever · Pain · Inflammation",
 
-        drugClass: [
-            "NSAID",
-            "Analgesic",
-            "Antipyretic",
-            "Anti-inflammatory"
-        ],
+        route: "Oral",
 
+        indications:
+            "Used for fever, pain and inflammatory conditions in appropriate pediatric patients.",
 
-        conditions: [
-            "fever",
-            "pain",
-            "inflammation"
-        ],
+        moa:
+            "Inhibits cyclooxygenase enzymes, reducing prostaglandin synthesis and producing analgesic, antipyretic and anti-inflammatory effects.",
 
-
-        mechanismOfAction:
-            "Inhibits cyclooxygenase enzymes, reducing prostaglandin synthesis and thereby producing analgesic, antipyretic, and anti-inflammatory effects.",
-
-
-        indications: [
-            "Fever",
-            "Mild to moderate pain",
-            "Inflammatory conditions"
-        ],
-
-
-        dosing: {
-
-            method: "weight",
-
-            unit: "mg/kg/dose",
-
-            frequency: "",
-
-            minimumAge: null,
-
-            maximumAge: null,
-
-            maximumSingleDose: null,
-
-            maximumDailyDose: null
-
-        },
-
-
-        concentrations: [],
-
-
-        routes: [
-            "Oral"
-        ],
-
-
-        dosageForms: [
-            "Oral suspension",
-            "Tablet"
-        ],
-
-
-        contraindications: [],
-
-        precautions: [],
-
-        sideEffects: [],
-
-        interactions: [],
-
-
-        pregnancy: "",
-
-        lactation: "",
-
-
-        renalAdjustment: "",
-
-        hepaticAdjustment: "",
-
-
-        pediatricNotes: "",
-
-
-        references: []
-
+        pediatric:
+            "Use should consider age, hydration status, renal function and the clinical condition of the child."
     },
 
 
-    /* =====================================
-       AMOXICILLIN
-    ===================================== */
-
     {
+        id: 3,
 
-        id: "amoxicillin",
+        name: "Amoxicillin",
 
-        genericName: "Amoxicillin",
+        class: "Penicillin · Antibiotic",
 
-        brandNames: [],
+        condition: "Bacterial infections",
 
-        drugClass: [
-            "Aminopenicillin",
-            "Beta-lactam antibiotic"
-        ],
+        route: "Oral",
 
+        indications:
+            "Used for susceptible bacterial infections including selected respiratory, ear and other infections.",
 
-        conditions: [
-            "bacterial infection",
-            "respiratory infection",
-            "otitis media"
-        ],
+        moa:
+            "Inhibits bacterial cell wall synthesis by binding to penicillin-binding proteins.",
 
-
-        mechanismOfAction:
-            "Inhibits bacterial cell wall synthesis by binding to penicillin-binding proteins, resulting in disruption of cell wall formation and bacterial cell death.",
-
-
-        indications: [
-            "Susceptible bacterial infections"
-        ],
-
-
-        dosing: {
-
-            method: "weight",
-
-            unit: "mg/kg/dose",
-
-            frequency: "",
-
-            minimumAge: null,
-
-            maximumAge: null,
-
-            maximumSingleDose: null,
-
-            maximumDailyDose: null
-
-        },
-
-
-        concentrations: [],
-
-
-        routes: [
-            "Oral"
-        ],
-
-
-        dosageForms: [
-            "Oral suspension",
-            "Capsule",
-            "Tablet"
-        ],
-
-
-        contraindications: [],
-
-        precautions: [],
-
-        sideEffects: [],
-
-        interactions: [],
-
-
-        pregnancy: "",
-
-        lactation: "",
-
-
-        renalAdjustment: "",
-
-        hepaticAdjustment: "",
-
-
-        pediatricNotes: "",
-
-
-        references: []
-
+        pediatric:
+            "Pediatric dosing depends on weight, infection type, severity and formulation concentration."
     },
 
 
-    /* =====================================
-       CETIRIZINE
-    ===================================== */
-
     {
+        id: 4,
 
-        id: "cetirizine",
+        name: "Azithromycin",
 
-        genericName: "Cetirizine",
+        class: "Macrolide · Antibiotic",
 
-        brandNames: [],
+        condition: "Respiratory · Bacterial infections",
 
-        drugClass: [
-            "Second-generation antihistamine"
-        ],
+        route: "Oral · IV",
 
+        indications:
+            "Used for selected susceptible bacterial infections.",
 
-        conditions: [
-            "allergy",
-            "urticaria"
-        ],
+        moa:
+            "Binds to the bacterial 50S ribosomal subunit and inhibits protein synthesis.",
 
-
-        mechanismOfAction:
-            "Selectively blocks peripheral histamine H1 receptors, reducing the effects of histamine responsible for allergic symptoms.",
-
-
-        indications: [
-            "Allergic rhinitis",
-            "Urticaria"
-        ],
-
-
-        dosing: {
-
-            method: "age",
-
-            unit: "mg",
-
-            frequency: "",
-
-            minimumAge: null,
-
-            maximumAge: null,
-
-            maximumSingleDose: null,
-
-            maximumDailyDose: null
-
-        },
-
-
-        concentrations: [],
-
-
-        routes: [
-            "Oral"
-        ],
-
-
-        dosageForms: [
-            "Oral solution",
-            "Tablet"
-        ],
-
-
-        contraindications: [],
-
-        precautions: [],
-
-        sideEffects: [],
-
-        interactions: [],
-
-
-        pregnancy: "",
-
-        lactation: "",
-
-
-        renalAdjustment: "",
-
-        hepaticAdjustment: "",
-
-
-        pediatricNotes: "",
-
-
-        references: []
-
+        pediatric:
+            "Dose and duration depend on the infection and the child's weight."
     }
 
 ];
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const medicineList =
+    document.getElementById("medicine-list");
+
+const medicineSearch =
+    document.getElementById("medicine-search");
+
+const classFilter =
+    document.getElementById("class-filter");
+
+const conditionFilter =
+    document.getElementById("condition-filter");
+
+const medicineCount =
+    document.getElementById("medicine-count");
+
+const emptyState =
+    document.getElementById("empty-state");
+
+const clearSearch =
+    document.getElementById("clear-search");
+
+
+/* =========================================
+   STARS
+========================================= */
+
+const starsContainer =
+    document.getElementById("stars");
+
+
+const STAR_COUNT = 55;
+
+
+if (starsContainer) {
+
+    for (
+        let i = 0;
+        i < STAR_COUNT;
+        i++
+    ) {
+
+        const star =
+            document.createElement("span");
+
+        star.classList.add("star");
+
+
+        const size =
+            Math.random();
+
+
+        if (size < .25) {
+
+            star.classList.add("large");
+
+        }
+        else if (size < .65) {
+
+            star.classList.add("small");
+
+        }
+
+
+        star.style.left =
+            `${Math.random() * 100}%`;
+
+        star.style.top =
+            `${Math.random() * 100}%`;
+
+
+        star.style.animationDelay =
+            `${Math.random() * 4}s`;
+
+
+        starsContainer.appendChild(star);
+
+    }
+
+}
+
+
+/* =========================================
+   BUILD FILTERS
+========================================= */
+
+function buildFilters() {
+
+    const classes =
+        [
+            ...new Set(
+                medicines.map(
+                    medicine => medicine.class
+                )
+            )
+        ];
+
+
+    const conditions =
+        [
+            ...new Set(
+                medicines.map(
+                    medicine => medicine.condition
+                )
+            )
+        ];
+
+
+    classes.forEach(
+        medicineClass => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                medicineClass;
+
+            option.textContent =
+                medicineClass;
+
+            classFilter.appendChild(option);
+
+        }
+    );
+
+
+    conditions.forEach(
+        condition => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                condition;
+
+            option.textContent =
+                condition;
+
+            conditionFilter.appendChild(option);
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   RENDER MEDICINES
+========================================= */
+
+function renderMedicines(list) {
+
+    medicineList.innerHTML = "";
+
+
+    medicineCount.textContent =
+        `${list.length} ${
+            list.length === 1
+                ? "medicine"
+                : "medicines"
+        }`;
+
+
+    if (list.length === 0) {
+
+        emptyState.classList.add("show");
+
+        return;
+
+    }
+
+
+    emptyState.classList.remove("show");
+
+
+    list.forEach(
+        medicine => {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "medicine-card";
+
+
+            card.innerHTML = `
+
+                <div class="card-top">
+
+                    <div class="medicine-icon">
+                        +
+                    </div>
+
+                    <button
+                        class="favorite-button"
+                        data-id="${medicine.id}"
+                        type="button"
+                        aria-label="Add to favorites"
+                    >
+                        ☆
+                    </button>
+
+                </div>
+
+
+                <span class="card-class">
+                    ${medicine.class}
+                </span>
+
+
+                <h3>
+                    ${medicine.name}
+                </h3>
+
+
+                <p class="card-condition">
+                    ${medicine.condition}
+                </p>
+
+
+                <div class="card-bottom">
+
+                    <button
+                        class="view-info"
+                        data-id="${medicine.id}"
+                        type="button"
+                    >
+
+                        View information
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <span class="route">
+                        ${medicine.route}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            medicineList.appendChild(card);
+
+        }
+    );
+
+
+    attachCardEvents();
+
+}
+
+
+/* =========================================
+   SEARCH + FILTER
+========================================= */
+
+function filterMedicines() {
+
+    const search =
+        medicineSearch.value
+            .trim()
+            .toLowerCase();
+
+
+    const selectedClass =
+        classFilter.value;
+
+
+    const selectedCondition =
+        conditionFilter.value;
+
+
+    const filtered =
+        medicines.filter(
+            medicine => {
+
+                const matchesSearch =
+
+                    medicine.name
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    medicine.class
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    medicine.condition
+                        .toLowerCase()
+                        .includes(search);
+
+
+                const matchesClass =
+
+                    selectedClass === "all"
+
+                    ||
+
+                    medicine.class === selectedClass;
+
+
+                const matchesCondition =
+
+                    selectedCondition === "all"
+
+                    ||
+
+                    medicine.condition === selectedCondition;
+
+
+                return (
+                    matchesSearch &&
+                    matchesClass &&
+                    matchesCondition
+                );
+
+            }
+        );
+
+
+    renderMedicines(filtered);
+
+
+    clearSearch.style.display =
+        search
+            ? "block"
+            : "none";
+
+}
+
+
+/* =========================================
+   CARD EVENTS
+========================================= */
+
+function attachCardEvents() {
+
+
+    document
+        .querySelectorAll(".favorite-button")
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        button.classList.toggle(
+                            "active"
+                        );
+
+
+                        button.textContent =
+                            button.classList.contains(
+                                "active"
+                            )
+                                ? "★"
+                                : "☆";
+
+                    }
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(".view-info")
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const id =
+                            Number(
+                                button.dataset.id
+                            );
+
+
+                        openMedicineModal(id);
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+const modal =
+    document.getElementById(
+        "medicine-modal"
+    );
+
+const closeModal =
+    document.getElementById(
+        "close-modal"
+    );
+
+
+function openMedicineModal(id) {
+
+    const medicine =
+        medicines.find(
+            item => item.id === id
+        );
+
+
+    if (!medicine) return;
+
+
+    document.getElementById(
+        "modal-name"
+    ).textContent =
+        medicine.name;
+
+
+    document.getElementById(
+        "modal-class"
+    ).textContent =
+        medicine.class;
+
+
+    document.getElementById(
+        "modal-condition"
+    ).textContent =
+        medicine.condition;
+
+
+    document.getElementById(
+        "modal-route"
+    ).textContent =
+        medicine.route;
+
+
+    document.getElementById(
+        "modal-indications"
+    ).textContent =
+        medicine.indications;
+
+
+    document.getElementById(
+        "modal-moa"
+    ).textContent =
+        medicine.moa;
+
+
+    document.getElementById(
+        "modal-pediatric"
+    ).textContent =
+        medicine.pediatric;
+
+
+    modal.classList.add("open");
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeMedicineModal() {
+
+    modal.classList.remove("open");
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+if (closeModal) {
+
+    closeModal.addEventListener(
+        "click",
+        closeMedicineModal
+    );
+
+}
+
+
+const modalOverlay =
+    document.querySelector(
+        ".modal-overlay"
+    );
+
+
+if (modalOverlay) {
+
+    modalOverlay.addEventListener(
+        "click",
+        closeMedicineModal
+    );
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+const backButton =
+    document.getElementById(
+        "back-button"
+    );
+
+
+if (backButton) {
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   SEARCH EVENTS
+========================================= */
+
+medicineSearch.addEventListener(
+    "input",
+    filterMedicines
+);
+
+
+classFilter.addEventListener(
+    "change",
+    filterMedicines
+);
+
+
+conditionFilter.addEventListener(
+    "change",
+    filterMedicines
+);
+
+
+clearSearch.addEventListener(
+    "click",
+    () => {
+
+        medicineSearch.value = "";
+
+        filterMedicines();
+
+        medicineSearch.focus();
+
+    }
+);
+
+
+/* =========================================
+   ESC → CLOSE MODAL
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeMedicineModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+buildFilters();
+
+renderMedicines(medicines);
