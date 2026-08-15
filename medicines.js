@@ -711,7 +711,7 @@ renderMedicines(medicines);
 
 
 /* =========================================
-   GET SAVED FAVORITES
+   GET FAVORITES
 ========================================= */
 
 function getFavoriteMedicines() {
@@ -721,13 +721,11 @@ function getFavoriteMedicines() {
             "dosecareFavorites"
         );
 
-
     if (!saved) {
 
         return [];
 
     }
-
 
     try {
 
@@ -764,12 +762,35 @@ function saveFavoriteMedicines(
 
 
 /* =========================================
-   ADD / REMOVE FAVORITE
+   CHECK FAVORITE
 ========================================= */
 
-function toggleFavoriteMedicine(
-    medicine
-) {
+function isFavoriteMedicine(id) {
+
+    const favorites =
+        getFavoriteMedicines();
+
+    return favorites.some(
+        medicine =>
+            medicine.id === id
+    );
+
+}
+
+
+/* =========================================
+   TOGGLE FAVORITE
+========================================= */
+
+function toggleFavoriteMedicine(id) {
+
+    const medicine =
+        medicines.find(
+            item => item.id === id
+        );
+
+    if (!medicine) return;
+
 
     let favorites =
         getFavoriteMedicines();
@@ -777,12 +798,11 @@ function toggleFavoriteMedicine(
 
     const existingIndex =
         favorites.findIndex(
-            (item) =>
-                item.name === medicine.name
+            item => item.id === id
         );
 
 
-    /* Remove */
+    /* REMOVE */
 
     if (existingIndex !== -1) {
 
@@ -794,18 +814,23 @@ function toggleFavoriteMedicine(
     }
 
 
-    /* Add */
+    /* ADD */
 
     else {
 
         favorites.push({
 
+            id:
+                medicine.id,
+
             name:
                 medicine.name,
 
             class:
-                medicine.class ||
-                "Medicine"
+                medicine.class,
+
+            condition:
+                medicine.condition
 
         });
 
@@ -823,72 +848,60 @@ function toggleFavoriteMedicine(
 
 
 /* =========================================
-   CHECK FAVORITE
-========================================= */
-
-function isFavoriteMedicine(
-    medicineName
-) {
-
-    const favorites =
-        getFavoriteMedicines();
-
-
-    return favorites.some(
-        (medicine) =>
-            medicine.name === medicineName
-    );
-
-}
-
-
-/* =========================================
    UPDATE STAR BUTTONS
 ========================================= */
 
 function updateFavoriteButtons() {
 
-    const buttons =
-        document.querySelectorAll(
+    document
+        .querySelectorAll(
             ".favorite-button"
+        )
+        .forEach(
+            button => {
+
+                const id =
+                    Number(
+                        button.dataset.id
+                    );
+
+
+                if (
+                    isFavoriteMedicine(id)
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    button.textContent =
+                        "★";
+
+                    button.setAttribute(
+                        "aria-label",
+                        "Remove from favorites"
+                    );
+
+                }
+
+                else {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                    button.textContent =
+                        "☆";
+
+                    button.setAttribute(
+                        "aria-label",
+                        "Add to favorites"
+                    );
+
+                }
+
+            }
         );
-
-
-    buttons.forEach(
-        (button) => {
-
-            const medicineName =
-                button.dataset.medicine;
-
-
-            if (
-                isFavoriteMedicine(
-                    medicineName
-                )
-            ) {
-
-                button.classList.add(
-                    "favorite-active"
-                );
-
-                button.textContent =
-                    "★";
-
-            }
-
-            else {
-
-                button.classList.remove(
-                    "favorite-active"
-                );
-
-                button.textContent =
-                    "☆";
-
-            }
-
-        }
-    );
 
 }
 
@@ -899,48 +912,37 @@ function updateFavoriteButtons() {
 
 function initializeFavoriteButtons() {
 
-    const buttons =
-        document.querySelectorAll(
+    document
+        .querySelectorAll(
             ".favorite-button"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    event => {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        const id =
+                            Number(
+                                button.dataset.id
+                            );
+
+
+                        toggleFavoriteMedicine(
+                            id
+                        );
+
+                    }
+                );
+
+            }
         );
-
-
-    buttons.forEach(
-        (button) => {
-
-            button.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-
-                    const medicineName =
-                        button.dataset.medicine;
-
-
-                    const medicineClass =
-                        button.dataset.class ||
-                        "Medicine";
-
-
-                    toggleFavoriteMedicine({
-
-                        name:
-                            medicineName,
-
-                        class:
-                            medicineClass
-
-                    });
-
-                }
-            );
-
-        }
-    );
 
 
     updateFavoriteButtons();
@@ -949,14 +951,7 @@ function initializeFavoriteButtons() {
 
 
 /* =========================================
-   INITIALIZE
+   INITIALIZE FAVORITES
 ========================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        initializeFavoriteButtons();
-
-    }
-);
+initializeFavoriteButtons();
