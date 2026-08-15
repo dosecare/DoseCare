@@ -1,59 +1,40 @@
 /* =========================================
    DoseCare
    Medicine Library
-   Visual Style
 ========================================= */
 
-
-/* =========================================
-   RESET
-========================================= */
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 
-html {
-    scroll-behavior: smooth;
+html,
+body {
+
+    width: 100%;
+    min-height: 100%;
+
 }
 
 
 body {
+
     min-height: 100vh;
 
+    overflow-x: hidden;
+
     font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
         "Segoe UI",
+        Arial,
         sans-serif;
 
-    color: #eaf7ff;
+    color: #f4f9ff;
 
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(58, 174, 226, 0.16),
-            transparent 30%
-        ),
+    background: #061a35;
 
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(70, 128, 220, 0.13),
-            transparent 32%
-        ),
-
-        linear-gradient(
-            135deg,
-            #081b32 0%,
-            #0b2542 48%,
-            #0d2b4b 100%
-        );
-
-    overflow-x: hidden;
 }
 
 
@@ -61,90 +42,117 @@ body {
    BACKGROUND
 ========================================= */
 
+
 .background {
+
     position: fixed;
 
     inset: 0;
 
+    z-index: -1;
+
     overflow: hidden;
 
-    pointer-events: none;
+    background:
 
-    z-index: 0;
+        radial-gradient(
+            circle at 12% 15%,
+            rgba(25,125,205,0.18),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(82,70,190,0.18),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            135deg,
+            #04152e 0%,
+            #07244a 48%,
+            #061a38 100%
+        );
+
 }
 
 
 /* =========================================
-   GLOW
+   GLOWS
 ========================================= */
 
+
 .glow {
+
     position: absolute;
+
+    width: 350px;
+    height: 350px;
 
     border-radius: 50%;
 
-    filter: blur(70px);
+    filter: blur(100px);
 
-    opacity: 0.45;
+    opacity: .18;
 
     animation:
-        glowFloat 12s ease-in-out infinite;
+        glowMove 16s ease-in-out infinite alternate;
+
 }
 
 
 .glow-one {
-    width: 260px;
-    height: 260px;
 
-    top: -90px;
-    left: -70px;
+    top: -180px;
+    left: -120px;
 
-    background:
-        rgba(62, 190, 236, 0.20);
+    background: #20a9ed;
+
 }
 
 
 .glow-two {
-    width: 300px;
-    height: 300px;
 
-    right: -120px;
+    right: -160px;
     top: 35%;
 
-    background:
-        rgba(80, 140, 230, 0.15);
+    background: #7163e8;
 
-    animation-delay: -4s;
+    animation-delay: -5s;
+
 }
 
 
 .glow-three {
-    width: 220px;
-    height: 220px;
 
-    bottom: -80px;
+    bottom: -200px;
     left: 35%;
 
-    background:
-        rgba(40, 190, 190, 0.12);
+    background: #16a8b8;
 
-    animation-delay: -7s;
+    animation-delay: -9s;
+
 }
 
 
-@keyframes glowFloat {
+@keyframes glowMove {
 
-    0%,
-    100% {
+    0% {
         transform:
-            translate3d(0, 0, 0)
+            translate(0,0)
             scale(1);
     }
 
     50% {
         transform:
-            translate3d(20px, -18px, 0)
+            translate(30px,-25px)
             scale(1.08);
+    }
+
+    100% {
+        transform:
+            translate(-25px,25px)
+            scale(.96);
     }
 
 }
@@ -154,139 +162,191 @@ body {
    BUBBLES
 ========================================= */
 
+
 .bubble {
+
     position: absolute;
 
     border-radius: 50%;
 
     border:
         1px solid
-        rgba(170, 230, 255, 0.08);
+        rgba(130,210,255,.12);
 
     background:
-        rgba(150, 220, 255, 0.025);
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255,255,255,.12),
+            rgba(75,150,235,.035) 55%,
+            transparent 75%
+        );
 
     box-shadow:
-        inset 0 0 20px
-        rgba(150, 220, 255, 0.025),
-
-        0 0 25px
-        rgba(80, 190, 240, 0.025);
+        inset 0 0 30px
+        rgba(90,190,255,.04);
 
     animation:
-        bubbleFloat 15s ease-in-out infinite;
+        bubbleFloat 14s ease-in-out infinite;
+
 }
 
 
 .bubble-one {
-    width: 110px;
-    height: 110px;
 
-    top: 18%;
-    left: -40px;
+    width: 100px;
+    height: 100px;
+
+    top: 12%;
+    left: 7%;
+
 }
 
 
 .bubble-two {
-    width: 70px;
-    height: 70px;
 
-    top: 55%;
-    right: 4%;
+    width: 65px;
+    height: 65px;
 
-    animation-delay: -5s;
+    top: 27%;
+    right: 10%;
+
+    animation-delay: -3s;
+
 }
 
 
 .bubble-three {
-    width: 145px;
-    height: 145px;
 
-    bottom: -60px;
-    right: 25%;
+    width: 120px;
+    height: 120px;
+
+    bottom: 10%;
+    left: 4%;
+
+    animation-delay: -6s;
+
+}
+
+
+.bubble-four {
+
+    width: 80px;
+    height: 80px;
+
+    bottom: 25%;
+    right: 7%;
 
     animation-delay: -9s;
+
 }
 
 
 @keyframes bubbleFloat {
 
-    0%,
-    100% {
+    0% {
         transform:
-            translateY(0)
-            translateX(0);
+            translate(0,0);
     }
 
     50% {
         transform:
-            translateY(-25px)
-            translateX(12px);
+            translate(15px,-20px);
+    }
+
+    100% {
+        transform:
+            translate(-10px,15px);
     }
 
 }
 
 
 /* =========================================
-   PARTICLES
+   STARS
 ========================================= */
 
-#particles {
+
+#stars {
+
     position: absolute;
 
     inset: 0;
+
+    pointer-events: none;
+
 }
 
 
-.particle {
-    position: absolute;
+.star {
 
-    display: block;
+    position: absolute;
 
     width: 3px;
     height: 3px;
 
     border-radius: 50%;
 
-    background:
-        rgba(170, 230, 255, 0.7);
+    background: #d9f5ff;
 
     box-shadow:
-        0 0 8px
-        rgba(110, 215, 255, 0.65);
+        0 0 6px
+        rgba(130,220,255,.9),
+
+        0 0 14px
+        rgba(100,190,255,.35);
 
     animation:
-        particleFloat 9s ease-in-out infinite,
-        particleGlow 3s ease-in-out infinite;
-}
-
-
-@keyframes particleFloat {
-
-    0%,
-    100% {
-        transform:
-            translate3d(0, 0, 0);
-    }
-
-    50% {
-        transform:
-            translate3d(10px, -22px, 0);
-    }
+        starPulse 3s ease-in-out infinite alternate;
 
 }
 
 
-@keyframes particleGlow {
+.star.small {
 
-    0%,
-    100% {
-        opacity: 0.25;
+    width: 2px;
+    height: 2px;
+
+}
+
+
+.star.large {
+
+    width: 4px;
+    height: 4px;
+
+}
+
+
+@keyframes starPulse {
+
+    from {
+        opacity: .18;
+        transform: scale(.75);
     }
 
-    50% {
-        opacity: 0.9;
+    to {
+        opacity: .95;
+        transform: scale(1.25);
     }
+
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+
+.medicine-page {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding:
+        34px 28px 80px;
 
 }
 
@@ -295,132 +355,90 @@ body {
    HEADER
 ========================================= */
 
-.medicines-header {
 
-    position: relative;
-
-    z-index: 5;
-
-    width: min(
-        1180px,
-        calc(100% - 40px)
-    );
-
-    margin: 0 auto;
-
-    padding:
-        28px
-        0
-        20px;
+.medicine-header {
 
     display: flex;
 
     align-items: center;
 
-    gap: 20px;
+    gap: 18px;
+
 }
 
 
-/* =========================================
-   BACK BUTTON
-========================================= */
-
 .back-button {
 
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
 
     flex-shrink: 0;
 
+    border-radius: 17px;
+
     border:
         1px solid
-        rgba(160, 225, 255, 0.12);
-
-    border-radius: 15px;
+        rgba(130,215,255,.16);
 
     background:
-        rgba(255, 255, 255, 0.045);
+        rgba(70,155,220,.08);
 
-    color:
-        #dff6ff;
+    color: #dff7ff;
 
-    font-size: 23px;
+    font-size: 32px;
 
     cursor: pointer;
 
-    transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        border-color 0.25s ease;
+    transition: .3s ease;
+
 }
 
 
 .back-button:hover {
 
     transform:
-        translateX(-3px);
+        translateX(-4px);
 
     background:
-        rgba(90, 190, 235, 0.10);
+        rgba(70,175,240,.15);
 
-    border-color:
-        rgba(110, 215, 255, 0.28);
 }
 
 
-/* =========================================
-   HEADER TITLE
-========================================= */
+.header-title {
 
-.header-title span {
+    display: flex;
 
-    display: block;
+    flex-direction: column;
 
-    margin-bottom: 3px;
+}
 
-    color:
-        rgba(150, 220, 250, 0.65);
+
+.mini-label {
 
     font-size: 10px;
 
-    font-weight: 700;
+    letter-spacing: 4px;
 
-    letter-spacing: 3px;
+    color: #6edbff;
+
+    font-weight: 600;
+
 }
 
 
 .header-title h1 {
 
-    font-size:
-        clamp(23px, 4vw, 32px);
+    margin-top: 4px;
 
-    font-weight: 650;
+    font-size: 34px;
 
-    letter-spacing: -0.7px;
-}
+    line-height: 1.1;
 
+    color: #ffffff;
 
-/* =========================================
-   MAIN
-========================================= */
+    letter-spacing: -.5px;
 
-.medicines-page {
-
-    position: relative;
-
-    z-index: 2;
-
-    width: min(
-        1180px,
-        calc(100% - 40px)
-    );
-
-    margin: 0 auto;
-
-    padding:
-        28px
-        0
-        70px;
 }
 
 
@@ -428,140 +446,56 @@ body {
    INTRO
 ========================================= */
 
-.library-intro {
 
-    max-width: 720px;
+.intro-section {
 
-    margin-bottom: 28px;
+    margin-top: 80px;
+
 }
 
 
 .section-label {
 
-    display: inline-block;
+    font-size: 12px;
 
-    margin-bottom: 9px;
+    letter-spacing: 5px;
 
-    color:
-        rgba(120, 215, 250, 0.78);
+    color: #71dfff;
 
-    font-size: 10px;
+    font-weight: 600;
 
-    font-weight: 750;
-
-    letter-spacing: 2.5px;
 }
 
 
-.library-intro h2 {
+.intro-section h2 {
 
-    margin-bottom: 10px;
+    margin-top: 12px;
 
     font-size:
-        clamp(28px, 5vw, 43px);
+        clamp(42px,7vw,70px);
 
-    line-height: 1.1;
+    line-height: 1;
 
-    letter-spacing: -1.3px;
+    letter-spacing: -2px;
+
+    color: #ffffff;
+
 }
 
 
-.library-intro p {
+.intro-section p {
 
-    max-width: 650px;
+    max-width: 720px;
+
+    margin-top: 22px;
+
+    font-size: 18px;
+
+    line-height: 1.75;
 
     color:
-        rgba(220, 241, 250, 0.62);
+        rgba(225,240,255,.70);
 
-    font-size: 14px;
-
-    line-height: 1.7;
-}
-
-
-/* =========================================
-   SEARCH
-========================================= */
-
-.medicine-search-box {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    margin-bottom: 14px;
-
-    padding:
-        0 18px;
-
-    border:
-        1px solid
-        rgba(150, 220, 250, 0.10);
-
-    border-radius: 18px;
-
-    background:
-        rgba(255, 255, 255, 0.045);
-
-    box-shadow:
-        0 12px 40px
-        rgba(0, 0, 0, 0.08);
-
-    transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-
-.medicine-search-box:focus-within {
-
-    border-color:
-        rgba(100, 210, 250, 0.30);
-
-    box-shadow:
-        0 0 35px
-        rgba(50, 170, 230, 0.07);
-}
-
-
-.search-icon {
-
-    margin-right: 12px;
-
-    color:
-        rgba(150, 220, 250, 0.65);
-
-    font-size: 25px;
-}
-
-
-.medicine-search-box input {
-
-    width: 100%;
-
-    height: 58px;
-
-    border: none;
-
-    outline: none;
-
-    background: transparent;
-
-    color:
-        #edfaff;
-
-    font-size: 14px;
-}
-
-
-.medicine-search-box input::placeholder {
-
-    color:
-        rgba(215, 239, 249, 0.38);
 }
 
 
@@ -569,182 +503,268 @@ body {
    FILTERS
 ========================================= */
 
-.library-filter {
 
-    display: grid;
+.filters {
 
-    grid-template-columns:
-        repeat(2, 1fr);
+    margin-top: 42px;
 
-    gap: 12px;
-
-    margin-bottom: 24px;
 }
 
 
-.library-filter select {
+.search-box {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
 
     width: 100%;
 
-    height: 50px;
+    min-height: 70px;
 
     padding:
-        0 15px;
+        0 22px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(15,52,91,.72);
 
     border:
         1px solid
-        rgba(150, 220, 250, 0.09);
+        rgba(130,215,255,.16);
 
-    border-radius: 15px;
+    box-shadow:
+        0 15px 50px
+        rgba(0,0,0,.12);
+
+    backdrop-filter:
+        blur(18px);
+
+    transition: .3s ease;
+
+}
+
+
+.search-box:focus-within {
+
+    border-color:
+        rgba(105,215,255,.40);
+
+    box-shadow:
+        0 0 35px
+        rgba(45,175,235,.08);
+
+}
+
+
+.search-icon {
+
+    font-size: 30px;
+
+    color: #79dfff;
+
+    margin-right: 13px;
+
+}
+
+
+.search-box input {
+
+    flex: 1;
+
+    width: 100%;
+
+    border: none;
 
     outline: none;
 
-    background:
-        rgba(255, 255, 255, 0.04);
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+}
+
+
+.search-box input::placeholder {
 
     color:
-        rgba(230, 247, 255, 0.82);
+        rgba(205,230,250,.48);
+
+}
+
+
+.clear-search {
+
+    display: none;
+
+    border: none;
+
+    background: transparent;
+
+    color: #bdeeff;
+
+    font-size: 25px;
 
     cursor: pointer;
 
-    font-size: 13px;
 }
 
 
-.library-filter select:focus {
-
-    border-color:
-        rgba(100, 210, 250, 0.30);
-}
-
-
-.library-filter select option {
-
-    background:
-        #102d50;
-
-    color:
-        #eef9ff;
-}
-
-
-/* =========================================
-   COUNT
-========================================= */
-
-.medicine-count {
-
-    margin-bottom: 14px;
-
-    color:
-        rgba(185, 225, 240, 0.50);
-
-    font-size: 12px;
-
-    font-weight: 600;
-}
-
-
-/* =========================================
-   MEDICINE GRID
-========================================= */
-
-.medicine-grid {
+.filter-row {
 
     display: grid;
 
     grid-template-columns:
-        repeat(
-            3,
-            minmax(0, 1fr)
-        );
+        1fr 1fr;
 
     gap: 15px;
+
+    margin-top: 15px;
+
+}
+
+
+.filter-select {
+
+    width: 100%;
+
+    min-height: 60px;
+
+    padding:
+        0 18px;
+
+    border-radius: 18px;
+
+    border:
+        1px solid
+        rgba(130,215,255,.14);
+
+    background:
+        rgba(15,52,91,.70);
+
+    color: #dff5ff;
+
+    outline: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+}
+
+
+.filter-select option {
+
+    background: #0a2443;
+
+    color: white;
+
 }
 
 
 /* =========================================
-   MEDICINE CARD
+   RESULTS
 ========================================= */
+
+
+.results-header {
+
+    margin-top: 35px;
+
+    margin-bottom: 14px;
+
+}
+
+
+#medicine-count {
+
+    font-size: 14px;
+
+    color:
+        rgba(200,225,245,.65);
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================
+   MEDICINE LIST
+========================================= */
+
+
+.medicine-list {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 18px;
+
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
 
 .medicine-card {
 
     position: relative;
 
-    min-height: 235px;
+    padding: 25px;
 
-    padding: 22px;
+    min-height: 275px;
 
-    overflow: hidden;
-
-    border:
-        1px solid
-        rgba(155, 220, 250, 0.09);
-
-    border-radius: 22px;
+    border-radius: 25px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255, 255, 255, 0.065),
-            rgba(255, 255, 255, 0.025)
+            rgba(20,62,104,.76),
+            rgba(18,45,82,.64)
         );
 
-    backdrop-filter:
-        blur(14px);
+    border:
+        1px solid
+        rgba(135,215,255,.14);
 
-    -webkit-backdrop-filter:
-        blur(14px);
+    backdrop-filter:
+        blur(20px);
 
     box-shadow:
-        0 15px 40px
-        rgba(0, 0, 0, 0.08);
+        0 18px 55px
+        rgba(0,0,0,.12);
 
     transition:
-        transform 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.3s ease;
-}
+        transform .35s ease,
+        border-color .35s ease,
+        background .35s ease;
 
-
-.medicine-card::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 120px;
-    height: 120px;
-
-    top: -65px;
-    right: -65px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(80, 190, 235, 0.08);
-
-    filter:
-        blur(5px);
-
-    pointer-events: none;
 }
 
 
 .medicine-card:hover {
 
     transform:
-        translateY(-5px);
+        translateY(-6px);
 
     border-color:
-        rgba(110, 215, 250, 0.22);
+        rgba(115,215,255,.30);
 
-    box-shadow:
-        0 20px 50px
-        rgba(0, 0, 0, 0.14),
+    background:
+        linear-gradient(
+            145deg,
+            rgba(26,75,120,.82),
+            rgba(23,52,94,.72)
+        );
 
-        0 0 35px
-        rgba(60, 180, 230, 0.035);
 }
 
 
@@ -752,66 +772,82 @@ body {
    CARD TOP
 ========================================= */
 
-.medicine-card-top {
+
+.card-top {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+}
+
+
+.medicine-icon {
+
+    width: 52px;
+    height: 52px;
 
     display: flex;
 
     align-items: center;
 
-    justify-content: space-between;
+    justify-content: center;
 
-    gap: 12px;
+    border-radius: 16px;
 
-    margin-bottom: 22px;
+    color: #8be6ff;
+
+    font-size: 27px;
+
+    background:
+        rgba(70,175,235,.09);
+
+    border:
+        1px solid
+        rgba(110,215,255,.16);
+
 }
 
 
-.medicine-symbol {
+.favorite-button {
 
     width: 42px;
     height: 42px;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 14px;
-
-    color:
-        #bfeeff;
-
-    background:
-        rgba(80, 190, 235, 0.08);
+    border-radius: 13px;
 
     border:
         1px solid
-        rgba(110, 215, 250, 0.12);
+        rgba(130,215,255,.12);
 
-    font-size: 22px;
+    background:
+        rgba(255,255,255,.035);
 
-    box-shadow:
-        0 0 20px
-        rgba(70, 190, 240, 0.05);
+    color:
+        rgba(210,235,255,.55);
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: .25s ease;
+
 }
 
 
-.medicine-category {
+.favorite-button:hover,
+.favorite-button.active {
 
-    max-width: 65%;
+    color: #ffd76a;
 
-    color:
-        rgba(145, 220, 245, 0.58);
+    background:
+        rgba(255,205,75,.08);
 
-    font-size: 9px;
+    border-color:
+        rgba(255,215,100,.22);
 
-    font-weight: 700;
-
-    line-height: 1.4;
-
-    letter-spacing: 1.1px;
-
-    text-align: right;
 }
 
 
@@ -819,41 +855,50 @@ body {
    CARD CONTENT
 ========================================= */
 
+
+.card-class {
+
+    display: block;
+
+    margin-top: 27px;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: #78dfff;
+
+    font-weight: 600;
+
+}
+
+
 .medicine-card h3 {
 
-    margin-bottom: 9px;
+    margin-top: 8px;
 
-    color:
-        #edfaff;
+    font-size: 27px;
 
-    font-size: 20px;
+    color: #ffffff;
 
-    font-weight: 650;
-
-    letter-spacing: -0.3px;
 }
 
 
-.medicine-indication {
+.card-condition {
 
-    min-height: 40px;
-
-    margin-bottom: 19px;
+    margin-top: 10px;
 
     color:
-        rgba(210, 238, 247, 0.54);
+        rgba(220,238,255,.67);
 
-    font-size: 12px;
+    font-size: 14px;
 
-    line-height: 1.65;
+    line-height: 1.6;
+
 }
 
 
-/* =========================================
-   VIEW BUTTON
-========================================= */
-
-.view-medicine {
+.card-bottom {
 
     display: flex;
 
@@ -861,54 +906,62 @@ body {
 
     justify-content: space-between;
 
-    width: 100%;
+    margin-top: 25px;
 
-    padding:
-        11px
-        0;
-
-    border: none;
+    padding-top: 18px;
 
     border-top:
         1px solid
-        rgba(150, 220, 250, 0.07);
+        rgba(150,215,255,.09);
+
+}
+
+
+.view-info {
+
+    border: none;
 
     background: transparent;
 
-    color:
-        rgba(155, 225, 250, 0.78);
+    color: #7bdfff;
 
-    font-size: 11px;
+    font-size: 14px;
 
-    font-weight: 650;
+    font-weight: 600;
 
     cursor: pointer;
 
-    transition:
-        color 0.25s ease;
 }
 
 
-.view-medicine span {
+.view-info span {
 
-    font-size: 17px;
+    display: inline-block;
 
-    transition:
-        transform 0.25s ease;
+    margin-left: 7px;
+
+    font-size: 19px;
+
+    transition: .25s ease;
+
 }
 
 
-.view-medicine:hover {
-
-    color:
-        #dff8ff;
-}
-
-
-.view-medicine:hover span {
+.view-info:hover span {
 
     transform:
-        translateX(4px);
+        translateX(5px);
+
+}
+
+
+.route {
+
+    font-size: 11px;
+
+    color:
+        rgba(210,235,250,.45);
+
 }
 
 
@@ -916,67 +969,74 @@ body {
    EMPTY STATE
 ========================================= */
 
+
 .empty-state {
 
     display: none;
 
-    padding:
-        60px 20px;
-
     text-align: center;
+
+    padding:
+        80px 20px;
+
+}
+
+
+.empty-state.show {
+
+    display: block;
+
 }
 
 
 .empty-icon {
 
-    width: 58px;
-    height: 58px;
+    width: 70px;
+    height: 70px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    margin:
-        0 auto
-        15px;
+    margin: auto;
 
-    border-radius: 18px;
+    border-radius: 22px;
 
     background:
-        rgba(100, 200, 235, 0.06);
+        rgba(70,175,235,.08);
 
-    border:
-        1px solid
-        rgba(120, 215, 245, 0.09);
+    color: #78ddff;
 
-    color:
-        rgba(160, 225, 250, 0.55);
+    font-size: 34px;
 
-    font-size: 25px;
 }
 
 
 .empty-state h3 {
 
-    margin-bottom: 7px;
+    margin-top: 20px;
 
-    font-size: 18px;
+    font-size: 24px;
+
 }
 
 
 .empty-state p {
 
-    color:
-        rgba(210, 238, 247, 0.48);
+    margin-top: 8px;
 
-    font-size: 12px;
+    color:
+        rgba(215,235,250,.58);
+
 }
 
 
 /* =========================================
    MODAL
 ========================================= */
+
 
 .medicine-modal {
 
@@ -989,6 +1049,7 @@ body {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     padding: 20px;
@@ -997,11 +1058,8 @@ body {
 
     visibility: hidden;
 
-    pointer-events: none;
+    transition: .35s ease;
 
-    transition:
-        opacity 0.3s ease,
-        visibility 0.3s ease;
 }
 
 
@@ -1011,13 +1069,8 @@ body {
 
     visibility: visible;
 
-    pointer-events: auto;
 }
 
-
-/* =========================================
-   MODAL OVERLAY
-========================================= */
 
 .modal-overlay {
 
@@ -1026,336 +1079,329 @@ body {
     inset: 0;
 
     background:
-        rgba(3, 14, 28, 0.70);
+        rgba(1,9,22,.70);
 
     backdrop-filter:
-        blur(8px);
+        blur(10px);
 
-    -webkit-backdrop-filter:
-        blur(8px);
 }
 
 
-/* =========================================
-   DETAILS
-========================================= */
-
-.medicine-details {
+.modal-card {
 
     position: relative;
 
     z-index: 2;
 
-    width: min(
-        760px,
-        100%
-    );
+    width: min(620px,100%);
 
-    max-height:
-        calc(100vh - 40px);
+    max-height: 90vh;
 
     overflow-y: auto;
 
     padding: 30px;
 
-    border:
-        1px solid
-        rgba(160, 225, 250, 0.13);
-
-    border-radius: 25px;
+    border-radius: 28px;
 
     background:
         linear-gradient(
             145deg,
-            #0e2b49,
-            #0b223c
+            rgba(13,48,84,.97),
+            rgba(9,31,60,.98)
         );
 
+    border:
+        1px solid
+        rgba(130,215,255,.20);
+
     box-shadow:
-        0 30px 90px
-        rgba(0, 0, 0, 0.35);
+        0 30px 100px
+        rgba(0,0,0,.45);
 
     transform:
-        translateY(15px)
-        scale(0.98);
+        translateY(20px)
+        scale(.97);
 
-    transition:
-        transform 0.3s ease;
+    transition: .35s ease;
+
 }
 
 
-.medicine-modal.open
-.medicine-details {
+.medicine-modal.open .modal-card {
 
     transform:
         translateY(0)
         scale(1);
+
 }
 
 
-/* =========================================
-   MODAL SCROLLBAR
-========================================= */
+.modal-close {
 
-.medicine-details::-webkit-scrollbar {
+    position: absolute;
 
-    width: 5px;
-}
+    top: 18px;
+    right: 18px;
 
+    width: 40px;
+    height: 40px;
 
-.medicine-details::-webkit-scrollbar-track {
-
-    background:
-        transparent;
-}
-
-
-.medicine-details::-webkit-scrollbar-thumb {
-
-    border-radius: 20px;
-
-    background:
-        rgba(130, 210, 240, 0.20);
-}
-
-
-/* =========================================
-   CLOSE BUTTON
-========================================= */
-
-.close-modal {
-
-    position: sticky;
-
-    top: 0;
-
-    float: right;
-
-    width: 38px;
-    height: 38px;
-
-    border:
-        1px solid
-        rgba(160, 225, 250, 0.10);
+    border: none;
 
     border-radius: 12px;
 
     background:
-        rgba(255, 255, 255, 0.045);
+        rgba(255,255,255,.06);
 
-    color:
-        rgba(230, 248, 255, 0.75);
+    color: white;
 
-    font-size: 23px;
+    font-size: 25px;
 
     cursor: pointer;
 
-    z-index: 5;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
 }
 
 
-.close-modal:hover {
+.modal-top {
 
-    transform:
-        rotate(4deg);
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+
+    padding-right: 45px;
+
+}
+
+
+.medicine-symbol {
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 18px;
 
     background:
-        rgba(100, 200, 240, 0.10);
+        rgba(70,180,240,.10);
+
+    border:
+        1px solid
+        rgba(120,220,255,.18);
+
+    color: #7ce2ff;
+
+    font-size: 31px;
+
 }
 
 
-/* =========================================
-   DETAILS HEADER
-========================================= */
+.modal-class {
 
-.details-header {
+    font-size: 11px;
 
-    padding-right: 50px;
+    letter-spacing: 2px;
 
-    margin-bottom: 28px;
+    color: #76dfff;
+
 }
 
 
-.details-header h2 {
+.modal-top h2 {
 
-    margin-bottom: 8px;
+    margin-top: 5px;
 
-    font-size:
-        clamp(26px, 5vw, 36px);
+    font-size: 31px;
 
-    letter-spacing: -0.8px;
+    color: white;
+
 }
 
 
-.details-header p {
+.modal-tags {
 
-    color:
-        rgba(150, 220, 245, 0.58);
+    display: flex;
 
-    font-size: 12px;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 25px;
+
 }
 
 
-/* =========================================
-   DETAILS SECTION
-========================================= */
-
-.details-section {
+.modal-tags span {
 
     padding:
-        20px 0;
+        8px 12px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(80,175,235,.08);
+
+    border:
+        1px solid
+        rgba(110,210,255,.12);
+
+    color:
+        rgba(220,242,255,.72);
+
+    font-size: 12px;
+
+}
+
+
+.modal-content {
+
+    margin-top: 28px;
+
+}
+
+
+.info-block {
+
+    padding:
+        18px 0;
 
     border-top:
         1px solid
-        rgba(160, 225, 250, 0.07);
+        rgba(150,215,255,.09);
+
 }
 
 
-.details-section h3 {
+.info-block span {
 
-    margin-bottom: 9px;
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color: #73dfff;
+
+    font-weight: 600;
+
+}
+
+
+.info-block p {
+
+    margin-top: 8px;
 
     color:
-        rgba(185, 235, 250, 0.88);
+        rgba(225,240,255,.72);
+
+    line-height: 1.7;
 
     font-size: 14px;
 
-    font-weight: 650;
-}
-
-
-.details-section p {
-
-    color:
-        rgba(215, 239, 247, 0.60);
-
-    font-size: 13px;
-
-    line-height: 1.75;
-}
-
-
-.details-section ul {
-
-    padding-left: 18px;
-}
-
-
-.details-section li {
-
-    margin-bottom: 7px;
-
-    color:
-        rgba(215, 239, 247, 0.60);
-
-    font-size: 13px;
-
-    line-height: 1.65;
-}
-
-
-.reference-section {
-
-    margin-bottom: 0;
 }
 
 
 /* =========================================
-   RESPONSIVE
+   MOBILE
 ========================================= */
 
-@media (max-width: 900px) {
 
-    .medicine-grid {
+@media (max-width: 700px) {
 
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
+    .medicine-page {
 
-    }
-
-}
-
-
-@media (max-width: 620px) {
-
-    .medicines-header {
-
-        width:
-            calc(100% - 28px);
-
-        padding-top: 20px;
-    }
-
-
-    .medicines-page {
-
-        width:
-            calc(100% - 28px);
-
-        padding-top: 20px;
-    }
-
-
-    .library-filter {
-
-        grid-template-columns:
-            1fr;
+        padding:
+            25px 18px 60px;
 
     }
 
 
-    .medicine-grid {
+    .header-title h1 {
 
-        grid-template-columns:
-            1fr;
+        font-size: 25px;
+
+    }
+
+
+    .back-button {
+
+        width: 50px;
+        height: 50px;
+
+    }
+
+
+    .intro-section {
+
+        margin-top: 55px;
+
+    }
+
+
+    .intro-section h2 {
+
+        font-size: 43px;
+
+        letter-spacing: -1.5px;
+
+    }
+
+
+    .intro-section p {
+
+        font-size: 16px;
+
+        line-height: 1.7;
+
+    }
+
+
+    .filter-row {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .medicine-list {
+
+        grid-template-columns: 1fr;
 
     }
 
 
     .medicine-card {
 
-        min-height: 220px;
+        min-height: 260px;
 
     }
 
 
-    .medicine-details {
+    .modal-card {
 
-        padding: 23px;
-
-        border-radius: 21px;
-    }
-
-
-    .library-intro h2 {
-
-        font-size: 30px;
+        padding: 24px;
 
     }
 
 }
 
 
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
+    .glow,
+    .bubble,
+    .star {
 
-        animation-duration: 0.01ms !important;
-
-        animation-iteration-count: 1 !important;
-
-        scroll-behavior: auto !important;
-
-        transition-duration: 0.01ms !important;
+        animation: none;
 
     }
 
