@@ -1,6 +1,6 @@
 /* =========================================
    DoseCare
-   History Logic
+   History Page Logic
 ========================================= */
 
 
@@ -13,25 +13,30 @@ const historyList =
         "history-list"
     );
 
+
 const historyEmpty =
     document.getElementById(
         "history-empty"
     );
+
 
 const historyCount =
     document.getElementById(
         "history-count"
     );
 
-const clearHistoryButton =
+
+const clearHistory =
     document.getElementById(
         "clear-history"
     );
+
 
 const backButton =
     document.getElementById(
         "back-button"
     );
+
 
 const goCalculator =
     document.getElementById(
@@ -60,7 +65,9 @@ function getDoseHistory() {
 
     try {
 
-        return JSON.parse(saved);
+        return JSON.parse(
+            saved
+        );
 
     }
 
@@ -79,84 +86,87 @@ function getDoseHistory() {
 
 
 /* =========================================
-   SAVE HISTORY
+   FORMAT DATE
 ========================================= */
 
-function saveDoseHistory(history) {
+function formatHistoryDate(
+    item
+) {
 
-    localStorage.setItem(
-        "dosecareHistory",
-        JSON.stringify(history)
-    );
+    /*
+        Use the original timestamp
+        when available.
+    */
+
+    if (item.timestamp) {
+
+        const date =
+            new Date(
+                item.timestamp
+            );
+
+
+        if (
+            !Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return date.toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+    }
+
+
+    return item.date || "Unknown date";
 
 }
 
 
 /* =========================================
-   FORMAT DATE
+   FORMAT TIME
 ========================================= */
 
-function formatHistoryDate(dateValue) {
+function formatHistoryTime(
+    item
+) {
 
-    const date =
-        new Date(dateValue);
+    if (item.timestamp) {
+
+        const date =
+            new Date(
+                item.timestamp
+            );
 
 
-    if (Number.isNaN(date.getTime())) {
+        if (
+            !Number.isNaN(
+                date.getTime()
+            )
+        ) {
 
-        return {
-            date: "Unknown date",
-            time: ""
-        };
+            return date.toLocaleTimeString(
+                "en-US",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+        }
 
     }
 
 
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-
-    const year =
-        date.getFullYear();
-
-
-    let hours =
-        date.getHours();
-
-
-    const minutes =
-        String(
-            date.getMinutes()
-        ).padStart(2, "0");
-
-
-    const period =
-        hours >= 12
-            ? "PM"
-            : "AM";
-
-
-    hours =
-        hours % 12 || 12;
-
-
-    return {
-
-        date:
-            `${day}/${month}/${year}`,
-
-        time:
-            `${hours}:${minutes} ${period}`
-
-    };
+    return item.time || "Unknown time";
 
 }
 
@@ -175,14 +185,14 @@ function renderHistory() {
 
 
     historyCount.textContent =
-        `${history.length} ${
-            history.length === 1
-                ? "calculation"
-                : "calculations"
-        }`;
+        history.length;
 
 
-    if (history.length === 0) {
+    /*
+        EMPTY
+    */
+
+    if (!history.length) {
 
         historyEmpty.classList.add(
             "show"
@@ -198,14 +208,12 @@ function renderHistory() {
     );
 
 
+    /*
+        HISTORY CARDS
+    */
+
     history.forEach(
-        (item, index) => {
-
-            const date =
-                formatHistoryDate(
-                    item.date
-                );
-
+        (item) => {
 
             const card =
                 document.createElement(
@@ -219,95 +227,126 @@ function renderHistory() {
 
             card.innerHTML = `
 
-                <div class="history-icon">
-                    +
-                </div>
+                <div class="history-card-top">
 
+                    <div class="history-medicine">
 
-                <div class="history-main">
+                        <div class="history-medicine-icon">
+                            +
+                        </div>
 
-                    <h3>
-                        ${item.medicine || "Medicine"}
-                    </h3>
+                        <div>
 
+                            <span>
+                                MEDICINE
+                            </span>
 
-                    <span class="history-class">
-                        ${item.class || "Pediatric medicine"}
-                    </span>
+                            <h3>
+                                ${
+                                    item.medicine ||
+                                    "Unknown medicine"
+                                }
+                            </h3>
 
-
-                    <div class="history-details">
-
-                        ${
-                            item.age
-                                ? `
-                                    <span class="history-detail">
-                                        Age: ${item.age}
-                                    </span>
-                                  `
-                                : ""
-                        }
-
-
-                        ${
-                            item.weight
-                                ? `
-                                    <span class="history-detail">
-                                        Weight: ${item.weight} kg
-                                    </span>
-                                  `
-                                : ""
-                        }
-
-
-                        ${
-                            item.concentration
-                                ? `
-                                    <span class="history-detail">
-                                        ${item.concentration}
-                                    </span>
-                                  `
-                                : ""
-                        }
+                        </div>
 
                     </div>
 
 
+                    <div class="history-date">
+
+                        <strong>
+                            ${
+                                formatHistoryDate(
+                                    item
+                                )
+                            }
+                        </strong>
+
+                        <span>
+                            ${
+                                formatHistoryTime(
+                                    item
+                                )
+                            }
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="history-dose">
+
+                    <span>
+                        Calculated Dose
+                    </span>
+
+                    <strong>
+                        ${
+                            item.dose ??
+                            "—"
+                        }
+                        ${
+                            item.unit ||
+                            ""
+                        }
+                    </strong>
+
+                </div>
+
+
+                <div class="history-details">
+
                     ${
-                        item.dose
+                        item.age !== undefined &&
+                        item.age !== null &&
+                        item.age !== ""
                             ? `
-                                <div class="history-dose">
-                                    Dose: ${item.dose}
+                                <div>
+                                    <span>Age</span>
+                                    <strong>
+                                        ${item.age}
+                                        ${item.ageUnit || ""}
+                                    </strong>
                                 </div>
                               `
                             : ""
                     }
 
 
-                    <button
-                        class="delete-history"
-                        type="button"
-                        data-index="${index}"
-                    >
-                        Delete
-                    </button>
+                    ${
+                        item.weight !== undefined &&
+                        item.weight !== null &&
+                        item.weight !== ""
+                            ? `
+                                <div>
+                                    <span>Weight</span>
+                                    <strong>
+                                        ${item.weight} kg
+                                    </strong>
+                                </div>
+                              `
+                            : ""
+                    }
 
-                </div>
 
-
-                <div class="history-date">
-
-                    <small>
-                        Calculated on
-                    </small>
-
-                    <strong>
-                        ${date.date}
-                    </strong>
-
-                    <small>
-                        ${date.time}
-                    </small>
+                    ${
+                        item.concentrationMg &&
+                        item.concentrationMl
+                            ? `
+                                <div>
+                                    <span>Concentration</span>
+                                    <strong>
+                                        ${item.concentrationMg}
+                                        mg /
+                                        ${item.concentrationMl}
+                                        mL
+                                    </strong>
+                                </div>
+                              `
+                            : ""
+                    }
 
                 </div>
 
@@ -321,70 +360,16 @@ function renderHistory() {
         }
     );
 
-
-    attachDeleteEvents();
-
 }
 
 
 /* =========================================
-   DELETE ONE ITEM
+   CLEAR HISTORY
 ========================================= */
 
-function attachDeleteEvents() {
+if (clearHistory) {
 
-    const buttons =
-        document.querySelectorAll(
-            ".delete-history"
-        );
-
-
-    buttons.forEach(
-        button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const index =
-                        Number(
-                            button.dataset.index
-                        );
-
-
-                    const history =
-                        getDoseHistory();
-
-
-                    history.splice(
-                        index,
-                        1
-                    );
-
-
-                    saveDoseHistory(
-                        history
-                    );
-
-
-                    renderHistory();
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   CLEAR ALL HISTORY
-========================================= */
-
-if (clearHistoryButton) {
-
-    clearHistoryButton.addEventListener(
+    clearHistory.addEventListener(
         "click",
         () => {
 
@@ -392,7 +377,7 @@ if (clearHistoryButton) {
                 getDoseHistory();
 
 
-            if (history.length === 0) {
+            if (!history.length) {
 
                 return;
 
@@ -400,8 +385,8 @@ if (clearHistoryButton) {
 
 
             const confirmed =
-                confirm(
-                    "Clear all calculation history?"
+                window.confirm(
+                    "Are you sure you want to clear all calculation history?"
                 );
 
 
@@ -459,72 +444,6 @@ if (goCalculator) {
 
         }
     );
-
-}
-
-
-/* =========================================
-   PARTICLES
-========================================= */
-
-const particlesContainer =
-    document.getElementById(
-        "particles"
-    );
-
-
-if (particlesContainer) {
-
-    for (
-        let i = 0;
-        i < 55;
-        i++
-    ) {
-
-        const particle =
-            document.createElement(
-                "span"
-            );
-
-
-        particle.classList.add(
-            "particle"
-        );
-
-
-        const size =
-            Math.random() * 2.5 + 1.5;
-
-
-        particle.style.width =
-            `${size}px`;
-
-
-        particle.style.height =
-            `${size}px`;
-
-
-        particle.style.left =
-            `${Math.random() * 100}%`;
-
-
-        particle.style.top =
-            `${Math.random() * 100}%`;
-
-
-        particle.style.animationDuration =
-            `${Math.random() * 8 + 8}s, ${Math.random() * 3 + 2}s`;
-
-
-        particle.style.animationDelay =
-            `${Math.random() * 8}s, ${Math.random() * 3}s`;
-
-
-        particlesContainer.appendChild(
-            particle
-        );
-
-    }
 
 }
 
