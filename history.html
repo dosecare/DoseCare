@@ -10,11 +10,16 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>History | DoseCare</title>
+    <title>DoseCare — History</title>
 
     <link
         rel="stylesheet"
         href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="history.css"
     >
 
 </head>
@@ -24,7 +29,7 @@
 
 
     <!-- =================================
-         ANIMATED BACKGROUND
+         BACKGROUND
     ================================= -->
 
     <div class="background">
@@ -44,6 +49,7 @@
     </div>
 
 
+
     <!-- =================================
          HISTORY PAGE
     ================================= -->
@@ -51,17 +57,14 @@
     <main class="history-page">
 
 
-        <!-- =================================
-             HEADER
-        ================================= -->
+        <!-- HEADER -->
 
-        <header class="page-header">
+        <header class="history-header">
 
             <button
-                class="back-button"
-                id="back-home"
+                id="back-button"
+                class="history-back"
                 type="button"
-                aria-label="Back to Home"
             >
                 ←
             </button>
@@ -69,34 +72,17 @@
 
             <div>
 
-                <span class="page-label">
+                <span class="history-label">
                     DOSECARE
                 </span>
 
                 <h1>
-                    History
+                    Calculation History
                 </h1>
 
-            </div>
-
-        </header>
-
-
-        <!-- =================================
-             INTRO
-        ================================= -->
-
-        <section class="page-intro">
-
-            <div>
-
-                <h2>
-                    Recent calculations
-                </h2>
-
                 <p>
-                    Review your previous pediatric
-                    dose calculations.
+                    Review your previous
+                    pediatric dose calculations.
                 </p>
 
             </div>
@@ -104,73 +90,75 @@
 
             <button
                 id="clear-history"
-                class="clear-history-button"
+                class="clear-history"
                 type="button"
             >
                 Clear History
             </button>
 
-        </section>
+        </header>
 
 
-        <!-- =================================
-             HISTORY LIST
-        ================================= -->
+
+        <!-- COUNT -->
+
+        <div class="history-summary">
+
+            <span>
+                Recent calculations
+            </span>
+
+            <strong id="history-count">
+                0 calculations
+            </strong>
+
+        </div>
+
+
+
+        <!-- HISTORY LIST -->
 
         <section
-            id="history-container"
-            class="history-container"
-        >
-
-            <!-- History cards
-                 will be created by JavaScript -->
-
-        </section>
+            id="history-list"
+            class="history-list"
+        ></section>
 
 
-        <!-- =================================
-             EMPTY STATE
-        ================================= -->
+
+        <!-- EMPTY STATE -->
 
         <section
-            id="empty-history"
-            class="empty-history"
+            id="history-empty"
+            class="history-empty"
         >
 
-            <div class="empty-history-icon">
+            <div class="empty-icon">
                 ◷
             </div>
-
 
             <h2>
                 No calculations yet
             </h2>
 
-
             <p>
-                Your recent dose calculations
-                will appear here.
+                Your completed dose calculations
+                will appear here automatically.
             </p>
 
-
             <button
-                id="start-calculator"
+                id="go-calculator"
                 class="primary-button"
                 type="button"
             >
-
                 Start Dose Calculator
-
-                <span>
-                    →
-                </span>
-
+                <span>→</span>
             </button>
 
         </section>
 
 
     </main>
+
 
 
     <script src="history.js"></script>
