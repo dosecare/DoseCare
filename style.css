@@ -1718,3 +1718,477 @@ body {
     }
 
 }
+/* =========================================
+   FAVORITES PAGE
+========================================= */
+
+.favorites-page {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+    padding: 30px 25px 60px;
+
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding-bottom: 30px;
+
+}
+
+
+.back-button {
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid
+        rgba(140,215,255,0.16);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.055);
+
+    color: white;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+}
+
+
+.back-button:hover {
+
+    transform:
+        translateX(4px);
+
+    background:
+        rgba(70,170,240,0.12);
+
+    border-color:
+        rgba(120,220,255,0.28);
+
+}
+
+
+.page-label {
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    color: #70d9ff;
+
+}
+
+
+.page-header h1 {
+
+    margin-top: 5px;
+
+    font-size: 34px;
+
+}
+
+
+/* =========================================
+   PAGE INTRO
+========================================= */
+
+.page-intro {
+
+    margin-top: 15px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.page-intro h2 {
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+}
+
+
+.page-intro p {
+
+    margin-top: 8px;
+
+    color:
+        rgba(215,233,250,0.58);
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================
+   FAVORITES CONTAINER
+========================================= */
+
+.favorites-container {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+}
+
+
+/* =========================================
+   FAVORITE CARD
+========================================= */
+
+.favorite-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    min-height: 105px;
+
+    padding: 20px;
+
+    border-radius: 21px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    border:
+        1px solid
+        rgba(150,210,255,0.12);
+
+    backdrop-filter:
+        blur(16px);
+
+    transition:
+        0.3s ease;
+
+}
+
+
+.favorite-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    background:
+        rgba(70,170,240,0.08);
+
+    border-color:
+        rgba(120,215,255,0.2);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,0.14);
+
+}
+
+
+/* =========================================
+   MEDICINE ICON
+========================================= */
+
+.favorite-medicine-icon {
+
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    font-size: 25px;
+
+    background:
+        rgba(70,170,240,0.09);
+
+    border:
+        1px solid
+        rgba(110,210,255,0.14);
+
+}
+
+
+/* =========================================
+   MEDICINE INFO
+========================================= */
+
+.favorite-medicine-info {
+
+    min-width: 0;
+
+    flex: 1;
+
+}
+
+
+.favorite-medicine-info h3 {
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.favorite-medicine-info p {
+
+    margin-top: 6px;
+
+    color:
+        rgba(210,230,250,0.52);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================
+   REMOVE FAVORITE
+========================================= */
+
+.remove-favorite {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    color: #72dcff;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+
+}
+
+
+.remove-favorite:hover {
+
+    transform:
+        scale(1.08);
+
+    background:
+        rgba(100,190,240,0.12);
+
+}
+
+
+/* =========================================
+   EMPTY FAVORITES
+========================================= */
+
+.empty-favorites {
+
+    min-height: 330px;
+
+    display: none;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 40px 20px;
+
+    border-radius: 26px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    border:
+        1px dashed
+        rgba(130,205,255,0.16);
+
+    backdrop-filter:
+        blur(14px);
+
+}
+
+
+.empty-icon {
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 22px;
+
+    color: #73dcff;
+
+    font-size: 32px;
+
+    background:
+        rgba(70,170,240,0.08);
+
+    border:
+        1px solid
+        rgba(110,210,255,0.14);
+
+}
+
+
+.empty-favorites h2 {
+
+    font-size: 23px;
+
+}
+
+
+.empty-favorites p {
+
+    max-width: 390px;
+
+    margin-top: 9px;
+
+    color:
+        rgba(215,233,250,0.55);
+
+    line-height: 1.6;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================
+   EMPTY STATE BUTTON
+========================================= */
+
+.empty-favorites .primary-button {
+
+    margin-top: 23px;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .favorites-page {
+
+        padding:
+            20px 16px 45px;
+
+    }
+
+
+    .page-header {
+
+        gap: 13px;
+
+    }
+
+
+    .back-button {
+
+        width: 44px;
+        height: 44px;
+
+    }
+
+
+    .page-header h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .page-intro h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .favorites-container {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .favorite-card {
+
+        padding: 17px;
+
+    }
+
+}
