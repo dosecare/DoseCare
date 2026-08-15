@@ -3,7 +3,6 @@
    History Page
 ========================================= */
 
-
 .history-page {
 
     position: relative;
@@ -12,11 +11,11 @@
 
     width: 100%;
 
-    max-width: 1150px;
+    max-width: 1050px;
 
     min-height: 100vh;
 
-    margin: auto;
+    margin: 0 auto;
 
     padding: 35px 25px 60px;
 
@@ -31,42 +30,27 @@
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
 
-    gap: 20px;
-
-    padding-bottom: 30px;
-
-    border-bottom:
-        1px solid
-        rgba(150,210,255,0.10);
-
-}
-
-
-.history-header > div {
-
-    flex: 1;
+    gap: 18px;
 
 }
 
 
 .history-back {
 
-    width: 48px;
-
-    height: 48px;
+    width: 46px;
+    height: 46px;
 
     flex-shrink: 0;
 
+    border: 1px solid
+        rgba(140,210,255,0.15);
+
     border-radius: 14px;
 
-    border:
-        1px solid
-        rgba(130,210,255,0.16);
-
     background:
-        rgba(255,255,255,0.045);
+        rgba(255,255,255,0.05);
 
     color: white;
 
@@ -90,6 +74,13 @@
 }
 
 
+.history-header > div {
+
+    flex: 1;
+
+}
+
+
 .history-label {
 
     font-size: 10px;
@@ -106,51 +97,41 @@
     margin-top: 7px;
 
     font-size:
-        clamp(30px,5vw,48px);
+        clamp(30px,5vw,46px);
 
 }
 
 
 .history-header p {
 
-    margin-top: 8px;
+    margin-top: 10px;
 
     color:
         rgba(215,233,250,0.58);
 
-    line-height: 1.6;
-
 }
 
 
+/* =========================================
+   CLEAR BUTTON
+========================================= */
+
 .clear-history {
 
-    padding:
-        11px 16px;
+    padding: 11px 17px;
+
+    border: 1px solid
+        rgba(255,150,150,0.16);
 
     border-radius: 12px;
-
-    border:
-        1px solid
-        rgba(255,130,130,0.15);
 
     background:
         rgba(255,100,100,0.05);
 
     color:
-        rgba(255,205,205,0.8);
+        rgba(255,220,220,0.75);
 
     cursor: pointer;
-
-    transition: 0.3s ease;
-
-}
-
-
-.clear-history:hover {
-
-    background:
-        rgba(255,100,100,0.11);
 
 }
 
@@ -161,14 +142,23 @@
 
 .history-summary {
 
+    margin-top: 35px;
+
+    padding: 17px 20px;
+
     display: flex;
 
     align-items: center;
 
     justify-content: space-between;
 
-    margin:
-        25px 0 15px;
+    border-radius: 17px;
+
+    border: 1px solid
+        rgba(140,210,255,0.10);
+
+    background:
+        rgba(255,255,255,0.035);
 
 }
 
@@ -176,7 +166,7 @@
 .history-summary span {
 
     color:
-        rgba(220,237,250,0.55);
+        rgba(220,235,255,0.58);
 
     font-size: 13px;
 
@@ -185,9 +175,9 @@
 
 .history-summary strong {
 
-    color: #75dcff;
+    color: #72dcff;
 
-    font-size: 13px;
+    font-size: 18px;
 
 }
 
@@ -202,7 +192,9 @@
 
     flex-direction: column;
 
-    gap: 13px;
+    gap: 15px;
+
+    margin-top: 18px;
 
 }
 
@@ -213,28 +205,18 @@
 
 .history-card {
 
-    display: grid;
+    padding: 22px;
 
-    grid-template-columns:
-        auto 1fr auto;
+    border-radius: 21px;
 
-    align-items: center;
-
-    gap: 18px;
-
-    padding: 20px;
-
-    border-radius: 20px;
+    border: 1px solid
+        rgba(140,210,255,0.11);
 
     background:
         rgba(255,255,255,0.045);
 
-    border:
-        1px solid
-        rgba(150,210,255,0.10);
-
     backdrop-filter:
-        blur(15px);
+        blur(14px);
 
     transition: 0.3s ease;
 
@@ -244,10 +226,10 @@
 .history-card:hover {
 
     transform:
-        translateY(-2px);
+        translateY(-3px);
 
     border-color:
-        rgba(120,210,255,0.20);
+        rgba(120,215,255,0.20);
 
     background:
         rgba(70,170,240,0.065);
@@ -255,11 +237,38 @@
 }
 
 
-.history-icon {
+/* =========================================
+   CARD TOP
+========================================= */
 
-    width: 52px;
+.history-card-top {
 
-    height: 52px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+
+.history-medicine {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+
+.history-medicine-icon {
+
+    width: 45px;
+    height: 45px;
 
     display: flex;
 
@@ -267,75 +276,38 @@
 
     justify-content: center;
 
-    border-radius: 15px;
+    border-radius: 13px;
 
     color: #78ddff;
 
-    font-size: 24px;
-
     background:
-        rgba(70,170,240,0.08);
+        rgba(70,170,240,0.09);
 
-    border:
-        1px solid
-        rgba(110,210,255,0.12);
+    border: 1px solid
+        rgba(110,210,255,0.13);
 
-}
-
-
-/* =========================================
-   MEDICINE INFO
-========================================= */
-
-.history-main h3 {
-
-    font-size: 19px;
+    font-size: 21px;
 
 }
 
 
-.history-class {
+.history-medicine span {
 
-    display: block;
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    color:
+        rgba(190,220,245,0.45);
+
+}
+
+
+.history-medicine h3 {
 
     margin-top: 4px;
 
-    color: #72d9ff;
-
-    font-size: 11px;
-
-    letter-spacing: 1px;
-
-}
-
-
-.history-details {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    margin-top: 9px;
-
-}
-
-
-.history-detail {
-
-    padding:
-        5px 9px;
-
-    border-radius: 8px;
-
-    background:
-        rgba(255,255,255,0.045);
-
-    color:
-        rgba(220,238,255,0.65);
-
-    font-size: 11px;
+    font-size: 20px;
 
 }
 
@@ -346,35 +318,33 @@
 
 .history-date {
 
-    min-width: 145px;
+    display: flex;
 
-    text-align: right;
+    flex-direction: column;
 
-}
+    align-items: flex-end;
 
-
-.history-date small {
-
-    display: block;
-
-    color:
-        rgba(205,230,250,0.45);
-
-    font-size: 10px;
+    gap: 4px;
 
 }
 
 
 .history-date strong {
 
-    display: block;
-
-    margin-top: 4px;
+    font-size: 13px;
 
     color:
-        rgba(230,245,255,0.82);
+        rgba(225,242,255,0.82);
 
-    font-size: 12px;
+}
+
+
+.history-date span {
+
+    font-size: 11px;
+
+    color:
+        rgba(190,220,245,0.45);
 
 }
 
@@ -385,41 +355,98 @@
 
 .history-dose {
 
-    margin-top: 10px;
+    margin-top: 20px;
 
-    color: #80e1ff;
+    padding: 17px;
 
-    font-weight: 600;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-radius: 14px;
+
+    background:
+        rgba(60,160,230,0.07);
+
+    border: 1px solid
+        rgba(100,200,255,0.08);
+
+}
+
+
+.history-dose span {
+
+    color:
+        rgba(215,233,250,0.58);
+
+    font-size: 12px;
+
+}
+
+
+.history-dose strong {
+
+    color: #79ddff;
+
+    font-size: 24px;
 
 }
 
 
 /* =========================================
-   DELETE
+   DETAILS
 ========================================= */
 
-.delete-history {
+.history-details {
 
-    margin-top: 8px;
+    display: grid;
 
-    border: none;
+    grid-template-columns:
+        repeat(3,1fr);
 
-    background: transparent;
+    gap: 10px;
 
-    color:
-        rgba(255,150,150,0.65);
-
-    font-size: 11px;
-
-    cursor: pointer;
+    margin-top: 12px;
 
 }
 
 
-.delete-history:hover {
+.history-details > div {
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+}
+
+
+.history-details span {
+
+    display: block;
+
+    font-size: 10px;
 
     color:
-        rgba(255,170,170,1);
+        rgba(190,220,245,0.45);
+
+}
+
+
+.history-details strong {
+
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color:
+        rgba(225,240,255,0.78);
 
 }
 
@@ -432,31 +459,36 @@
 
     display: none;
 
-    min-height: 420px;
+    margin-top: 45px;
 
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
+    padding: 55px 25px;
 
     text-align: center;
+
+    border-radius: 25px;
+
+    border: 1px solid
+        rgba(140,210,255,0.10);
+
+    background:
+        rgba(255,255,255,0.035);
 
 }
 
 
 .history-empty.show {
 
-    display: flex;
+    display: block;
 
 }
 
 
-.empty-icon {
+.history-empty-icon {
 
-    width: 72px;
+    width: 65px;
+    height: 65px;
 
-    height: 72px;
+    margin: 0 auto 18px;
 
     display: flex;
 
@@ -464,41 +496,38 @@
 
     justify-content: center;
 
-    border-radius: 22px;
+    border-radius: 20px;
 
-    font-size: 32px;
-
-    color: #75dcff;
+    color: #78ddff;
 
     background:
         rgba(70,170,240,0.08);
 
-    border:
-        1px solid
-        rgba(110,210,255,0.14);
+    font-size: 30px;
 
 }
 
 
 .history-empty h2 {
 
-    margin-top: 20px;
-
-    font-size: 25px;
+    font-size: 23px;
 
 }
 
 
 .history-empty p {
 
-    max-width: 430px;
-
     margin-top: 9px;
 
     color:
         rgba(215,233,250,0.55);
 
-    line-height: 1.6;
+}
+
+
+.history-empty .primary-button {
+
+    margin-top: 24px;
 
 }
 
@@ -507,19 +536,19 @@
    MOBILE
 ========================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 650px) {
 
     .history-page {
 
         padding:
-            20px 16px 40px;
+            22px 16px 45px;
 
     }
 
 
     .history-header {
 
-        align-items: flex-start;
+        gap: 11px;
 
     }
 
@@ -535,36 +564,51 @@
 
         font-size: 12px;
 
+        line-height: 1.5;
+
     }
 
 
     .clear-history {
 
-        padding:
-            9px 11px;
+        padding: 9px 11px;
 
-        font-size: 10px;
+        font-size: 11px;
 
     }
 
 
     .history-card {
 
-        grid-template-columns:
-            auto 1fr;
+        padding: 17px;
+
+    }
+
+
+    .history-card-top {
+
+        align-items: flex-start;
 
     }
 
 
     .history-date {
 
-        grid-column: 2;
+        font-size: 10px;
 
-        min-width: 0;
+    }
 
-        text-align: left;
 
-        padding-top: 3px;
+    .history-details {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .history-dose strong {
+
+        font-size: 20px;
 
     }
 
