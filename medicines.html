@@ -22,9 +22,10 @@
 
 <body>
 
-    <!-- =================================
+
+    <!-- =========================================
          BACKGROUND
-    ================================= -->
+    ========================================= -->
 
     <div class="background">
 
@@ -35,52 +36,57 @@
         <div class="bubble bubble-one"></div>
         <div class="bubble bubble-two"></div>
         <div class="bubble bubble-three"></div>
+        <div class="bubble bubble-four"></div>
 
-        <div id="particles"></div>
+        <div id="stars"></div>
 
     </div>
 
 
-    <!-- =================================
-         HEADER
-    ================================= -->
 
-    <header class="medicines-header">
-
-        <button
-            id="back-button"
-            class="back-button"
-            type="button"
-        >
-            ←
-        </button>
-
-
-        <div class="header-title">
-
-            <span>
-                DOSECARE
-            </span>
-
-            <h1>
-                Medicine Library
-            </h1>
-
-        </div>
-
-    </header>
-
-
-    <!-- =================================
+    <!-- =========================================
          MAIN
-    ================================= -->
+    ========================================= -->
 
-    <main class="medicines-page">
+    <main class="medicine-page">
 
 
-        <!-- INTRO -->
+        <!-- =====================================
+             HEADER
+        ===================================== -->
 
-        <section class="library-intro">
+        <header class="medicine-header">
+
+            <button
+                class="back-button"
+                id="back-button"
+                aria-label="Back"
+            >
+                ←
+            </button>
+
+
+            <div class="header-title">
+
+                <span class="mini-label">
+                    DOSECARE
+                </span>
+
+                <h1>
+                    Medicine Library
+                </h1>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================
+             INTRO
+        ===================================== -->
+
+        <section class="intro-section">
 
             <span class="section-label">
                 MEDICINE DATABASE
@@ -99,57 +105,78 @@
         </section>
 
 
-        <!-- =================================
+
+        <!-- =====================================
              SEARCH
-        ================================= -->
+        ===================================== -->
 
-        <section class="medicine-search-box">
+        <section class="filters">
 
-            <span class="search-icon">
-                ⌕
-            </span>
 
-            <input
-                type="search"
-                id="medicine-library-search"
-                placeholder="Search medicine..."
-                autocomplete="off"
-            >
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    id="medicine-search"
+                    placeholder="Search medicine..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="clear-search"
+                    class="clear-search"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <div class="filter-row">
+
+
+                <select
+                    id="class-filter"
+                    class="filter-select"
+                >
+
+                    <option value="all">
+                        All drug classes
+                    </option>
+
+                </select>
+
+
+
+                <select
+                    id="condition-filter"
+                    class="filter-select"
+                >
+
+                    <option value="all">
+                        All conditions
+                    </option>
+
+                </select>
+
+
+            </div>
 
         </section>
 
 
-        <!-- =================================
-             FILTER
-        ================================= -->
 
-        <section class="library-filter">
+        <!-- =====================================
+             RESULTS HEADER
+        ===================================== -->
 
-            <select id="medicine-class-filter">
-
-                <option value="">
-                    All drug classes
-                </option>
-
-            </select>
-
-
-            <select id="medicine-condition-filter">
-
-                <option value="">
-                    All conditions
-                </option>
-
-            </select>
-
-        </section>
-
-
-        <!-- =================================
-             MEDICINE COUNT
-        ================================= -->
-
-        <div class="medicine-count">
+        <div class="results-header">
 
             <span id="medicine-count">
                 0 medicines
@@ -158,19 +185,23 @@
         </div>
 
 
-        <!-- =================================
-             MEDICINE GRID
-        ================================= -->
+
+        <!-- =====================================
+             MEDICINES
+        ===================================== -->
 
         <section
-            id="medicine-grid"
-            class="medicine-grid"
-        ></section>
+            id="medicine-list"
+            class="medicine-list"
+        >
+
+        </section>
 
 
-        <!-- =================================
+
+        <!-- =====================================
              EMPTY STATE
-        ================================= -->
+        ===================================== -->
 
         <section
             id="empty-state"
@@ -178,7 +209,7 @@
         >
 
             <div class="empty-icon">
-                ◈
+                ⌕
             </div>
 
             <h3>
@@ -187,59 +218,120 @@
 
             <p>
                 Try another medicine name,
-                class or condition.
+                drug class or condition.
             </p>
 
         </section>
 
 
+
     </main>
 
 
-    <!-- =================================
-         MEDICINE DETAILS MODAL
-    ================================= -->
+
+    <!-- =========================================
+         MEDICINE MODAL
+    ========================================= -->
 
     <div
         id="medicine-modal"
         class="medicine-modal"
     >
 
-        <div
-            class="modal-overlay"
-            id="modal-overlay"
-        ></div>
+        <div class="modal-overlay"></div>
 
 
-        <article class="medicine-details">
+        <article class="modal-card">
 
             <button
                 id="close-modal"
-                class="close-modal"
-                type="button"
+                class="modal-close"
             >
                 ×
             </button>
 
 
-            <div
-                id="medicine-details-content"
-                class="medicine-details-content"
-            ></div>
+            <div class="modal-top">
+
+                <div class="medicine-symbol">
+                    +
+                </div>
+
+                <div>
+
+                    <span
+                        id="modal-class"
+                        class="modal-class"
+                    >
+                    </span>
+
+                    <h2 id="modal-name">
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="modal-tags">
+
+                <span id="modal-condition">
+                </span>
+
+                <span id="modal-route">
+                </span>
+
+            </div>
+
+
+
+            <div class="modal-content">
+
+                <div class="info-block">
+
+                    <span>
+                        INDICATIONS
+                    </span>
+
+                    <p id="modal-indications">
+                    </p>
+
+                </div>
+
+
+                <div class="info-block">
+
+                    <span>
+                        MECHANISM OF ACTION
+                    </span>
+
+                    <p id="modal-moa">
+                    </p>
+
+                </div>
+
+
+                <div class="info-block">
+
+                    <span>
+                        PEDIATRIC NOTE
+                    </span>
+
+                    <p id="modal-pediatric">
+                    </p>
+
+                </div>
+
+            </div>
 
         </article>
 
     </div>
 
 
-    <!-- =================================
-         SCRIPTS
-    ================================= -->
 
     <script src="medicines.js"></script>
-
-    <script src="medicines-page.js"></script>
-
 
 </body>
 
