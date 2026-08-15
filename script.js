@@ -326,3 +326,47 @@ menuItems.forEach(
 
     }
 );
+/* =========================================
+   MENU NAVIGATION
+========================================= */
+
+
+/* =========================================
+   HOME
+========================================= */
+
+const homeMenuButton =
+    document.getElementById(
+        "home-menu-button"
+    );
+
+
+if (homeMenuButton) {
+
+    homeMenuButton.addEventListener(
+        "click",
+        () => {
+
+            /*
+                Home is the main page.
+                Close the menu first.
+            */
+
+            closeSideMenu();
+
+
+            /*
+                If the user is already on
+                the home page, simply scroll
+                to the top.
+            */
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+}
