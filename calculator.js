@@ -1210,7 +1210,94 @@ if (backButton) {
     );
 
 }
+/* =========================================
+   SAVE CALCULATION TO HISTORY
+========================================= */
 
+const HISTORY_STORAGE_KEY =
+    "dosecareHistory";
+
+
+function saveCalculationToHistory({
+    medicine,
+    dose,
+    doseUnit,
+    age,
+    ageUnit,
+    weight,
+    concentration
+}) {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                HISTORY_STORAGE_KEY
+            ) || "[]"
+        );
+
+
+    const now = new Date();
+
+
+    const historyItem = {
+
+        medicine:
+            medicine,
+
+        dose:
+            dose,
+
+        doseUnit:
+            doseUnit,
+
+        age:
+            age,
+
+        ageUnit:
+            ageUnit,
+
+        weight:
+            weight,
+
+        concentration:
+            concentration,
+
+        date:
+            now.toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }
+            ),
+
+        time:
+            now.toLocaleTimeString(
+                "en-US",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ),
+
+        timestamp:
+            now.getTime()
+
+    };
+
+
+    history.unshift(
+        historyItem
+    );
+
+
+    localStorage.setItem(
+        HISTORY_STORAGE_KEY,
+        JSON.stringify(history)
+    );
+
+}
 
 /* =========================================
    INITIALIZE
