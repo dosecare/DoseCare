@@ -43,15 +43,14 @@ const clearHistoryButton =
 
 const backButton =
     document.getElementById(
-        "history-back"
+        "back-button"
     );
 
 
 const startCalculatorButton =
     document.getElementById(
-        "start-history-calculator"
+        "go-calculator"
     );
-
 
 /* =========================================
    GET HISTORY
