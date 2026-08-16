@@ -1211,75 +1211,104 @@ if (backButton) {
 
 }
 /* =========================================
-   SAVE CALCULATION TO HISTORY
+   HISTORY
+   SAVE CALCULATION
 ========================================= */
 
 const HISTORY_STORAGE_KEY =
     "dosecareHistory";
 
 
-function saveCalculationToHistory({
-    medicine,
-    dose,
-    doseUnit,
-    age,
-    ageUnit,
-    weight,
-    concentration
-}) {
+function saveCalculationToHistory(data) {
 
-    const history =
-        JSON.parse(
+    let history = [];
+
+    try {
+
+        const saved =
             localStorage.getItem(
                 HISTORY_STORAGE_KEY
-            ) || "[]"
+            );
+
+        if (saved) {
+
+            const parsed =
+                JSON.parse(saved);
+
+            if (Array.isArray(parsed)) {
+
+                history = parsed;
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "History loading error:",
+            error
+        );
+
+    }
+
+
+    const now =
+        new Date();
+
+
+    const date =
+        now.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
         );
 
 
-    const now = new Date();
+    const time =
+        now.toLocaleTimeString(
+            "en-US",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
 
 
     const historyItem = {
 
+        id:
+            Date.now(),
+
         medicine:
-            medicine,
+            data.medicine,
 
         dose:
-            dose,
+            data.dose,
 
         doseUnit:
-            doseUnit,
+            data.doseUnit,
 
         age:
-            age,
+            data.age,
 
         ageUnit:
-            ageUnit,
+            data.ageUnit,
 
         weight:
-            weight,
+            data.weight,
 
         concentration:
-            concentration,
+            data.concentration,
 
         date:
-            now.toLocaleDateString(
-                "en-GB",
-                {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric"
-                }
-            ),
+            date,
 
         time:
-            now.toLocaleTimeString(
-                "en-US",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            ),
+            time,
 
         timestamp:
             now.getTime()
@@ -1287,9 +1316,26 @@ function saveCalculationToHistory({
     };
 
 
+    /*
+        Add newest calculation
+        to the beginning.
+    */
+
     history.unshift(
         historyItem
     );
+
+
+    /*
+        Keep the latest 50
+        calculations only.
+    */
+
+    history =
+        history.slice(
+            0,
+            50
+        );
 
 
     localStorage.setItem(
@@ -1297,8 +1343,13 @@ function saveCalculationToHistory({
         JSON.stringify(history)
     );
 
-}
 
+    console.log(
+        "Calculation saved to history:",
+        historyItem
+    );
+
+}
 /* =========================================
    INITIALIZE
 ========================================= */
