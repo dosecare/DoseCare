@@ -10,6 +10,10 @@
 
 const medicines = [
 
+    /* =====================================
+       PARACETAMOL
+    ===================================== */
+
     {
         id: "paracetamol",
 
@@ -28,7 +32,8 @@ const medicines = [
             "Antipyretic"
         ],
 
-        class: "Analgesic · Antipyretic",
+        class:
+            "Analgesic · Antipyretic",
 
         conditions: [
             "fever",
@@ -50,14 +55,47 @@ const medicines = [
         pediatric:
             "Pediatric dosing should be calculated according to the child's weight and the specific formulation concentration.",
 
-        /*
-            Dosing data will be added only after
-            verified pediatric dosing rules are configured.
-        */
 
-        dosing: null
+        /* =================================
+           DOSING CONFIGURATION
+        ================================= */
+
+        dosing: {
+
+            configured: false,
+
+            type:
+                "mg_per_kg_per_dose",
+
+            dose:
+                null,
+
+            frequency:
+                null,
+
+            maxDose:
+                null,
+
+            minAge:
+                null,
+
+            maxAge:
+                null,
+
+            indicationSpecific:
+                true,
+
+            notes:
+                "Verified pediatric dosing data must be configured before calculation."
+
+        }
+
     },
 
+
+    /* =====================================
+       IBUPROFEN
+    ===================================== */
 
     {
         id: "ibuprofen",
@@ -102,9 +140,47 @@ const medicines = [
         pediatric:
             "Use should consider age, hydration status, renal function and the clinical condition of the child.",
 
-        dosing: null
+
+        /* =================================
+           DOSING CONFIGURATION
+        ================================= */
+
+        dosing: {
+
+            configured: false,
+
+            type:
+                "mg_per_kg_per_dose",
+
+            dose:
+                null,
+
+            frequency:
+                null,
+
+            maxDose:
+                null,
+
+            minAge:
+                null,
+
+            maxAge:
+                null,
+
+            indicationSpecific:
+                true,
+
+            notes:
+                "Verify age restrictions and clinical suitability before configuring pediatric dosing."
+
+        }
+
     },
 
+
+    /* =====================================
+       AMOXICILLIN
+    ===================================== */
 
     {
         id: "amoxicillin",
@@ -146,9 +222,47 @@ const medicines = [
         pediatric:
             "Pediatric dosing depends on weight, infection type, severity and formulation concentration.",
 
-        dosing: null
+
+        /* =================================
+           DOSING CONFIGURATION
+        ================================= */
+
+        dosing: {
+
+            configured: false,
+
+            type:
+                "mg_per_kg_per_day",
+
+            dose:
+                null,
+
+            frequency:
+                null,
+
+            maxDose:
+                null,
+
+            minAge:
+                null,
+
+            maxAge:
+                null,
+
+            indicationSpecific:
+                true,
+
+            notes:
+                "Pediatric dose varies according to infection and clinical indication."
+
+        }
+
     },
 
+
+    /* =====================================
+       AZITHROMYCIN
+    ===================================== */
 
     {
         id: "azithromycin",
@@ -190,56 +304,120 @@ const medicines = [
         pediatric:
             "Dose and duration depend on the infection and the child's weight.",
 
-        dosing: null
+
+        /* =================================
+           DOSING CONFIGURATION
+        ================================= */
+
+        dosing: {
+
+            configured: false,
+
+            type:
+                "mg_per_kg_per_dose",
+
+            dose:
+                null,
+
+            frequency:
+                null,
+
+            maxDose:
+                null,
+
+            minAge:
+                null,
+
+            maxAge:
+                null,
+
+            indicationSpecific:
+                true,
+
+            notes:
+                "Dose and duration must be selected according to the verified indication-specific regimen."
+
+        }
+
     }
 
 ];
 
 
 /* =========================================
-   HELPER FUNCTIONS
+   MEDICINE HELPER FUNCTIONS
 ========================================= */
 
 
-/*
-    Find medicine by ID
-*/
+/* =========================================
+   GET MEDICINE BY ID
+========================================= */
 
 function getMedicineById(id) {
 
     return medicines.find(
         medicine =>
-            String(medicine.id) === String(id)
+            String(medicine.id) ===
+            String(id)
     );
 
 }
 
 
-/*
-    Find medicine by generic name
-*/
+/* =========================================
+   GET MEDICINE BY GENERIC NAME
+========================================= */
 
 function getMedicineByName(name) {
 
     if (!name) {
+
         return null;
+
     }
 
+
     const search =
-        name.trim().toLowerCase();
+        String(name)
+            .trim()
+            .toLowerCase();
+
 
     return medicines.find(
         medicine =>
             medicine.genericName
-                .toLowerCase() === search
+                .toLowerCase() ===
+            search
     );
 
 }
 
 
-/*
-    Search medicines
-*/
+/* =========================================
+   GET MEDICINE NAME
+========================================= */
+
+function getMedicineName(medicine) {
+
+    if (!medicine) {
+
+        return "Medicine";
+
+    }
+
+
+    return (
+        medicine.genericName ||
+        medicine.name ||
+        "Medicine"
+    );
+
+}
+
+
+/* =========================================
+   SEARCH MEDICINES
+========================================= */
 
 function searchMedicines(searchTerm) {
 
@@ -249,8 +427,9 @@ function searchMedicines(searchTerm) {
 
     }
 
+
     const search =
-        searchTerm
+        String(searchTerm)
             .trim()
             .toLowerCase();
 
@@ -270,7 +449,7 @@ function searchMedicines(searchTerm) {
             const brandMatch =
                 brands.some(
                     brand =>
-                        brand
+                        String(brand)
                             .toLowerCase()
                             .includes(search)
                 );
@@ -301,9 +480,9 @@ function searchMedicines(searchTerm) {
 }
 
 
-/*
-    Get all conditions
-*/
+/* =========================================
+   GET ALL CONDITIONS
+========================================= */
 
 function getAllMedicineConditions() {
 
@@ -314,8 +493,14 @@ function getAllMedicineConditions() {
     medicines.forEach(
         medicine => {
 
-            if (!medicine.conditions) {
+            if (
+                !Array.isArray(
+                    medicine.conditions
+                )
+            ) {
+
                 return;
+
             }
 
 
@@ -340,9 +525,9 @@ function getAllMedicineConditions() {
 }
 
 
-/*
-    Get medicines by condition
-*/
+/* =========================================
+   GET MEDICINES BY CONDITION
+========================================= */
 
 function getMedicinesByCondition(
     condition
@@ -356,11 +541,58 @@ function getMedicinesByCondition(
 
 
     return medicines.filter(
-        medicine =>
-            medicine.conditions &&
-            medicine.conditions.includes(
-                condition
-            )
+        medicine => {
+
+            return (
+                Array.isArray(
+                    medicine.conditions
+                ) &&
+                medicine.conditions.includes(
+                    condition
+                )
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   GET DOSING CONFIGURATION
+========================================= */
+
+function getMedicineDosing(id) {
+
+    const medicine =
+        getMedicineById(id);
+
+
+    if (!medicine) {
+
+        return null;
+
+    }
+
+
+    return medicine.dosing || null;
+
+}
+
+
+/* =========================================
+   CHECK IF DOSING IS CONFIGURED
+========================================= */
+
+function isMedicineDosingConfigured(id) {
+
+    const dosing =
+        getMedicineDosing(id);
+
+
+    return Boolean(
+        dosing &&
+        dosing.configured === true
     );
 
 }
@@ -373,6 +605,10 @@ function getMedicinesByCondition(
 const FAVORITES_STORAGE_KEY =
     "dosecareFavorites";
 
+
+/* =========================================
+   GET FAVORITES
+========================================= */
 
 function getFavoriteMedicines() {
 
@@ -395,7 +631,9 @@ function getFavoriteMedicines() {
             JSON.parse(saved);
 
 
-        return Array.isArray(favorites)
+        return Array.isArray(
+            favorites
+        )
             ? favorites
             : [];
 
@@ -414,9 +652,9 @@ function getFavoriteMedicines() {
 }
 
 
-/*
-    Save favorites
-*/
+/* =========================================
+   SAVE FAVORITES
+========================================= */
 
 function saveFavoriteMedicines(
     favorites
@@ -430,9 +668,9 @@ function saveFavoriteMedicines(
 }
 
 
-/*
-    Check favorite
-*/
+/* =========================================
+   CHECK FAVORITE
+========================================= */
 
 function isFavoriteMedicine(id) {
 
@@ -442,15 +680,16 @@ function isFavoriteMedicine(id) {
 
     return favorites.some(
         medicine =>
-            String(medicine.id) === String(id)
+            String(medicine.id) ===
+            String(id)
     );
 
 }
 
 
-/*
-    Add / remove favorite
-*/
+/* =========================================
+   TOGGLE FAVORITE
+========================================= */
 
 function toggleFavoriteMedicine(id) {
 
@@ -459,7 +698,9 @@ function toggleFavoriteMedicine(id) {
 
 
     if (!medicine) {
-        return;
+
+        return false;
+
     }
 
 
@@ -475,9 +716,9 @@ function toggleFavoriteMedicine(id) {
         );
 
 
-    /*
-        REMOVE
-    */
+    /* -------------------------------------
+       REMOVE
+    ------------------------------------- */
 
     if (existingIndex !== -1) {
 
@@ -489,9 +730,9 @@ function toggleFavoriteMedicine(id) {
     }
 
 
-    /*
-        ADD
-    */
+    /* -------------------------------------
+       ADD
+    ------------------------------------- */
 
     else {
 
@@ -527,7 +768,7 @@ function toggleFavoriteMedicine(id) {
 
 
 /* =========================================
-   FAVORITE BUTTON UI
+   UPDATE FAVORITE BUTTONS
 ========================================= */
 
 function updateFavoriteButtons() {
@@ -572,9 +813,9 @@ function updateFavoriteButtons() {
 }
 
 
-/*
-    Initialize favorite buttons
-*/
+/* =========================================
+   INITIALIZE FAVORITE BUTTONS
+========================================= */
 
 function initializeFavoriteButtons() {
 
@@ -637,7 +878,7 @@ function initializeFavoriteButtons() {
 
 
 /* =========================================
-   MEDICINE DATA VALIDATION
+   MEDICINE DATABASE VALIDATION
 ========================================= */
 
 function validateMedicineDatabase() {
@@ -650,10 +891,16 @@ function validateMedicineDatabase() {
                 "id",
                 "genericName",
                 "name",
+                "brandNames",
+                "drugClass",
                 "class",
-                "condition",
                 "conditions",
-                "route"
+                "condition",
+                "route",
+                "indications",
+                "moa",
+                "pediatric",
+                "dosing"
 
             ];
 
@@ -674,6 +921,19 @@ function validateMedicineDatabase() {
 
                 }
             );
+
+
+            if (
+                medicine.dosing &&
+                typeof medicine.dosing !==
+                "object"
+            ) {
+
+                console.warn(
+                    `Medicine "${medicine.genericName}" has an invalid dosing configuration.`
+                );
+
+            }
 
         }
     );
