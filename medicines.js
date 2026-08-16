@@ -61,26 +61,17 @@ const medicines = [
         ================================= */
 
         dosing: {
+    type: "mg_per_kg_per_dose",
 
-            configured: false,
+    minDose: 10,
+    maxDose: 15,
 
-            type:
-                "mg_per_kg_per_dose",
+    frequency: "every 4–6 hours",
 
-            dose:
-                null,
+    maxDailyDose: 60,
 
-            frequency:
-                null,
-
-            maxDose:
-                null,
-
-            minAge:
-                null,
-
-            maxAge:
-                null,
+    route: "oral"
+}
 
             indicationSpecific:
                 true,
@@ -146,27 +137,19 @@ const medicines = [
         ================================= */
 
         dosing: {
+    type: "mg_per_kg_per_dose",
 
-            configured: false,
+    minDose: 5,
+    maxDose: 10,
 
-            type:
-                "mg_per_kg_per_dose",
+    frequency: "every 6–8 hours",
 
-            dose:
-                null,
+    maxDailyDose: 30,
 
-            frequency:
-                null,
+    route: "oral",
 
-            maxDose:
-                null,
-
-            minAge:
-                null,
-
-            maxAge:
-                null,
-
+    minimumAgeMonths: 3
+}
             indicationSpecific:
                 true,
 
@@ -228,26 +211,28 @@ const medicines = [
         ================================= */
 
         dosing: {
+    type: "mg_per_kg_per_day",
 
-            configured: false,
+    regimens: {
 
-            type:
-                "mg_per_kg_per_day",
+        "respiratory infections": {
+            minDose: 45,
+            maxDose: 45,
+            frequency: 2,
+            maxPerDose: 2000
+        },
 
-            dose:
-                null,
+        "otitis media": {
+            minDose: 80,
+            maxDose: 90,
+            frequency: 2,
+            maxPerDose: 2000
+        }
 
-            frequency:
-                null,
+    },
 
-            maxDose:
-                null,
-
-            minAge:
-                null,
-
-            maxAge:
-                null,
+    route: "oral"
+}
 
             indicationSpecific:
                 true,
@@ -310,26 +295,12 @@ const medicines = [
         ================================= */
 
         dosing: {
+    type: "condition_based",
 
-            configured: false,
+    regimens: {},
 
-            type:
-                "mg_per_kg_per_dose",
-
-            dose:
-                null,
-
-            frequency:
-                null,
-
-            maxDose:
-                null,
-
-            minAge:
-                null,
-
-            maxAge:
-                null,
+    route: "oral"
+}
 
             indicationSpecific:
                 true,
