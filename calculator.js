@@ -103,15 +103,21 @@ function getAllConditions() {
 
 
     medicines.forEach(
-        (medicine) => {
+        medicine => {
 
-            if (!medicine.conditions) {
+            if (
+                !Array.isArray(
+                    medicine.conditions
+                )
+            ) {
+
                 return;
+
             }
 
 
             medicine.conditions.forEach(
-                (condition) => {
+                condition => {
 
                     conditionSet.add(
                         condition
@@ -142,12 +148,24 @@ function initializeConditions() {
     }
 
 
+    /*
+        Prevent duplicate options
+        if the function runs again.
+    */
+
+    conditionSelect.innerHTML = `
+        <option value="">
+            Select a condition
+        </option>
+    `;
+
+
     const allConditions =
         getAllConditions();
 
 
     allConditions.forEach(
-        (condition) => {
+        condition => {
 
             const option =
                 document.createElement(
@@ -183,7 +201,7 @@ function formatConditionName(
     condition
 ) {
 
-    return condition
+    return String(condition)
         .split(" ")
         .map(
             word =>
@@ -215,16 +233,13 @@ function getFilteredMedicines() {
 
 
     return medicines.filter(
-        (medicine) => {
-
-            return (
-                medicine.conditions &&
-                medicine.conditions.includes(
-                    selectedCondition
-                )
-            );
-
-        }
+        medicine =>
+            Array.isArray(
+                medicine.conditions
+            ) &&
+            medicine.conditions.includes(
+                selectedCondition
+            )
     );
 
 }
@@ -267,7 +282,7 @@ function populateMedicineSelect() {
 
 
     availableMedicines.forEach(
-        (medicine) => {
+        medicine => {
 
             const option =
                 document.createElement(
@@ -275,24 +290,16 @@ function populateMedicineSelect() {
                 );
 
 
-            /*
-                Support both:
-
-                genericName
-                name
-
-                This keeps the calculator
-                compatible with the database.
-            */
-
             option.value =
-                String(medicine.id);
+                String(
+                    medicine.id
+                );
 
 
             option.textContent =
-                medicine.genericName ||
-                medicine.name ||
-                "Medicine";
+                getMedicineName(
+                    medicine
+                );
 
 
             medicineSelect.appendChild(
@@ -303,7 +310,8 @@ function populateMedicineSelect() {
     );
 
 
-    medicineSelect.disabled = false;
+    medicineSelect.disabled =
+        false;
 
 }
 
@@ -321,10 +329,18 @@ if (conditionSelect) {
             populateMedicineSelect();
 
 
+            /*
+                Clear selected medicine
+                if it doesn't belong to
+                the selected condition.
+            */
+
             if (
                 selectedMedicine &&
                 conditionSelect.value &&
-                selectedMedicine.conditions &&
+                Array.isArray(
+                    selectedMedicine.conditions
+                ) &&
                 !selectedMedicine.conditions.includes(
                     conditionSelect.value
                 )
@@ -365,7 +381,7 @@ if (medicineSelect) {
 
             const medicine =
                 medicines.find(
-                    (item) =>
+                    item =>
                         String(item.id) ===
                         String(medicineId)
                 );
@@ -414,7 +430,9 @@ function selectMedicine(
 ) {
 
     if (!medicine) {
+
         return;
+
     }
 
 
@@ -435,7 +453,9 @@ function selectMedicine(
     if (medicineSelect) {
 
         medicineSelect.value =
-            String(medicine.id);
+            String(
+                medicine.id
+            );
 
     }
 
@@ -469,14 +489,16 @@ function clearSelectedMedicine() {
 
     if (medicineSelect) {
 
-        medicineSelect.value = "";
+        medicineSelect.value =
+            "";
 
     }
 
 
     if (medicineSearch) {
 
-        medicineSearch.value = "";
+        medicineSearch.value =
+            "";
 
     }
 
@@ -487,6 +509,11 @@ function clearSelectedMedicine() {
             "none";
 
     }
+
+
+    hideSearchResults();
+
+    hideResult();
 
 }
 
@@ -526,41 +553,52 @@ if (medicineSearch) {
             }
 
 
+            /*
+                Search the unified
+                medicine database.
+            */
+
             const filteredMedicines =
-                medicines.filter(
-                    (medicine) => {
+                typeof searchMedicines ===
+                "function"
 
-                        const name =
-                            getMedicineName(
-                                medicine
-                            ).toLowerCase();
+                    ? searchMedicines(
+                        searchTerm
+                    )
+
+                    : medicines.filter(
+                        medicine => {
+
+                            const name =
+                                getMedicineName(
+                                    medicine
+                                )
+                                    .toLowerCase();
 
 
-                        const brands =
-                            medicine.brandNames ||
-                            [];
+                            const brands =
+                                medicine.brandNames ||
+                                [];
 
 
-                        const brandMatch =
-                            brands.some(
-                                (brand) =>
-                                    String(brand)
-                                        .toLowerCase()
-                                        .includes(
-                                            searchTerm
+                            return (
+                                name.includes(
+                                    searchTerm
+                                ) ||
+                                brands.some(
+                                    brand =>
+                                        String(
+                                            brand
                                         )
+                                            .toLowerCase()
+                                            .includes(
+                                                searchTerm
+                                            )
+                                )
                             );
 
-
-                        return (
-                            name.includes(
-                                searchTerm
-                            ) ||
-                            brandMatch
-                        );
-
-                    }
-                );
+                        }
+                    );
 
 
             showSearchResults(
@@ -582,11 +620,14 @@ function showSearchResults(
 ) {
 
     if (!medicineResults) {
+
         return;
+
     }
 
 
-    medicineResults.innerHTML = "";
+    medicineResults.innerHTML =
+        "";
 
 
     if (!results.length) {
@@ -623,7 +664,7 @@ function showSearchResults(
 
 
     results.forEach(
-        (medicine) => {
+        medicine => {
 
             const item =
                 document.createElement(
@@ -645,9 +686,11 @@ function showSearchResults(
                 Array.isArray(
                     medicine.drugClass
                 )
+
                     ? medicine.drugClass.join(
                         " · "
                     )
+
                     : (
                         medicine.drugClass ||
                         medicine.class ||
@@ -699,7 +742,9 @@ function showSearchResults(
 function hideSearchResults() {
 
     if (!medicineResults) {
+
         return;
+
     }
 
 
@@ -721,8 +766,6 @@ if (clearMedicine) {
 
             clearSelectedMedicine();
 
-            hideSearchResults();
-
         }
     );
 
@@ -735,7 +778,7 @@ if (clearMedicine) {
 
 document.addEventListener(
     "click",
-    (event) => {
+    event => {
 
         if (
             medicineSearch &&
@@ -765,7 +808,9 @@ function showValidation(
 ) {
 
     if (!validationMessage) {
+
         return;
+
     }
 
 
@@ -792,7 +837,9 @@ function showValidation(
 function hideValidation() {
 
     if (!validationMessage) {
+
         return;
+
     }
 
 
@@ -809,7 +856,9 @@ function hideValidation() {
 function hideResult() {
 
     if (!resultCard) {
+
         return;
+
     }
 
 
@@ -822,12 +871,89 @@ function hideResult() {
 function showResult() {
 
     if (!resultCard) {
+
         return;
+
     }
 
 
     resultCard.style.display =
         "block";
+
+}
+
+
+/* =========================================
+   FORMAT NUMBER
+========================================= */
+
+function formatDoseNumber(
+    value
+) {
+
+    const number =
+        Number(value);
+
+
+    if (!Number.isFinite(number)) {
+
+        return "—";
+
+    }
+
+
+    /*
+        Keep useful decimals
+        without displaying
+        unnecessary zeros.
+    */
+
+    return Number(
+        number.toFixed(2)
+    ).toString();
+
+}
+
+
+/* =========================================
+   CALCULATE LIQUID VOLUME
+========================================= */
+
+/*
+    Example:
+
+    dose = 250 mg
+    concentration = 125 mg / 5 mL
+
+    volume =
+        250 × 5 / 125
+
+    = 10 mL
+*/
+
+function calculateLiquidVolume(
+    doseMg,
+    concentrationMg,
+    concentrationMl
+) {
+
+    if (
+        !Number.isFinite(doseMg) ||
+        !Number.isFinite(concentrationMg) ||
+        !Number.isFinite(concentrationMl) ||
+        concentrationMg <= 0 ||
+        concentrationMl <= 0
+    ) {
+
+        return NaN;
+
+    }
+
+
+    return (
+        doseMg *
+        concentrationMl
+    ) / concentrationMg;
 
 }
 
@@ -888,68 +1014,100 @@ function saveCalculationToHistory(
         getCalculationHistory();
 
 
-    history.unshift(
-        data
-    );
-
-
-    localStorage.setItem(
-        HISTORY_STORAGE_KEY,
-        JSON.stringify(history)
-    );
-
-}
-
-
-/* =========================================
-   CREATE DATE + TIME
-========================================= */
-
-function createHistoryDateTime() {
-
     const now =
         new Date();
 
 
-    const date =
-        now.toLocaleDateString(
-            "en-GB",
-            {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric"
-            }
-        );
+    const historyItem = {
 
+        id:
+            Date.now(),
 
-    const time =
-        now.toLocaleTimeString(
-            "en-US",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
+        medicine:
+            data.medicine,
 
+        dose:
+            data.dose,
 
-    return {
+        doseUnit:
+            data.doseUnit,
 
-        timestamp:
-            now.toISOString(),
+        age:
+            data.age,
+
+        ageUnit:
+            data.ageUnit,
+
+        weight:
+            data.weight,
+
+        concentration:
+            data.concentration,
 
         date:
-            date,
+            now.toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }
+            ),
 
         time:
-            time
+            now.toLocaleTimeString(
+                "en-US",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ),
+
+        timestamp:
+            now.getTime()
 
     };
+
+
+    /*
+        Newest calculation
+        appears first.
+    */
+
+    history.unshift(
+        historyItem
+    );
+
+
+    /*
+        Keep latest 50 records.
+    */
+
+    const limitedHistory =
+        history.slice(
+            0,
+            50
+        );
+
+
+    localStorage.setItem(
+        HISTORY_STORAGE_KEY,
+        JSON.stringify(
+            limitedHistory
+        )
+    );
+
+
+    console.log(
+        "Calculation saved to history:",
+        historyItem
+    );
 
 }
 
 
 /* =========================================
-   SAVE HISTORY RECORD
+   CREATE HISTORY RECORD
 ========================================= */
 
 function createHistoryRecord(
@@ -958,14 +1116,7 @@ function createHistoryRecord(
     concentration
 ) {
 
-    const dateTime =
-        createHistoryDateTime();
-
-
     return {
-
-        id:
-            Date.now(),
 
         medicine:
             getMedicineName(
@@ -994,16 +1145,218 @@ function createHistoryRecord(
                 : "",
 
         concentration:
-            concentration,
+            concentration
 
-        date:
-            dateTime.date,
+    };
 
-        time:
-            dateTime.time,
+}
 
-        timestamp:
-            dateTime.timestamp
+
+/* =========================================
+   GET DOSING RULE
+========================================= */
+
+function getDosingRule() {
+
+    if (
+        !selectedMedicine ||
+        !selectedMedicine.dosing
+    ) {
+
+        return null;
+
+    }
+
+
+    return selectedMedicine.dosing;
+
+}
+
+
+/* =========================================
+   CALCULATE DOSE FROM DATABASE
+========================================= */
+
+/*
+    This function reads the dosing rule
+    from medicines.js.
+
+    It does NOT invent a clinical dose.
+
+    Supported structures will include:
+
+    mgPerKgPerDose
+
+    mgPerKgPerDay
+
+    fixedDoseMg
+
+    maxDoseMg
+
+    maxDailyDoseMg
+
+    frequency
+*/
+
+function calculateDoseFromRule(
+    dosing,
+    weight
+) {
+
+    if (!dosing) {
+
+        return null;
+
+    }
+
+
+    let doseMg =
+        NaN;
+
+
+    /*
+        MG / KG / DOSE
+    */
+
+    if (
+        Number.isFinite(
+            Number(
+                dosing.mgPerKgPerDose
+            )
+        )
+    ) {
+
+        doseMg =
+            Number(
+                dosing.mgPerKgPerDose
+            ) *
+            weight;
+
+    }
+
+
+    /*
+        MG / KG / DAY
+
+        If the rule is expressed
+        per day, divide by the
+        number of doses per day.
+    */
+
+    else if (
+        Number.isFinite(
+            Number(
+                dosing.mgPerKgPerDay
+            )
+        )
+    ) {
+
+        const dailyDose =
+            Number(
+                dosing.mgPerKgPerDay
+            ) *
+            weight;
+
+
+        const dosesPerDay =
+            Number(
+                dosing.dosesPerDay
+            );
+
+
+        if (
+            Number.isFinite(
+                dosesPerDay
+            ) &&
+            dosesPerDay > 0
+        ) {
+
+            doseMg =
+                dailyDose /
+                dosesPerDay;
+
+        }
+
+        else {
+
+            doseMg =
+                dailyDose;
+
+        }
+
+    }
+
+
+    /*
+        FIXED DOSE
+    */
+
+    else if (
+        Number.isFinite(
+            Number(
+                dosing.fixedDoseMg
+            )
+        )
+    ) {
+
+        doseMg =
+            Number(
+                dosing.fixedDoseMg
+            );
+
+    }
+
+
+    if (
+        !Number.isFinite(
+            doseMg
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    /*
+        Maximum dose per dose
+    */
+
+    if (
+        Number.isFinite(
+            Number(
+                dosing.maxDoseMg
+            )
+        )
+    ) {
+
+        doseMg =
+            Math.min(
+                doseMg,
+                Number(
+                    dosing.maxDoseMg
+                )
+            );
+
+    }
+
+
+    return {
+
+        doseMg:
+            doseMg,
+
+        frequency:
+            dosing.frequency ||
+            "",
+
+        route:
+            dosing.route ||
+            "",
+
+        note:
+            dosing.note ||
+            ""
 
     };
 
@@ -1085,7 +1438,10 @@ function calculateDose() {
     }
 
 
-    if (hasAge && age < 0) {
+    if (
+        hasAge &&
+        age < 0
+    ) {
 
         showValidation(
             "Please enter a valid age."
@@ -1096,10 +1452,30 @@ function calculateDose() {
     }
 
 
-    if (hasWeight && weight <= 0) {
+    if (
+        hasWeight &&
+        weight <= 0
+    ) {
 
         showValidation(
             "Please enter a valid weight."
+        );
+
+        return;
+
+    }
+
+
+    /*
+        The current dosing engine
+        requires weight for
+        weight-based calculations.
+    */
+
+    if (!hasWeight) {
+
+        showValidation(
+            "Please enter the patient's weight to calculate the pediatric dose."
         );
 
         return;
@@ -1148,17 +1524,17 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       4. CHECK DOSING METHOD
+       4. DOSING RULE
     ------------------------------------- */
 
     const dosing =
-        selectedMedicine.dosing;
+        getDosingRule();
 
 
     if (!dosing) {
 
         showValidation(
-            "A dosing method has not been configured for this medicine yet."
+            "A verified pediatric dosing rule has not been configured for this medicine yet."
         );
 
         return;
@@ -1166,29 +1542,170 @@ function calculateDose() {
     }
 
 
-    /*
-        IMPORTANT
+    /* -------------------------------------
+       5. CALCULATE DOSE
+    ------------------------------------- */
 
-        The clinical dosing rule is NOT
-        invented here.
+    const calculation =
+        calculateDoseFromRule(
+            dosing,
+            weight
+        );
 
-        It must come from the verified
-        medicine database.
-    */
+
+    if (!calculation) {
+
+        showValidation(
+            "The dosing information for this medicine is incomplete."
+        );
+
+        return;
+
+    }
 
 
-    showValidation(
-        "The medicine and patient information are ready. The verified dosing rule will be applied once the dosing data for this medicine is configured."
+    const doseMg =
+        calculation.doseMg;
+
+
+    /* -------------------------------------
+       6. CALCULATE LIQUID VOLUME
+    ------------------------------------- */
+
+    const volumeMl =
+        calculateLiquidVolume(
+            doseMg,
+            concentrationMg,
+            concentrationMl
+        );
+
+
+    if (
+        !Number.isFinite(
+            volumeMl
+        )
+    ) {
+
+        showValidation(
+            "The medicine concentration could not be used to calculate the liquid volume."
+        );
+
+        return;
+
+    }
+
+
+    /* -------------------------------------
+       7. DISPLAY RESULT
+    ------------------------------------- */
+
+    if (doseResult) {
+
+        doseResult.textContent =
+            formatDoseNumber(
+                volumeMl
+            );
+
+    }
+
+
+    if (doseUnit) {
+
+        doseUnit.textContent =
+            "mL";
+
+    }
+
+
+    if (resultDetails) {
+
+        resultDetails.innerHTML = `
+
+            <div>
+                <span>
+                    Dose
+                </span>
+
+                <strong>
+                    ${formatDoseNumber(
+                        doseMg
+                    )} mg
+                </strong>
+            </div>
+
+
+            <div>
+                <span>
+                    Concentration
+                </span>
+
+                <strong>
+                    ${concentrationMg} mg /
+                    ${concentrationMl} mL
+                </strong>
+            </div>
+
+
+            <div>
+                <span>
+                    Frequency
+                </span>
+
+                <strong>
+                    ${
+                        calculation.frequency ||
+                        "As configured"
+                    }
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    showResult();
+
+
+    /* -------------------------------------
+       8. SAVE SUCCESSFUL CALCULATION
+          TO HISTORY
+    ------------------------------------- */
+
+    const historyData =
+        createHistoryRecord(
+            formatDoseNumber(
+                volumeMl
+            ),
+            "mL",
+            `${concentrationMg} mg / ${concentrationMl} mL`
+        );
+
+
+    saveCalculationToHistory(
+        historyData
     );
 
 
     /*
-        Do NOT save an incomplete calculation
-        to History.
-
-        History should contain only a real
-        calculated dose.
+        Optional note for the user.
     */
+
+    console.log(
+        "Dose calculation completed:",
+        {
+            medicine:
+                getMedicineName(
+                    selectedMedicine
+                ),
+
+            doseMg:
+                doseMg,
+
+            volumeMl:
+                volumeMl
+        }
+    );
 
 }
 
@@ -1210,146 +1727,8 @@ if (backButton) {
     );
 
 }
-/* =========================================
-   HISTORY
-   SAVE CALCULATION
-========================================= */
-
-const HISTORY_STORAGE_KEY =
-    "dosecareHistory";
 
 
-function saveCalculationToHistory(data) {
-
-    let history = [];
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                HISTORY_STORAGE_KEY
-            );
-
-        if (saved) {
-
-            const parsed =
-                JSON.parse(saved);
-
-            if (Array.isArray(parsed)) {
-
-                history = parsed;
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "History loading error:",
-            error
-        );
-
-    }
-
-
-    const now =
-        new Date();
-
-
-    const date =
-        now.toLocaleDateString(
-            "en-GB",
-            {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric"
-            }
-        );
-
-
-    const time =
-        now.toLocaleTimeString(
-            "en-US",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
-
-
-    const historyItem = {
-
-        id:
-            Date.now(),
-
-        medicine:
-            data.medicine,
-
-        dose:
-            data.dose,
-
-        doseUnit:
-            data.doseUnit,
-
-        age:
-            data.age,
-
-        ageUnit:
-            data.ageUnit,
-
-        weight:
-            data.weight,
-
-        concentration:
-            data.concentration,
-
-        date:
-            date,
-
-        time:
-            time,
-
-        timestamp:
-            now.getTime()
-
-    };
-
-
-    /*
-        Add newest calculation
-        to the beginning.
-    */
-
-    history.unshift(
-        historyItem
-    );
-
-
-    /*
-        Keep the latest 50
-        calculations only.
-    */
-
-    history =
-        history.slice(
-            0,
-            50
-        );
-
-
-    localStorage.setItem(
-        HISTORY_STORAGE_KEY,
-        JSON.stringify(history)
-    );
-
-
-    console.log(
-        "Calculation saved to history:",
-        historyItem
-    );
-
-}
 /* =========================================
    INITIALIZE
 ========================================= */
