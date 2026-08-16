@@ -1,22 +1,25 @@
 /* =========================================
    DoseCare
-   History Page Logic
+   Calculation History
+   History Logic
 ========================================= */
 
 
 /* =========================================
-   ELEMENTS
+   STORAGE
+========================================= */
+
+const HISTORY_STORAGE_KEY =
+    "dosecareHistory";
+
+
+/* =========================================
+   DOM ELEMENTS
 ========================================= */
 
 const historyList =
     document.getElementById(
         "history-list"
-    );
-
-
-const historyEmpty =
-    document.getElementById(
-        "history-empty"
     );
 
 
@@ -26,7 +29,13 @@ const historyCount =
     );
 
 
-const clearHistory =
+const emptyState =
+    document.getElementById(
+        "history-empty"
+    );
+
+
+const clearHistoryButton =
     document.getElementById(
         "clear-history"
     );
@@ -34,13 +43,13 @@ const clearHistory =
 
 const backButton =
     document.getElementById(
-        "back-button"
+        "history-back"
     );
 
 
-const goCalculator =
+const startCalculatorButton =
     document.getElementById(
-        "go-calculator"
+        "start-history-calculator"
     );
 
 
@@ -48,11 +57,11 @@ const goCalculator =
    GET HISTORY
 ========================================= */
 
-function getDoseHistory() {
+function getHistory() {
 
     const saved =
         localStorage.getItem(
-            "dosecareHistory"
+            HISTORY_STORAGE_KEY
         );
 
 
@@ -65,12 +74,20 @@ function getDoseHistory() {
 
     try {
 
-        return JSON.parse(
-            saved
-        );
+        const history =
+            JSON.parse(saved);
+
+
+        if (!Array.isArray(history)) {
+
+            return [];
+
+        }
+
+
+        return history;
 
     }
-
     catch (error) {
 
         console.error(
@@ -86,6 +103,22 @@ function getDoseHistory() {
 
 
 /* =========================================
+   SAVE HISTORY
+========================================= */
+
+function saveHistory(
+    history
+) {
+
+    localStorage.setItem(
+        HISTORY_STORAGE_KEY,
+        JSON.stringify(history)
+    );
+
+}
+
+
+/* =========================================
    FORMAT DATE
 ========================================= */
 
@@ -94,9 +127,19 @@ function formatHistoryDate(
 ) {
 
     /*
-        Use the original timestamp
-        when available.
+        New records already contain
+        a formatted date.
+
+        We keep this fallback for
+        older records.
     */
+
+    if (item.date) {
+
+        return item.date;
+
+    }
+
 
     if (item.timestamp) {
 
@@ -106,27 +149,19 @@ function formatHistoryDate(
             );
 
 
-        if (
-            !Number.isNaN(
-                date.getTime()
-            )
-        ) {
-
-            return date.toLocaleDateString(
-                "en-GB",
-                {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric"
-                }
-            );
-
-        }
+        return date.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        );
 
     }
 
 
-    return item.date || "Unknown date";
+    return "—";
 
 }
 
@@ -139,6 +174,13 @@ function formatHistoryTime(
     item
 ) {
 
+    if (item.time) {
+
+        return item.time;
+
+    }
+
+
     if (item.timestamp) {
 
         const date =
@@ -147,26 +189,43 @@ function formatHistoryTime(
             );
 
 
-        if (
-            !Number.isNaN(
-                date.getTime()
-            )
-        ) {
-
-            return date.toLocaleTimeString(
-                "en-US",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
-
-        }
+        return date.toLocaleTimeString(
+            "en-US",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
 
     }
 
 
-    return item.time || "Unknown time";
+    return "—";
+
+}
+
+
+/* =========================================
+   FORMAT VALUE
+========================================= */
+
+function formatValue(
+    value,
+    fallback = "—"
+) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return fallback;
+
+    }
+
+
+    return value;
 
 }
 
@@ -177,40 +236,67 @@ function formatHistoryTime(
 
 function renderHistory() {
 
-    const history =
-        getDoseHistory();
-
-
-    historyList.innerHTML = "";
-
-
-    historyCount.textContent =
-        history.length;
-
-
-    /*
-        EMPTY
-    */
-
-    if (!history.length) {
-
-        historyEmpty.classList.add(
-            "show"
-        );
+    if (!historyList) {
 
         return;
 
     }
 
 
-    historyEmpty.classList.remove(
-        "show"
-    );
+    const history =
+        getHistory();
 
 
     /*
-        HISTORY CARDS
+        Update counter
     */
+
+    if (historyCount) {
+
+        historyCount.textContent =
+            history.length;
+
+    }
+
+
+    /*
+        Empty state
+    */
+
+    if (!history.length) {
+
+        historyList.innerHTML = "";
+
+
+        if (emptyState) {
+
+            emptyState.classList.add(
+                "show"
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    /*
+        Hide empty state
+    */
+
+    if (emptyState) {
+
+        emptyState.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    historyList.innerHTML = "";
+
 
     history.forEach(
         (item) => {
@@ -225,15 +311,74 @@ function renderHistory() {
                 "history-card";
 
 
+            const medicine =
+                formatValue(
+                    item.medicine,
+                    "Medicine"
+                );
+
+
+            const dose =
+                formatValue(
+                    item.dose
+                );
+
+
+            const doseUnit =
+                formatValue(
+                    item.doseUnit,
+                    "mg"
+                );
+
+
+            const age =
+                item.age !== undefined &&
+                item.age !== ""
+                    ? `${item.age} ${
+                        formatValue(
+                            item.ageUnit,
+                            ""
+                        )
+                      }`
+                    : "—";
+
+
+            const weight =
+                item.weight !== undefined &&
+                item.weight !== ""
+                    ? `${item.weight} kg`
+                    : "—";
+
+
+            const concentration =
+                formatValue(
+                    item.concentration
+                );
+
+
+            const date =
+                formatHistoryDate(
+                    item
+                );
+
+
+            const time =
+                formatHistoryTime(
+                    item
+                );
+
+
             card.innerHTML = `
 
                 <div class="history-card-top">
+
 
                     <div class="history-medicine">
 
                         <div class="history-medicine-icon">
                             +
                         </div>
+
 
                         <div>
 
@@ -242,10 +387,7 @@ function renderHistory() {
                             </span>
 
                             <h3>
-                                ${
-                                    item.medicine ||
-                                    "Unknown medicine"
-                                }
+                                ${medicine}
                             </h3>
 
                         </div>
@@ -256,24 +398,18 @@ function renderHistory() {
                     <div class="history-date">
 
                         <strong>
-                            ${
-                                formatHistoryDate(
-                                    item
-                                )
-                            }
+                            ${date}
                         </strong>
 
                         <span>
-                            ${
-                                formatHistoryTime(
-                                    item
-                                )
-                            }
+                            ${time}
                         </span>
 
                     </div>
 
+
                 </div>
+
 
 
                 <div class="history-dose">
@@ -283,70 +419,55 @@ function renderHistory() {
                     </span>
 
                     <strong>
-                        ${
-                            item.dose ??
-                            "—"
-                        }
-                        ${
-                            item.unit ||
-                            ""
-                        }
+                        ${dose}
+                        ${doseUnit}
                     </strong>
 
                 </div>
 
 
+
                 <div class="history-details">
 
-                    ${
-                        item.age !== undefined &&
-                        item.age !== null &&
-                        item.age !== ""
-                            ? `
-                                <div>
-                                    <span>Age</span>
-                                    <strong>
-                                        ${item.age}
-                                        ${item.ageUnit || ""}
-                                    </strong>
-                                </div>
-                              `
-                            : ""
-                    }
+
+                    <div>
+
+                        <span>
+                            Age
+                        </span>
+
+                        <strong>
+                            ${age}
+                        </strong>
+
+                    </div>
 
 
-                    ${
-                        item.weight !== undefined &&
-                        item.weight !== null &&
-                        item.weight !== ""
-                            ? `
-                                <div>
-                                    <span>Weight</span>
-                                    <strong>
-                                        ${item.weight} kg
-                                    </strong>
-                                </div>
-                              `
-                            : ""
-                    }
+                    <div>
+
+                        <span>
+                            Weight
+                        </span>
+
+                        <strong>
+                            ${weight}
+                        </strong>
+
+                    </div>
 
 
-                    ${
-                        item.concentrationMg &&
-                        item.concentrationMl
-                            ? `
-                                <div>
-                                    <span>Concentration</span>
-                                    <strong>
-                                        ${item.concentrationMg}
-                                        mg /
-                                        ${item.concentrationMl}
-                                        mL
-                                    </strong>
-                                </div>
-                              `
-                            : ""
-                    }
+                    <div>
+
+                        <span>
+                            Concentration
+                        </span>
+
+                        <strong>
+                            ${concentration}
+                        </strong>
+
+                    </div>
+
 
                 </div>
 
@@ -367,51 +488,58 @@ function renderHistory() {
    CLEAR HISTORY
 ========================================= */
 
-if (clearHistory) {
+function clearHistory() {
 
-    clearHistory.addEventListener(
+    const history =
+        getHistory();
+
+
+    if (!history.length) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        window.confirm(
+            "Are you sure you want to clear all calculation history?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        HISTORY_STORAGE_KEY
+    );
+
+
+    renderHistory();
+
+}
+
+
+/* =========================================
+   CLEAR BUTTON
+========================================= */
+
+if (clearHistoryButton) {
+
+    clearHistoryButton.addEventListener(
         "click",
-        () => {
-
-            const history =
-                getDoseHistory();
-
-
-            if (!history.length) {
-
-                return;
-
-            }
-
-
-            const confirmed =
-                window.confirm(
-                    "Are you sure you want to clear all calculation history?"
-                );
-
-
-            if (!confirmed) {
-
-                return;
-
-            }
-
-
-            localStorage.removeItem(
-                "dosecareHistory"
-            );
-
-
-            renderHistory();
-
-        }
+        clearHistory
     );
 
 }
 
 
 /* =========================================
-   BACK
+   BACK TO HOME
 ========================================= */
 
 if (backButton) {
@@ -430,12 +558,12 @@ if (backButton) {
 
 
 /* =========================================
-   GO TO CALCULATOR
+   START CALCULATOR
 ========================================= */
 
-if (goCalculator) {
+if (startCalculatorButton) {
 
-    goCalculator.addEventListener(
+    startCalculatorButton.addEventListener(
         "click",
         () => {
 
@@ -449,7 +577,40 @@ if (goCalculator) {
 
 
 /* =========================================
+   AUTO REFRESH
+========================================= */
+
+/*
+    If another tab/page changes
+    the history, update this page.
+*/
+
+window.addEventListener(
+    "storage",
+    (event) => {
+
+        if (
+            event.key ===
+            HISTORY_STORAGE_KEY
+        ) {
+
+            renderHistory();
+
+        }
+
+    }
+);
+
+
+/* =========================================
    INITIALIZE
 ========================================= */
 
-renderHistory();
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        renderHistory();
+
+    }
+);
