@@ -125,49 +125,45 @@ function initializeConditions() {
         return;
     }
 
-
     /*
-        Prevent duplicate options
-        if the script is initialized again.
+        Keep the default option already
+        موجودة بالـHTML.
     */
 
-    conditionSelect.innerHTML = "";
-
-
-    const defaultOption =
-        document.createElement("option");
-
-
-    defaultOption.value = "";
-
-
-    defaultOption.textContent =
-        "Select a condition";
-
-
-    conditionSelect.appendChild(
-        defaultOption
-    );
-
+    const existingValues =
+        Array.from(
+            conditionSelect.options
+        ).map(
+            option => option.value
+        );
 
     getAllConditions().forEach(
         condition => {
+
+            /*
+                Don't add duplicate conditions.
+            */
+
+            if (
+                existingValues.includes(
+                    condition
+                )
+            ) {
+                return;
+            }
 
             const option =
                 document.createElement(
                     "option"
                 );
 
-
             option.value =
                 condition;
-
 
             option.textContent =
                 formatConditionName(
                     condition
                 );
-
 
             conditionSelect.appendChild(
                 option
@@ -177,8 +173,6 @@ function initializeConditions() {
     );
 
 }
-
-
 /* =========================================
    FORMAT CONDITION NAME
 ========================================= */
