@@ -1,6 +1,6 @@
 /* =========================================
    DoseCare
-   Medicine Library Logic
+   Unified Medicine Database
 ========================================= */
 
 
@@ -11,15 +11,35 @@
 const medicines = [
 
     {
-        id: 1,
+        id: "paracetamol",
+
+        genericName: "Paracetamol",
 
         name: "Paracetamol",
 
+        brandNames: [
+            "Panadol",
+            "Calpol",
+            "Tylenol"
+        ],
+
+        drugClass: [
+            "Analgesic",
+            "Antipyretic"
+        ],
+
         class: "Analgesic · Antipyretic",
 
-        condition: "Fever · Mild to moderate pain",
+        conditions: [
+            "fever",
+            "mild to moderate pain"
+        ],
 
-        route: "Oral · IV · Rectal",
+        condition:
+            "Fever · Mild to moderate pain",
+
+        route:
+            "Oral · IV · Rectal",
 
         indications:
             "Used for fever and mild to moderate pain.",
@@ -28,20 +48,50 @@ const medicines = [
             "Reduces prostaglandin synthesis mainly in the central nervous system, producing analgesic and antipyretic effects.",
 
         pediatric:
-            "Pediatric dosing should be calculated according to the child's weight and the specific formulation concentration."
+            "Pediatric dosing should be calculated according to the child's weight and the specific formulation concentration.",
+
+        /*
+            Dosing data will be added only after
+            verified pediatric dosing rules are configured.
+        */
+
+        dosing: null
     },
 
 
     {
-        id: 2,
+        id: "ibuprofen",
+
+        genericName: "Ibuprofen",
 
         name: "Ibuprofen",
 
-        class: "NSAID · Analgesic",
+        brandNames: [
+            "Brufen",
+            "Nurofen",
+            "Advil"
+        ],
 
-        condition: "Fever · Pain · Inflammation",
+        drugClass: [
+            "NSAID",
+            "Analgesic",
+            "Antipyretic"
+        ],
 
-        route: "Oral",
+        class:
+            "NSAID · Analgesic",
+
+        conditions: [
+            "fever",
+            "pain",
+            "inflammation"
+        ],
+
+        condition:
+            "Fever · Pain · Inflammation",
+
+        route:
+            "Oral",
 
         indications:
             "Used for fever, pain and inflammatory conditions in appropriate pediatric patients.",
@@ -50,20 +100,42 @@ const medicines = [
             "Inhibits cyclooxygenase enzymes, reducing prostaglandin synthesis and producing analgesic, antipyretic and anti-inflammatory effects.",
 
         pediatric:
-            "Use should consider age, hydration status, renal function and the clinical condition of the child."
+            "Use should consider age, hydration status, renal function and the clinical condition of the child.",
+
+        dosing: null
     },
 
 
     {
-        id: 3,
+        id: "amoxicillin",
+
+        genericName: "Amoxicillin",
 
         name: "Amoxicillin",
 
-        class: "Penicillin · Antibiotic",
+        brandNames: [
+            "Amoxil"
+        ],
 
-        condition: "Bacterial infections",
+        drugClass: [
+            "Penicillin",
+            "Antibiotic"
+        ],
 
-        route: "Oral",
+        class:
+            "Penicillin · Antibiotic",
+
+        conditions: [
+            "bacterial infections",
+            "respiratory infections",
+            "otitis media"
+        ],
+
+        condition:
+            "Bacterial infections",
+
+        route:
+            "Oral",
 
         indications:
             "Used for susceptible bacterial infections including selected respiratory, ear and other infections.",
@@ -72,20 +144,42 @@ const medicines = [
             "Inhibits bacterial cell wall synthesis by binding to penicillin-binding proteins.",
 
         pediatric:
-            "Pediatric dosing depends on weight, infection type, severity and formulation concentration."
+            "Pediatric dosing depends on weight, infection type, severity and formulation concentration.",
+
+        dosing: null
     },
 
 
     {
-        id: 4,
+        id: "azithromycin",
+
+        genericName: "Azithromycin",
 
         name: "Azithromycin",
 
-        class: "Macrolide · Antibiotic",
+        brandNames: [
+            "Zithromax",
+            "Sumamed"
+        ],
 
-        condition: "Respiratory · Bacterial infections",
+        drugClass: [
+            "Macrolide",
+            "Antibiotic"
+        ],
 
-        route: "Oral · IV",
+        class:
+            "Macrolide · Antibiotic",
+
+        conditions: [
+            "respiratory infections",
+            "bacterial infections"
+        ],
+
+        condition:
+            "Respiratory · Bacterial infections",
+
+        route:
+            "Oral · IV",
 
         indications:
             "Used for selected susceptible bacterial infections.",
@@ -94,547 +188,112 @@ const medicines = [
             "Binds to the bacterial 50S ribosomal subunit and inhibits protein synthesis.",
 
         pediatric:
-            "Dose and duration depend on the infection and the child's weight."
+            "Dose and duration depend on the infection and the child's weight.",
+
+        dosing: null
     }
 
 ];
 
 
 /* =========================================
-   ELEMENTS
+   HELPER FUNCTIONS
 ========================================= */
 
-const medicineList =
-    document.getElementById("medicine-list");
 
-const medicineSearch =
-    document.getElementById("medicine-search");
+/*
+    Find medicine by ID
+*/
 
-const classFilter =
-    document.getElementById("class-filter");
+function getMedicineById(id) {
 
-const conditionFilter =
-    document.getElementById("condition-filter");
+    return medicines.find(
+        medicine =>
+            String(medicine.id) === String(id)
+    );
 
-const medicineCount =
-    document.getElementById("medicine-count");
-
-const emptyState =
-    document.getElementById("empty-state");
-
-const clearSearch =
-    document.getElementById("clear-search");
+}
 
 
-/* =========================================
-   STARS
-========================================= */
+/*
+    Find medicine by generic name
+*/
 
-const starsContainer =
-    document.getElementById("stars");
+function getMedicineByName(name) {
 
-
-const STAR_COUNT = 55;
-
-
-if (starsContainer) {
-
-    for (
-        let i = 0;
-        i < STAR_COUNT;
-        i++
-    ) {
-
-        const star =
-            document.createElement("span");
-
-        star.classList.add("star");
-
-
-        const size =
-            Math.random();
-
-
-        if (size < .25) {
-
-            star.classList.add("large");
-
-        }
-        else if (size < .65) {
-
-            star.classList.add("small");
-
-        }
-
-
-        star.style.left =
-            `${Math.random() * 100}%`;
-
-        star.style.top =
-            `${Math.random() * 100}%`;
-
-
-        star.style.animationDelay =
-            `${Math.random() * 4}s`;
-
-
-        starsContainer.appendChild(star);
-
+    if (!name) {
+        return null;
     }
-
-}
-
-
-/* =========================================
-   BUILD FILTERS
-========================================= */
-
-function buildFilters() {
-
-    const classes =
-        [
-            ...new Set(
-                medicines.map(
-                    medicine => medicine.class
-                )
-            )
-        ];
-
-
-    const conditions =
-        [
-            ...new Set(
-                medicines.map(
-                    medicine => medicine.condition
-                )
-            )
-        ];
-
-
-    classes.forEach(
-        medicineClass => {
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                medicineClass;
-
-            option.textContent =
-                medicineClass;
-
-            classFilter.appendChild(option);
-
-        }
-    );
-
-
-    conditions.forEach(
-        condition => {
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                condition;
-
-            option.textContent =
-                condition;
-
-            conditionFilter.appendChild(option);
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   RENDER MEDICINES
-========================================= */
-
-function renderMedicines(list) {
-
-    medicineList.innerHTML = "";
-
-
-    medicineCount.textContent =
-        `${list.length} ${
-            list.length === 1
-                ? "medicine"
-                : "medicines"
-        }`;
-
-
-    if (list.length === 0) {
-
-        emptyState.classList.add("show");
-
-        return;
-
-    }
-
-
-    emptyState.classList.remove("show");
-
-
-    list.forEach(
-        medicine => {
-
-            const card =
-                document.createElement("article");
-
-            card.className =
-                "medicine-card";
-
-
-            card.innerHTML = `
-
-                <div class="card-top">
-
-                    <div class="medicine-icon">
-                        +
-                    </div>
-
-                    <button
-                        class="favorite-button"
-                        data-id="${medicine.id}"
-                        type="button"
-                        aria-label="Add to favorites"
-                    >
-                        ☆
-                    </button>
-
-                </div>
-
-
-                <span class="card-class">
-                    ${medicine.class}
-                </span>
-
-
-                <h3>
-                    ${medicine.name}
-                </h3>
-
-
-                <p class="card-condition">
-                    ${medicine.condition}
-                </p>
-
-
-                <div class="card-bottom">
-
-                    <button
-                        class="view-info"
-                        data-id="${medicine.id}"
-                        type="button"
-                    >
-
-                        View information
-
-                        <span>
-                            →
-                        </span>
-
-                    </button>
-
-
-                    <span class="route">
-                        ${medicine.route}
-                    </span>
-
-                </div>
-
-            `;
-
-
-            medicineList.appendChild(card);
-
-        }
-    );
-
-
-    attachCardEvents();
-initializeFavoriteButtons();
-
-}
-
-
-/* =========================================
-   SEARCH + FILTER
-========================================= */
-
-function filterMedicines() {
 
     const search =
-        medicineSearch.value
+        name.trim().toLowerCase();
+
+    return medicines.find(
+        medicine =>
+            medicine.genericName
+                .toLowerCase() === search
+    );
+
+}
+
+
+/*
+    Search medicines
+*/
+
+function searchMedicines(searchTerm) {
+
+    if (!searchTerm) {
+
+        return medicines;
+
+    }
+
+    const search =
+        searchTerm
             .trim()
             .toLowerCase();
 
 
-    const selectedClass =
-        classFilter.value;
+    return medicines.filter(
+        medicine => {
+
+            const genericName =
+                medicine.genericName
+                    .toLowerCase();
 
 
-    const selectedCondition =
-        conditionFilter.value;
+            const brands =
+                medicine.brandNames || [];
 
 
-    const filtered =
-        medicines.filter(
-            medicine => {
-
-                const matchesSearch =
-
-                    medicine.name
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    medicine.class
-                        .toLowerCase()
-                        .includes(search)
-
-                    ||
-
-                    medicine.condition
-                        .toLowerCase()
-                        .includes(search);
-
-
-                const matchesClass =
-
-                    selectedClass === "all"
-
-                    ||
-
-                    medicine.class === selectedClass;
-
-
-                const matchesCondition =
-
-                    selectedCondition === "all"
-
-                    ||
-
-                    medicine.condition === selectedCondition;
-
-
-                return (
-                    matchesSearch &&
-                    matchesClass &&
-                    matchesCondition
+            const brandMatch =
+                brands.some(
+                    brand =>
+                        brand
+                            .toLowerCase()
+                            .includes(search)
                 );
 
-            }
-        );
 
+            const classMatch =
+                medicine.class
+                    .toLowerCase()
+                    .includes(search);
 
-    renderMedicines(filtered);
 
+            const conditionMatch =
+                medicine.condition
+                    .toLowerCase()
+                    .includes(search);
 
-    clearSearch.style.display =
-        search
-            ? "block"
-            : "none";
 
-}
-
-
-/* =========================================
-   CARD EVENTS
-========================================= */
-
-function attachCardEvents() {
-
-
-    document
-        .querySelectorAll(".favorite-button")
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        button.classList.toggle(
-                            "active"
-                        );
-
-
-                        button.textContent =
-                            button.classList.contains(
-                                "active"
-                            )
-                                ? "★"
-                                : "☆";
-
-                    }
-                );
-
-            }
-        );
-
-
-    document
-        .querySelectorAll(".view-info")
-        .forEach(
-            button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        const id =
-                            Number(
-                                button.dataset.id
-                            );
-
-
-                        openMedicineModal(id);
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-/* =========================================
-   MODAL
-========================================= */
-
-const modal =
-    document.getElementById(
-        "medicine-modal"
-    );
-
-const closeModal =
-    document.getElementById(
-        "close-modal"
-    );
-
-
-function openMedicineModal(id) {
-
-    const medicine =
-        medicines.find(
-            item => item.id === id
-        );
-
-
-    if (!medicine) return;
-
-
-    document.getElementById(
-        "modal-name"
-    ).textContent =
-        medicine.name;
-
-
-    document.getElementById(
-        "modal-class"
-    ).textContent =
-        medicine.class;
-
-
-    document.getElementById(
-        "modal-condition"
-    ).textContent =
-        medicine.condition;
-
-
-    document.getElementById(
-        "modal-route"
-    ).textContent =
-        medicine.route;
-
-
-    document.getElementById(
-        "modal-indications"
-    ).textContent =
-        medicine.indications;
-
-
-    document.getElementById(
-        "modal-moa"
-    ).textContent =
-        medicine.moa;
-
-
-    document.getElementById(
-        "modal-pediatric"
-    ).textContent =
-        medicine.pediatric;
-
-
-    modal.classList.add("open");
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-function closeMedicineModal() {
-
-    modal.classList.remove("open");
-
-    document.body.style.overflow =
-        "";
-
-}
-
-
-if (closeModal) {
-
-    closeModal.addEventListener(
-        "click",
-        closeMedicineModal
-    );
-
-}
-
-
-const modalOverlay =
-    document.querySelector(
-        ".modal-overlay"
-    );
-
-
-if (modalOverlay) {
-
-    modalOverlay.addEventListener(
-        "click",
-        closeMedicineModal
-    );
-
-}
-
-
-/* =========================================
-   BACK BUTTON
-========================================= */
-
-const backButton =
-    document.getElementById(
-        "back-button"
-    );
-
-
-if (backButton) {
-
-    backButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "index.html";
+            return (
+                genericName.includes(search) ||
+                brandMatch ||
+                classMatch ||
+                conditionMatch
+            );
 
         }
     );
@@ -642,85 +301,86 @@ if (backButton) {
 }
 
 
-/* =========================================
-   SEARCH EVENTS
-========================================= */
+/*
+    Get all conditions
+*/
 
-medicineSearch.addEventListener(
-    "input",
-    filterMedicines
-);
+function getAllMedicineConditions() {
 
-
-classFilter.addEventListener(
-    "change",
-    filterMedicines
-);
+    const conditionSet =
+        new Set();
 
 
-conditionFilter.addEventListener(
-    "change",
-    filterMedicines
-);
+    medicines.forEach(
+        medicine => {
+
+            if (!medicine.conditions) {
+                return;
+            }
 
 
-clearSearch.addEventListener(
-    "click",
-    () => {
+            medicine.conditions.forEach(
+                condition => {
 
-        medicineSearch.value = "";
+                    conditionSet.add(
+                        condition
+                    );
 
-        filterMedicines();
-
-        medicineSearch.focus();
-
-    }
-);
-
-
-/* =========================================
-   ESC → CLOSE MODAL
-========================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            closeMedicineModal();
+                }
+            );
 
         }
+    );
+
+
+    return Array.from(
+        conditionSet
+    ).sort();
+
+}
+
+
+/*
+    Get medicines by condition
+*/
+
+function getMedicinesByCondition(
+    condition
+) {
+
+    if (!condition) {
+
+        return medicines;
 
     }
-);
+
+
+    return medicines.filter(
+        medicine =>
+            medicine.conditions &&
+            medicine.conditions.includes(
+                condition
+            )
+    );
+
+}
 
 
 /* =========================================
-   INITIALIZE
+   FAVORITES
 ========================================= */
 
-buildFilters();
+const FAVORITES_STORAGE_KEY =
+    "dosecareFavorites";
 
-renderMedicines(medicines);
-/* =========================================
-   DOSECARE
-   FAVORITES SYSTEM
-========================================= */
-
-
-/* =========================================
-   GET FAVORITES
-========================================= */
 
 function getFavoriteMedicines() {
 
     const saved =
         localStorage.getItem(
-            "dosecareFavorites"
+            FAVORITES_STORAGE_KEY
         );
+
 
     if (!saved) {
 
@@ -728,11 +388,19 @@ function getFavoriteMedicines() {
 
     }
 
+
     try {
 
-        return JSON.parse(saved);
+        const favorites =
+            JSON.parse(saved);
 
-    } catch (error) {
+
+        return Array.isArray(favorites)
+            ? favorites
+            : [];
+
+    }
+    catch (error) {
 
         console.error(
             "Favorites loading error:",
@@ -746,51 +414,53 @@ function getFavoriteMedicines() {
 }
 
 
-/* =========================================
-   SAVE FAVORITES
-========================================= */
+/*
+    Save favorites
+*/
 
 function saveFavoriteMedicines(
     favorites
 ) {
 
     localStorage.setItem(
-        "dosecareFavorites",
+        FAVORITES_STORAGE_KEY,
         JSON.stringify(favorites)
     );
 
 }
 
 
-/* =========================================
-   CHECK FAVORITE
-========================================= */
+/*
+    Check favorite
+*/
 
 function isFavoriteMedicine(id) {
 
     const favorites =
         getFavoriteMedicines();
 
+
     return favorites.some(
         medicine =>
-            medicine.id === id
+            String(medicine.id) === String(id)
     );
 
 }
 
 
-/* =========================================
-   TOGGLE FAVORITE
-========================================= */
+/*
+    Add / remove favorite
+*/
 
 function toggleFavoriteMedicine(id) {
 
     const medicine =
-        medicines.find(
-            item => item.id === id
-        );
+        getMedicineById(id);
 
-    if (!medicine) return;
+
+    if (!medicine) {
+        return;
+    }
 
 
     let favorites =
@@ -799,11 +469,15 @@ function toggleFavoriteMedicine(id) {
 
     const existingIndex =
         favorites.findIndex(
-            item => item.id === id
+            item =>
+                String(item.id) ===
+                String(id)
         );
 
 
-    /* REMOVE */
+    /*
+        REMOVE
+    */
 
     if (existingIndex !== -1) {
 
@@ -815,7 +489,9 @@ function toggleFavoriteMedicine(id) {
     }
 
 
-    /* ADD */
+    /*
+        ADD
+    */
 
     else {
 
@@ -825,7 +501,7 @@ function toggleFavoriteMedicine(id) {
                 medicine.id,
 
             name:
-                medicine.name,
+                medicine.genericName,
 
             class:
                 medicine.class,
@@ -843,13 +519,15 @@ function toggleFavoriteMedicine(id) {
     );
 
 
-    updateFavoriteButtons();
+    return (
+        existingIndex === -1
+    );
 
 }
 
 
 /* =========================================
-   UPDATE STAR BUTTONS
+   FAVORITE BUTTON UI
 ========================================= */
 
 function updateFavoriteButtons() {
@@ -862,44 +540,31 @@ function updateFavoriteButtons() {
             button => {
 
                 const id =
-                    Number(
-                        button.dataset.id
-                    );
+                    button.dataset.id;
 
 
-                if (
-                    isFavoriteMedicine(id)
-                ) {
+                const active =
+                    isFavoriteMedicine(id);
 
-                    button.classList.add(
-                        "active"
-                    );
 
-                    button.textContent =
-                        "★";
+                button.classList.toggle(
+                    "active",
+                    active
+                );
 
-                    button.setAttribute(
-                        "aria-label",
-                        "Remove from favorites"
-                    );
 
-                }
+                button.textContent =
+                    active
+                        ? "★"
+                        : "☆";
 
-                else {
 
-                    button.classList.remove(
-                        "active"
-                    );
-
-                    button.textContent =
-                        "☆";
-
-                    button.setAttribute(
-                        "aria-label",
-                        "Add to favorites"
-                    );
-
-                }
+                button.setAttribute(
+                    "aria-label",
+                    active
+                        ? "Remove from favorites"
+                        : "Add to favorites"
+                );
 
             }
         );
@@ -907,9 +572,9 @@ function updateFavoriteButtons() {
 }
 
 
-/* =========================================
-   FAVORITE BUTTON EVENTS
-========================================= */
+/*
+    Initialize favorite buttons
+*/
 
 function initializeFavoriteButtons() {
 
@@ -919,6 +584,25 @@ function initializeFavoriteButtons() {
         )
         .forEach(
             button => {
+
+                /*
+                    Prevent duplicate
+                    event listeners.
+                */
+
+                if (
+                    button.dataset.favoriteReady ===
+                    "true"
+                ) {
+
+                    return;
+
+                }
+
+
+                button.dataset.favoriteReady =
+                    "true";
+
 
                 button.addEventListener(
                     "click",
@@ -930,14 +614,15 @@ function initializeFavoriteButtons() {
 
 
                         const id =
-                            Number(
-                                button.dataset.id
-                            );
+                            button.dataset.id;
 
 
                         toggleFavoriteMedicine(
                             id
                         );
+
+
+                        updateFavoriteButtons();
 
                     }
                 );
@@ -952,7 +637,52 @@ function initializeFavoriteButtons() {
 
 
 /* =========================================
-   INITIALIZE FAVORITES
+   MEDICINE DATA VALIDATION
 ========================================= */
 
-initializeFavoriteButtons();
+function validateMedicineDatabase() {
+
+    medicines.forEach(
+        medicine => {
+
+            const requiredFields = [
+
+                "id",
+                "genericName",
+                "name",
+                "class",
+                "condition",
+                "conditions",
+                "route"
+
+            ];
+
+
+            requiredFields.forEach(
+                field => {
+
+                    if (
+                        medicine[field] ===
+                        undefined
+                    ) {
+
+                        console.warn(
+                            `Medicine "${medicine.genericName}" is missing "${field}".`
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   INITIALIZE DATABASE
+========================================= */
+
+validateMedicineDatabase();
