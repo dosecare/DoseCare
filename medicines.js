@@ -55,31 +55,37 @@ const medicines = [
         pediatric:
             "Pediatric dosing should be calculated according to the child's weight and the specific formulation concentration.",
 
-
         /* =================================
            DOSING CONFIGURATION
         ================================= */
 
         dosing: {
-    type: "mg_per_kg_per_dose",
 
-    minDose: 10,
-    maxDose: 15,
+            type:
+                "mg_per_kg_per_dose",
 
-    frequency: "every 4–6 hours",
+            minDose:
+                10,
 
-    maxDailyDose: 60,
+            maxDose:
+                15,
 
-    route: "oral"
-}
+            frequency:
+                "every 4–6 hours",
 
-            indicationSpecific:
-                true,
+            maxDailyDose:
+                60,
 
-            notes:
-                "Verified pediatric dosing data must be configured before calculation."
+            route:
+                "oral"
 
-        }
+        },
+
+        indicationSpecific:
+            true,
+
+        notes:
+            "Verified pediatric dosing data must be configured before calculation."
 
     },
 
@@ -131,32 +137,40 @@ const medicines = [
         pediatric:
             "Use should consider age, hydration status, renal function and the clinical condition of the child.",
 
-
         /* =================================
            DOSING CONFIGURATION
         ================================= */
 
         dosing: {
-    type: "mg_per_kg_per_dose",
 
-    minDose: 5,
-    maxDose: 10,
+            type:
+                "mg_per_kg_per_dose",
 
-    frequency: "every 6–8 hours",
+            minDose:
+                5,
 
-    maxDailyDose: 30,
+            maxDose:
+                10,
 
-    route: "oral",
+            frequency:
+                "every 6–8 hours",
 
-    minimumAgeMonths: 3
-}
-            indicationSpecific:
-                true,
+            maxDailyDose:
+                30,
 
-            notes:
-                "Verify age restrictions and clinical suitability before configuring pediatric dosing."
+            route:
+                "oral",
 
-        }
+            minimumAgeMonths:
+                3
+
+        },
+
+        indicationSpecific:
+            true,
+
+        notes:
+            "Verify age restrictions and clinical suitability before configuring pediatric dosing."
 
     },
 
@@ -205,42 +219,61 @@ const medicines = [
         pediatric:
             "Pediatric dosing depends on weight, infection type, severity and formulation concentration.",
 
-
         /* =================================
            DOSING CONFIGURATION
         ================================= */
 
         dosing: {
-    type: "mg_per_kg_per_day",
 
-    regimens: {
+            type:
+                "mg_per_kg_per_day",
 
-        "respiratory infections": {
-            minDose: 45,
-            maxDose: 45,
-            frequency: 2,
-            maxPerDose: 2000
+            regimens: {
+
+                "respiratory infections": {
+
+                    minDose:
+                        45,
+
+                    maxDose:
+                        45,
+
+                    frequency:
+                        2,
+
+                    maxPerDose:
+                        2000
+
+                },
+
+                "otitis media": {
+
+                    minDose:
+                        80,
+
+                    maxDose:
+                        90,
+
+                    frequency:
+                        2,
+
+                    maxPerDose:
+                        2000
+
+                }
+
+            },
+
+            route:
+                "oral"
+
         },
 
-        "otitis media": {
-            minDose: 80,
-            maxDose: 90,
-            frequency: 2,
-            maxPerDose: 2000
-        }
+        indicationSpecific:
+            true,
 
-    },
-
-    route: "oral"
-}
-
-            indicationSpecific:
-                true,
-
-            notes:
-                "Pediatric dose varies according to infection and clinical indication."
-
-        }
+        notes:
+            "Pediatric dose varies according to infection and clinical indication."
 
     },
 
@@ -289,26 +322,27 @@ const medicines = [
         pediatric:
             "Dose and duration depend on the infection and the child's weight.",
 
-
         /* =================================
            DOSING CONFIGURATION
         ================================= */
 
         dosing: {
-    type: "condition_based",
 
-    regimens: {},
+            type:
+                "condition_based",
 
-    route: "oral"
-}
+            regimens: {},
 
-            indicationSpecific:
-                true,
+            route:
+                "oral"
 
-            notes:
-                "Dose and duration must be selected according to the verified indication-specific regimen."
+        },
 
-        }
+        indicationSpecific:
+            true,
+
+        notes:
+            "Dose and duration must be selected according to the verified indication-specific regimen."
 
     }
 
@@ -347,12 +381,10 @@ function getMedicineByName(name) {
 
     }
 
-
     const search =
         String(name)
             .trim()
             .toLowerCase();
-
 
     return medicines.find(
         medicine =>
@@ -376,7 +408,6 @@ function getMedicineName(medicine) {
 
     }
 
-
     return (
         medicine.genericName ||
         medicine.name ||
@@ -398,12 +429,10 @@ function searchMedicines(searchTerm) {
 
     }
 
-
     const search =
         String(searchTerm)
             .trim()
             .toLowerCase();
-
 
     return medicines.filter(
         medicine => {
@@ -412,10 +441,8 @@ function searchMedicines(searchTerm) {
                 medicine.genericName
                     .toLowerCase();
 
-
             const brands =
                 medicine.brandNames || [];
-
 
             const brandMatch =
                 brands.some(
@@ -425,18 +452,15 @@ function searchMedicines(searchTerm) {
                             .includes(search)
                 );
 
-
             const classMatch =
                 medicine.class
                     .toLowerCase()
                     .includes(search);
 
-
             const conditionMatch =
                 medicine.condition
                     .toLowerCase()
                     .includes(search);
-
 
             return (
                 genericName.includes(search) ||
@@ -460,7 +484,6 @@ function getAllMedicineConditions() {
     const conditionSet =
         new Set();
 
-
     medicines.forEach(
         medicine => {
 
@@ -474,7 +497,6 @@ function getAllMedicineConditions() {
 
             }
 
-
             medicine.conditions.forEach(
                 condition => {
 
@@ -487,7 +509,6 @@ function getAllMedicineConditions() {
 
         }
     );
-
 
     return Array.from(
         conditionSet
@@ -509,7 +530,6 @@ function getMedicinesByCondition(
         return medicines;
 
     }
-
 
     return medicines.filter(
         medicine => {
@@ -538,13 +558,11 @@ function getMedicineDosing(id) {
     const medicine =
         getMedicineById(id);
 
-
     if (!medicine) {
 
         return null;
 
     }
-
 
     return medicine.dosing || null;
 
@@ -559,7 +577,6 @@ function isMedicineDosingConfigured(id) {
 
     const dosing =
         getMedicineDosing(id);
-
 
     return Boolean(
         dosing &&
@@ -588,19 +605,16 @@ function getFavoriteMedicines() {
             FAVORITES_STORAGE_KEY
         );
 
-
     if (!saved) {
 
         return [];
 
     }
 
-
     try {
 
         const favorites =
             JSON.parse(saved);
-
 
         return Array.isArray(
             favorites
@@ -648,7 +662,6 @@ function isFavoriteMedicine(id) {
     const favorites =
         getFavoriteMedicines();
 
-
     return favorites.some(
         medicine =>
             String(medicine.id) ===
@@ -667,17 +680,14 @@ function toggleFavoriteMedicine(id) {
     const medicine =
         getMedicineById(id);
 
-
     if (!medicine) {
 
         return false;
 
     }
 
-
     let favorites =
         getFavoriteMedicines();
-
 
     const existingIndex =
         favorites.findIndex(
@@ -730,7 +740,6 @@ function toggleFavoriteMedicine(id) {
         favorites
     );
 
-
     return (
         existingIndex === -1
     );
@@ -754,22 +763,18 @@ function updateFavoriteButtons() {
                 const id =
                     button.dataset.id;
 
-
                 const active =
                     isFavoriteMedicine(id);
-
 
                 button.classList.toggle(
                     "active",
                     active
                 );
 
-
                 button.textContent =
                     active
                         ? "★"
                         : "☆";
-
 
                 button.setAttribute(
                     "aria-label",
@@ -811,10 +816,8 @@ function initializeFavoriteButtons() {
 
                 }
 
-
                 button.dataset.favoriteReady =
                     "true";
-
 
                 button.addEventListener(
                     "click",
@@ -824,15 +827,12 @@ function initializeFavoriteButtons() {
 
                         event.stopPropagation();
 
-
                         const id =
                             button.dataset.id;
-
 
                         toggleFavoriteMedicine(
                             id
                         );
-
 
                         updateFavoriteButtons();
 
@@ -841,7 +841,6 @@ function initializeFavoriteButtons() {
 
             }
         );
-
 
     updateFavoriteButtons();
 
@@ -875,7 +874,6 @@ function validateMedicineDatabase() {
 
             ];
 
-
             requiredFields.forEach(
                 field => {
 
@@ -892,7 +890,6 @@ function validateMedicineDatabase() {
 
                 }
             );
-
 
             if (
                 medicine.dosing &&
