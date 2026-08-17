@@ -83,25 +83,60 @@ const homeScreen =
     );
 
 
-setTimeout(() => {
+/*
+    Show the Welcome screen only the first
+    time the user enters DoseCare during
+    the current browser session.
 
-    if (welcomeScreen) {
+    When returning from another page,
+    Home appears immediately.
+*/
+
+const WELCOME_SHOWN_KEY =
+    "dosecareWelcomeShown";
+
+
+if (welcomeScreen && homeScreen) {
+
+    const welcomeAlreadyShown =
+        sessionStorage.getItem(
+            WELCOME_SHOWN_KEY
+        );
+
+
+    if (welcomeAlreadyShown) {
 
         welcomeScreen.classList.add(
             "hide"
         );
-
-    }
-
-    if (homeScreen) {
 
         homeScreen.classList.add(
             "show"
         );
 
     }
+    else {
 
-}, 4000);
+        setTimeout(() => {
+
+            welcomeScreen.classList.add(
+                "hide"
+            );
+
+            homeScreen.classList.add(
+                "show"
+            );
+
+            sessionStorage.setItem(
+                WELCOME_SHOWN_KEY,
+                "true"
+            );
+
+        }, 4000);
+
+    }
+
+}
 
 
 /* =========================================
@@ -231,10 +266,8 @@ if (homeMenuButton) {
 
             closeSideMenu();
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+            window.location.href =
+                "index.html";
 
         }
     );
@@ -439,7 +472,7 @@ if (quickHistory) {
 
 
 /* =========================================
-   OTHER MENU ITEMS
+   ASK / HELP
 ========================================= */
 
 const helpMenuButton =
@@ -447,15 +480,13 @@ const helpMenuButton =
         "help-menu-button"
     );
 
-const referencesMenuButton =
-    document.getElementById(
-        "references-menu-button"
-    );
 
-const settingsMenuButton =
-    document.getElementById(
-        "settings-menu-button"
-    );
+function openAsk() {
+
+    window.location.href =
+        "ask.html";
+
+}
 
 
 if (helpMenuButton) {
@@ -466,14 +497,22 @@ if (helpMenuButton) {
 
             closeSideMenu();
 
-            alert(
-                "Ask / Help will be available soon."
-            );
+            openAsk();
 
         }
     );
 
 }
+
+
+/* =========================================
+   REFERENCES
+========================================= */
+
+const referencesMenuButton =
+    document.getElementById(
+        "references-menu-button"
+    );
 
 
 if (referencesMenuButton) {
@@ -492,6 +531,16 @@ if (referencesMenuButton) {
     );
 
 }
+
+
+/* =========================================
+   SETTINGS
+========================================= */
+
+const settingsMenuButton =
+    document.getElementById(
+        "settings-menu-button"
+    );
 
 
 if (settingsMenuButton) {
@@ -523,14 +572,14 @@ const menuItems =
 
 
 menuItems.forEach(
-    (item) => {
+    item => {
 
         item.addEventListener(
             "click",
             () => {
 
                 menuItems.forEach(
-                    (otherItem) => {
+                    otherItem => {
 
                         otherItem.classList.remove(
                             "active"
@@ -609,7 +658,9 @@ function getInitials(name) {
 
 
     const words =
-        name.trim().split(/\s+/);
+        name
+            .trim()
+            .split(/\s+/);
 
 
     if (words.length === 1) {
