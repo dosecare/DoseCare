@@ -1,0 +1,821 @@
+/* =========================================
+   DoseCare
+   Ask Page
+========================================= */
+
+
+.ask-page {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: min(
+        920px,
+        calc(100% - 32px)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        35px
+        0
+        70px;
+
+}
+
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.ask-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.ask-back {
+
+    width: 46px;
+
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border: 1px solid
+        rgba(255,255,255,.12);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        .25s ease;
+
+}
+
+
+.ask-back:hover {
+
+    transform:
+        translateX(-3px);
+
+    background:
+        rgba(255,255,255,.10);
+
+}
+
+
+.ask-title span {
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    font-weight: 700;
+
+    opacity: .55;
+
+}
+
+
+.ask-title h1 {
+
+    margin:
+        4px
+        0
+        5px;
+
+    font-size:
+        clamp(30px, 6vw, 44px);
+
+}
+
+
+.ask-title p {
+
+    margin: 0;
+
+    opacity: .65;
+
+    line-height: 1.6;
+
+}
+
+
+
+/* =========================================
+   NOTICE
+========================================= */
+
+.ask-notice {
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 18px;
+
+    margin-bottom: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.055);
+
+}
+
+
+.notice-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,190,80,.14);
+
+    color:
+        #ffd98a;
+
+    font-weight: 800;
+
+}
+
+
+.ask-notice strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+}
+
+
+.ask-notice p {
+
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    opacity: .68;
+
+}
+
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.ask-card {
+
+    padding: 25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.16);
+
+}
+
+
+.section-heading span {
+
+    font-size: 10px;
+
+    letter-spacing: 2.5px;
+
+    font-weight: 800;
+
+    opacity: .45;
+
+}
+
+
+.section-heading h2 {
+
+    margin:
+        5px
+        0
+        24px;
+
+    font-size: 22px;
+
+}
+
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.form-group {
+
+    position: relative;
+
+    margin-bottom: 18px;
+
+}
+
+
+.form-group label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    opacity: .82;
+
+}
+
+
+.form-group label span {
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    opacity: .4;
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius: 13px;
+
+    padding:
+        13px
+        14px;
+
+    outline: none;
+
+    background:
+        rgba(0,0,0,.12);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    transition:
+        border .2s ease,
+        background .2s ease;
+
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 140px;
+
+    line-height: 1.6;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color:
+        rgba(120,200,255,.45);
+
+    background:
+        rgba(0,0,0,.18);
+
+}
+
+
+.form-group select option {
+
+    background: #18232d;
+
+    color: white;
+
+}
+
+
+.patient-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
+    gap: 12px;
+
+}
+
+
+.character-count {
+
+    text-align: right;
+
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    opacity: .42;
+
+}
+
+
+
+/* =========================================
+   VALIDATION
+========================================= */
+
+.ask-validation {
+
+    display: none;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+
+    padding: 12px 14px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,90,90,.10);
+
+    border:
+        1px solid
+        rgba(255,90,90,.18);
+
+}
+
+
+.ask-validation.show {
+
+    display: flex;
+
+}
+
+
+.ask-validation span {
+
+    width: 24px;
+
+    height: 24px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,90,90,.15);
+
+}
+
+
+.ask-validation p {
+
+    margin: 0;
+
+    font-size: 12px;
+
+}
+
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.ask-actions,
+.review-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+}
+
+
+.primary-button,
+.secondary-button {
+
+    border: none;
+
+    border-radius: 13px;
+
+    padding:
+        12px
+        17px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        .25s ease;
+
+}
+
+
+.primary-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #63c9ff,
+            #7d8cff
+        );
+
+    color: white;
+
+    box-shadow:
+        0 10px 25px
+        rgba(90,150,255,.18);
+
+}
+
+
+.primary-button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.secondary-button {
+
+    background:
+        rgba(255,255,255,.07);
+
+    color: white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+}
+
+
+.secondary-button:hover {
+
+    background:
+        rgba(255,255,255,.11);
+
+}
+
+
+
+/* =========================================
+   REVIEW
+========================================= */
+
+.question-review {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 24px;
+
+    border:
+        1px solid
+        rgba(110,200,255,.18);
+
+    border-radius: 22px;
+
+    background:
+        rgba(80,160,255,.06);
+
+}
+
+
+.question-review.show {
+
+    display: block;
+
+}
+
+
+.review-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+}
+
+
+.review-header span {
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    opacity: .45;
+
+}
+
+
+.review-header h2 {
+
+    margin:
+        5px
+        0
+        18px;
+
+}
+
+
+.review-header button {
+
+    width: 34px;
+
+    height: 34px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+}
+
+
+.review-content {
+
+    display: grid;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.review-item {
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.05);
+
+}
+
+
+.review-item span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    opacity: .45;
+
+}
+
+
+.review-item strong {
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+
+}
+
+
+
+/* =========================================
+   QUICK QUESTIONS
+========================================= */
+
+.quick-questions {
+
+    margin-top: 35px;
+
+}
+
+
+.quick-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 12px;
+
+}
+
+
+.quick-question {
+
+    text-align: left;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        .25s ease;
+
+}
+
+
+.quick-question:hover {
+
+    transform:
+        translateY(-3px);
+
+    background:
+        rgba(255,255,255,.075);
+
+}
+
+
+.quick-question > span {
+
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-size: 22px;
+
+}
+
+
+.quick-question strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+}
+
+
+.quick-question small {
+
+    opacity: .5;
+
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .ask-page {
+
+        width:
+            calc(100% - 22px);
+
+        padding-top: 22px;
+
+    }
+
+
+    .ask-card {
+
+        padding: 18px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .patient-grid {
+
+        grid-template-columns:
+            1fr
+            1fr;
+
+    }
+
+
+    .quick-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .ask-actions,
+    .review-actions {
+
+        flex-direction: column;
+
+    }
+
+
+    .primary-button,
+    .secondary-button {
+
+        width: 100%;
+
+    }
+
+}
