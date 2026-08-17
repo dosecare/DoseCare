@@ -1,0 +1,880 @@
+/* =========================================
+   DoseCare
+   REFERENCES PAGE
+========================================= */
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.references-page {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: min(
+        960px,
+        calc(100% - 32px)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        35px
+        0
+        70px;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.references-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.references-back {
+
+    width: 46px;
+
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+
+}
+
+
+.references-back:hover {
+
+    transform:
+        translateX(-3px);
+
+    background:
+        rgba(255,255,255,.11);
+
+}
+
+
+.references-label {
+
+    display: block;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    font-weight: 800;
+
+    opacity: .5;
+
+}
+
+
+.references-header h1 {
+
+    margin:
+        4px
+        0
+        6px;
+
+    font-size:
+        clamp(
+            30px,
+            6vw,
+            44px
+        );
+
+}
+
+
+.references-header p {
+
+    max-width: 620px;
+
+    margin: 0;
+
+    line-height: 1.65;
+
+    opacity: .62;
+
+}
+
+
+
+/* =========================================
+   INTRO CARD
+========================================= */
+
+.references-intro {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 42px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+
+}
+
+
+.references-intro-icon {
+
+    width: 62px;
+
+    height: 62px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 19px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 29px;
+
+}
+
+
+.references-small-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 9px;
+
+    letter-spacing: 2.5px;
+
+    font-weight: 800;
+
+    opacity: .45;
+
+}
+
+
+.references-intro h2 {
+
+    margin:
+        0
+        0
+        7px;
+
+    font-size: 23px;
+
+}
+
+
+.references-intro p {
+
+    max-width: 680px;
+
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    opacity: .58;
+
+}
+
+
+
+/* =========================================
+   SECTION HEADING
+========================================= */
+
+.reference-section {
+
+    margin-top: 10px;
+
+}
+
+
+.section-heading > span {
+
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 2.5px;
+
+    font-weight: 800;
+
+    opacity: .45;
+
+}
+
+
+.section-heading h2 {
+
+    margin:
+        5px
+        0
+        7px;
+
+    font-size: 24px;
+
+}
+
+
+.section-heading p {
+
+    max-width: 650px;
+
+    margin:
+        0
+        0
+        22px;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    opacity: .55;
+
+}
+
+
+
+/* =========================================
+   REFERENCE GRID
+========================================= */
+
+.reference-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+
+}
+
+
+
+/* =========================================
+   REFERENCE CARD
+========================================= */
+
+.reference-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 23px;
+
+    min-height: 310px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 21px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+
+}
+
+
+.reference-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+
+    height: 150px;
+
+    top: -85px;
+
+    right: -70px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.055);
+
+    filter:
+        blur(5px);
+
+    pointer-events: none;
+
+}
+
+
+.reference-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    background:
+        rgba(255,255,255,.065);
+
+    border-color:
+        rgba(255,255,255,.13);
+
+}
+
+
+
+/* =========================================
+   CARD TOP
+========================================= */
+
+.reference-card-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.reference-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    display: grid;
+
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.075);
+
+    font-size: 23px;
+
+}
+
+
+.reference-type {
+
+    margin-left: auto;
+
+    font-size: 8px;
+
+    letter-spacing: 1.8px;
+
+    font-weight: 800;
+
+    text-align: right;
+
+    opacity: .38;
+
+}
+
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.reference-card h3 {
+
+    margin:
+        0
+        0
+        9px;
+
+    font-size: 18px;
+
+    line-height: 1.35;
+
+}
+
+
+.reference-card > p {
+
+    margin:
+        0
+        0
+        18px;
+
+    font-size: 12.5px;
+
+    line-height: 1.7;
+
+    opacity: .58;
+
+}
+
+
+
+/* =========================================
+   TAGS
+========================================= */
+
+.reference-tags {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.reference-tags span {
+
+    padding:
+        6px
+        9px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    font-size: 9px;
+
+    opacity: .55;
+
+}
+
+
+
+/* =========================================
+   OPEN SOURCE BUTTON
+========================================= */
+
+.reference-button {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0
+        15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.065);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+
+}
+
+
+.reference-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,255,255,.12);
+
+}
+
+
+.reference-button span {
+
+    font-size: 18px;
+
+    opacity: .7;
+
+}
+
+
+
+/* =========================================
+   SAFETY CARD
+========================================= */
+
+.reference-safety {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 17px;
+
+    margin-top: 32px;
+
+    padding: 24px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 21px;
+
+    background:
+        rgba(255,255,255,.04);
+
+}
+
+
+.safety-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    font-size: 20px;
+
+}
+
+
+.reference-safety > div:last-child {
+
+    flex: 1;
+
+}
+
+
+.reference-safety > div:last-child > span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    font-weight: 800;
+
+    opacity: .4;
+
+}
+
+
+.reference-safety h2 {
+
+    margin:
+        0
+        0
+        8px;
+
+    font-size: 18px;
+
+    line-height: 1.4;
+
+}
+
+
+.reference-safety p {
+
+    max-width: 760px;
+
+    margin: 0;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+
+    opacity: .55;
+
+}
+
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.reference-footer {
+
+    margin-top: 18px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    border-radius: 21px;
+
+    background:
+        rgba(255,255,255,.035);
+
+}
+
+
+.reference-footer > span {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    font-weight: 800;
+
+    opacity: .38;
+
+}
+
+
+.reference-footer h2 {
+
+    margin:
+        0
+        0
+        7px;
+
+    font-size: 21px;
+
+}
+
+
+.reference-footer p {
+
+    max-width: 560px;
+
+    margin:
+        0
+        auto;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    opacity: .45;
+
+}
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .references-page {
+
+        width:
+            calc(100% - 22px);
+
+        padding-top: 22px;
+
+    }
+
+
+    .references-intro {
+
+        align-items: flex-start;
+
+        padding: 21px;
+
+    }
+
+
+    .reference-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .reference-card {
+
+        min-height: 0;
+
+    }
+
+}
+
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 450px) {
+
+    .references-header {
+
+        gap: 12px;
+
+    }
+
+
+    .references-back {
+
+        width: 42px;
+
+        height: 42px;
+
+        border-radius: 13px;
+
+    }
+
+
+    .references-intro {
+
+        flex-direction: column;
+
+    }
+
+
+    .references-intro-icon {
+
+        width: 55px;
+
+        height: 55px;
+
+    }
+
+
+    .reference-card {
+
+        padding: 20px;
+
+        border-radius: 19px;
+
+    }
+
+
+    .reference-card-top {
+
+        align-items: flex-start;
+
+    }
+
+
+    .reference-type {
+
+        max-width: 130px;
+
+        line-height: 1.4;
+
+    }
+
+
+    .reference-safety {
+
+        padding: 20px;
+
+    }
+
+}
