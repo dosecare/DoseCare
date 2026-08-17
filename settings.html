@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DoseCare — Settings</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="settings.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         ANIMATED BACKGROUND
+    ================================= -->
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+        <div class="bubble bubble-two"></div>
+        <div class="bubble bubble-three"></div>
+        <div class="bubble bubble-four"></div>
+        <div class="bubble bubble-five"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+
+    <!-- =================================
+         SETTINGS PAGE
+    ================================= -->
+
+    <main class="settings-page">
+
+
+        <!-- =================================
+             HEADER
+        ================================= -->
+
+        <header class="settings-header">
+
+            <button
+                id="back-button"
+                class="settings-back"
+                type="button"
+                aria-label="Back to Home"
+            >
+                ←
+            </button>
+
+
+            <div>
+
+                <span class="settings-label">
+                    DOSECARE
+                </span>
+
+
+                <h1>
+                    Settings
+                </h1>
+
+
+                <p>
+                    Manage your app preferences.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================
+             APPEARANCE
+        ================================= -->
+
+        <section class="settings-section">
+
+
+            <div class="settings-section-title">
+
+                <span>
+                    APPEARANCE
+                </span>
+
+                <h2>
+                    Theme
+                </h2>
+
+            </div>
+
+
+            <div class="settings-card">
+
+
+                <div class="settings-card-icon">
+                    🎨
+                </div>
+
+
+                <div class="settings-card-content">
+
+                    <strong>
+                        Appearance
+                    </strong>
+
+                    <span id="theme-status">
+                        Dark Mode
+                    </span>
+
+                </div>
+
+
+                <button
+                    id="theme-toggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Toggle theme"
+                    aria-pressed="false"
+                >
+
+                    <span class="theme-toggle-icon">
+                        ☾
+                    </span>
+
+                    <span class="toggle-track">
+
+                        <span class="toggle-thumb"></span>
+
+                    </span>
+
+                </button>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             ABOUT
+        ================================= -->
+
+        <section class="settings-section">
+
+
+            <div class="settings-section-title">
+
+                <span>
+                    ABOUT
+                </span>
+
+                <h2>
+                    About DoseCare
+                </h2>
+
+            </div>
+
+
+            <div class="about-card">
+
+
+                <div class="about-logo">
+                    +
+                </div>
+
+
+                <div class="about-content">
+
+                    <h2>
+                        Dose<span>Care</span>
+                    </h2>
+
+
+                    <p>
+                        Pediatric Dose Calculator
+                    </p>
+
+
+                    <div class="about-divider"></div>
+
+
+                    <div class="about-row">
+
+                        <span>
+                            Version
+                        </span>
+
+                        <strong>
+                            1.0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="about-row">
+
+                        <span>
+                            Developed by
+                        </span>
+
+                        <strong>
+                            Duaa Kareem
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             FOOTER
+        ================================= -->
+
+        <footer class="settings-footer">
+
+            <span>
+                DOSECARE
+            </span>
+
+            <p>
+                Pediatric medication support
+                and dose calculation.
+            </p>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- =================================
+         SCRIPT
+    ================================= -->
+
+    <script src="settings.js"></script>
+
+</body>
+
+</html>
