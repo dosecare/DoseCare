@@ -13,6 +13,7 @@ const particlesContainer =
 
 const PARTICLE_COUNT = 70;
 
+
 if (particlesContainer) {
 
     for (
@@ -24,40 +25,55 @@ if (particlesContainer) {
         const particle =
             document.createElement("span");
 
-        particle.classList.add("particle");
+
+        particle.classList.add(
+            "particle"
+        );
+
 
         particle.style.left =
             `${Math.random() * 100}%`;
 
+
         particle.style.top =
             `${Math.random() * 100}%`;
+
 
         const size =
             Math.random() * 2.5 + 1.5;
 
+
         particle.style.width =
             `${size}px`;
+
 
         particle.style.height =
             `${size}px`;
 
+
         const movementDuration =
             Math.random() * 8 + 8;
+
 
         const glowDuration =
             Math.random() * 3 + 2;
 
+
         particle.style.animationDuration =
             `${movementDuration}s, ${glowDuration}s`;
+
 
         const movementDelay =
             Math.random() * 8;
 
+
         const glowDelay =
             Math.random() * 3;
 
+
         particle.style.animationDelay =
             `${movementDelay}s, ${glowDelay}s`;
+
 
         particlesContainer.appendChild(
             particle
@@ -77,26 +93,21 @@ const welcomeScreen =
         "welcome-screen"
     );
 
+
 const homeScreen =
     document.getElementById(
         "home-screen"
     );
 
 
-/*
-    Show the Welcome screen only the first
-    time the user enters DoseCare during
-    the current browser session.
-
-    When returning from another page,
-    Home appears immediately.
-*/
-
 const WELCOME_SHOWN_KEY =
     "dosecareWelcomeShown";
 
 
-if (welcomeScreen && homeScreen) {
+if (
+    welcomeScreen &&
+    homeScreen
+) {
 
     const welcomeAlreadyShown =
         sessionStorage.getItem(
@@ -109,6 +120,7 @@ if (welcomeScreen && homeScreen) {
         welcomeScreen.classList.add(
             "hide"
         );
+
 
         homeScreen.classList.add(
             "show"
@@ -123,9 +135,11 @@ if (welcomeScreen && homeScreen) {
                 "hide"
             );
 
+
             homeScreen.classList.add(
                 "show"
             );
+
 
             sessionStorage.setItem(
                 WELCOME_SHOWN_KEY,
@@ -148,15 +162,18 @@ const menuButton =
         "menu-button"
     );
 
+
 const sideMenu =
     document.getElementById(
         "side-menu"
     );
 
+
 const closeMenu =
     document.getElementById(
         "close-menu"
     );
+
 
 const menuOverlay =
     document.getElementById(
@@ -177,6 +194,7 @@ function openMenu() {
         );
 
     }
+
 
     if (menuOverlay) {
 
@@ -202,6 +220,7 @@ function closeSideMenu() {
         );
 
     }
+
 
     if (menuOverlay) {
 
@@ -266,6 +285,7 @@ if (homeMenuButton) {
 
             closeSideMenu();
 
+
             window.location.href =
                 "index.html";
 
@@ -284,10 +304,12 @@ const calculatorMenuButton =
         "calculator-menu-button"
     );
 
+
 const startCalculator =
     document.getElementById(
         "start-calculator"
     );
+
 
 const quickCalculator =
     document.getElementById(
@@ -347,6 +369,7 @@ const medicinesMenuButton =
     document.getElementById(
         "medicines-menu-button"
     );
+
 
 const quickMedicines =
     document.getElementById(
@@ -430,6 +453,7 @@ const historyMenuButton =
     document.getElementById(
         "history-menu-button"
     );
+
 
 const quickHistory =
     document.getElementById(
@@ -515,6 +539,14 @@ const referencesMenuButton =
     );
 
 
+function openReferences() {
+
+    window.location.href =
+        "references.html";
+
+}
+
+
 if (referencesMenuButton) {
 
     referencesMenuButton.addEventListener(
@@ -523,9 +555,7 @@ if (referencesMenuButton) {
 
             closeSideMenu();
 
-            alert(
-                "References section will be available soon."
-            );
+            openReferences();
 
         }
     );
@@ -543,6 +573,14 @@ const settingsMenuButton =
     );
 
 
+function openSettings() {
+
+    window.location.href =
+        "settings.html";
+
+}
+
+
 if (settingsMenuButton) {
 
     settingsMenuButton.addEventListener(
@@ -551,9 +589,7 @@ if (settingsMenuButton) {
 
             closeSideMenu();
 
-            alert(
-                "Settings will be available soon."
-            );
+            openSettings();
 
         }
     );
@@ -588,6 +624,7 @@ menuItems.forEach(
                     }
                 );
 
+
                 item.classList.add(
                     "active"
                 );
@@ -600,15 +637,8 @@ menuItems.forEach(
 
 
 /* =========================================
-   USER NAME
+   USER DISPLAY
 ========================================= */
-
-/*
-    Temporary account name.
-
-    Later this can be replaced
-    with the real logged-in account.
-*/
 
 const currentUser =
     localStorage.getItem(
@@ -639,7 +669,9 @@ if (userName) {
 if (profileInitials) {
 
     profileInitials.textContent =
-        getInitials(currentUser);
+        getInitials(
+            currentUser
+        );
 
 }
 
