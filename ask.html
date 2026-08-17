@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -21,16 +20,11 @@
         rel="stylesheet"
         href="ask.css"
     >
-
 </head>
-
 
 <body>
 
-
-    <!-- =========================================
-         BACKGROUND
-    ========================================== -->
+    <!-- BACKGROUND -->
 
     <div class="background">
 
@@ -49,15 +43,9 @@
     </div>
 
 
-
-    <!-- =========================================
-         ASK PAGE
-    ========================================== -->
+    <!-- ASK PAGE -->
 
     <main class="ask-page">
-
-
-        <!-- HEADER -->
 
         <header class="ask-header">
 
@@ -69,20 +57,18 @@
                 ←
             </button>
 
+            <div>
 
-            <div class="ask-title">
-
-                <span>
+                <span class="ask-label">
                     DOSECARE
                 </span>
 
                 <h1>
-                    Ask
+                    Ask DoseCare
                 </h1>
 
                 <p>
-                    Ask a clinical question and organize
-                    the information you need.
+                    Have a question, suggestion, or need help?
                 </p>
 
             </div>
@@ -90,449 +76,97 @@
         </header>
 
 
-
-        <!-- =========================================
-             SAFETY NOTICE
-        ========================================== -->
-
-        <section class="ask-notice">
-
-            <div class="notice-icon">
-                !
-            </div>
-
-            <div>
-
-                <strong>
-                    Clinical support
-                </strong>
-
-                <p>
-                    DoseCare provides educational support
-                    and calculation tools. Always verify
-                    clinical decisions with trusted references
-                    and professional judgment.
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             QUESTION CARD
-        ========================================== -->
+        <!-- CONTACT CARD -->
 
         <section class="ask-card">
 
-
-            <div class="section-heading">
-
-                <span>
-                    ASK DOSECARE
-                </span>
-
-                <h2>
-                    What would you like to ask?
-                </h2>
-
+            <div class="ask-icon">
+                💬
             </div>
 
+            <span class="ask-small-label">
+                CONTACT
+            </span>
+
+            <h2>
+                Need help?
+            </h2>
+
+            <p class="ask-description">
+                If you have a question about DoseCare,
+                found a problem, or have a suggestion,
+                you can contact the developer directly.
+            </p>
 
 
-            <!-- CATEGORY -->
+            <div class="telegram-box">
 
-            <div class="form-group">
+                <div class="telegram-icon">
+                    ✈
+                </div>
 
-                <label for="question-category">
-                    Question type
-                </label>
+                <div class="telegram-info">
 
-                <select
-                    id="question-category"
-                >
-
-                    <option value="">
-                        Select question type
-                    </option>
-
-                    <option value="dose">
-                        Pediatric dose
-                    </option>
-
-                    <option value="medicine">
-                        Medicine information
-                    </option>
-
-                    <option value="interaction">
-                        Drug interaction
-                    </option>
-
-                    <option value="side-effects">
-                        Side effects
-                    </option>
-
-                    <option value="administration">
-                        Administration
-                    </option>
-
-                    <option value="other">
-                        Other
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <!-- MEDICINE -->
-
-            <div class="form-group">
-
-                <label for="ask-medicine">
-                    Medicine
                     <span>
-                        Optional
-                    </span>
-                </label>
-
-                <input
-                    id="ask-medicine"
-                    type="text"
-                    placeholder="e.g. Paracetamol"
-                    autocomplete="off"
-                >
-
-            </div>
-
-
-
-            <!-- PATIENT INFO -->
-
-            <div class="patient-grid">
-
-
-                <div class="form-group">
-
-                    <label for="ask-age">
-                        Age
-                        <span>
-                            Optional
-                        </span>
-                    </label>
-
-                    <input
-                        id="ask-age"
-                        type="number"
-                        min="0"
-                        placeholder="Age"
-                    >
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label for="ask-age-unit">
-                        Unit
-                    </label>
-
-                    <select
-                        id="ask-age-unit"
-                    >
-
-                        <option value="years">
-                            Years
-                        </option>
-
-                        <option value="months">
-                            Months
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <div class="form-group">
-
-                    <label for="ask-weight">
-                        Weight
-                        <span>
-                            Optional
-                        </span>
-                    </label>
-
-                    <input
-                        id="ask-weight"
-                        type="number"
-                        min="0"
-                        step="0.1"
-                        placeholder="kg"
-                    >
-
-                </div>
-
-            </div>
-
-
-
-            <!-- QUESTION -->
-
-            <div class="form-group">
-
-                <label for="question">
-                    Your question
-                </label>
-
-                <textarea
-                    id="question"
-                    rows="6"
-                    maxlength="1000"
-                    placeholder="Write your question here..."
-                ></textarea>
-
-
-                <div class="character-count">
-
-                    <span id="character-count">
-                        0
+                        TELEGRAM
                     </span>
 
-                    / 1000
+                    <strong>
+                        @ph1_dk
+                    </strong>
 
                 </div>
 
             </div>
 
 
-
-            <!-- VALIDATION -->
-
-            <div
-                id="ask-validation"
-                class="ask-validation"
+            <button
+                id="telegram-button"
+                class="telegram-button"
+                type="button"
             >
 
-                <span>
-                    !
-                </span>
-
-                <p></p>
-
-            </div>
-
-
-
-            <!-- ACTIONS -->
-
-            <div class="ask-actions">
-
-                <button
-                    id="clear-question"
-                    class="secondary-button"
-                    type="button"
-                >
-                    Clear
-                </button>
-
-
-                <button
-                    id="review-question"
-                    class="primary-button"
-                    type="button"
-                >
-                    Review Question
-                    <span>→</span>
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             REVIEW
-        ========================================== -->
-
-        <section
-            id="question-review"
-            class="question-review"
-        >
-
-            <div class="review-header">
-
-                <div>
-
-                    <span>
-                        REVIEW
-                    </span>
-
-                    <h2>
-                        Your question
-                    </h2>
-
-                </div>
-
-                <button
-                    id="close-review"
-                    type="button"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div
-                id="review-content"
-                class="review-content"
-            ></div>
-
-
-            <div class="review-actions">
-
-                <button
-                    id="edit-question"
-                    class="secondary-button"
-                    type="button"
-                >
-                    Edit
-                </button>
-
-
-                <button
-                    id="save-question"
-                    class="primary-button"
-                    type="button"
-                >
-                    Save Question
-                    <span>✓</span>
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             QUICK QUESTIONS
-        ========================================== -->
-
-        <section class="quick-questions">
-
-            <div class="section-heading">
+                Contact on Telegram
 
                 <span>
-                    QUICK START
+                    →
                 </span>
 
-                <h2>
-                    Common questions
-                </h2>
-
-            </div>
+            </button>
 
 
-            <div class="quick-grid">
-
-
-                <button
-                    class="quick-question"
-                    data-question="How do I calculate a pediatric dose based on weight?"
-                    data-category="dose"
-                >
-
-                    <span>
-                        ⚖
-                    </span>
-
-                    <strong>
-                        Pediatric dose
-                    </strong>
-
-                    <small>
-                        Dose calculation basics
-                    </small>
-
-                </button>
-
-
-
-                <button
-                    class="quick-question"
-                    data-question="What should I check before dispensing a medicine to a child?"
-                    data-category="medicine"
-                >
-
-                    <span>
-                        💊
-                    </span>
-
-                    <strong>
-                        Before dispensing
-                    </strong>
-
-                    <small>
-                        Important checks
-                    </small>
-
-                </button>
-
-
-
-                <button
-                    class="quick-question"
-                    data-question="What information should I check when evaluating a possible drug interaction?"
-                    data-category="interaction"
-                >
-
-                    <span>
-                        ⇄
-                    </span>
-
-                    <strong>
-                        Drug interactions
-                    </strong>
-
-                    <small>
-                        What to review
-                    </small>
-
-                </button>
-
-
-
-                <button
-                    class="quick-question"
-                    data-question="What are important side effects I should counsel a patient about?"
-                    data-category="side-effects"
-                >
-
-                    <span>
-                        !
-                    </span>
-
-                    <strong>
-                        Side effects
-                    </strong>
-
-                    <small>
-                        Patient counselling
-                    </small>
-
-                </button>
-
-            </div>
+            <p class="ask-note">
+                DoseCare support is available through Telegram.
+            </p>
 
         </section>
 
+
+        <!-- HELP LINK -->
+
+        <section class="ask-help-card">
+
+            <div>
+
+                <span>
+                    NEED HELP USING DOSECARE?
+                </span>
+
+                <h3>
+                    Check the Help Center
+                </h3>
+
+            </div>
+
+            <button
+                id="help-button"
+                type="button"
+            >
+                Help
+                <span>→</span>
+            </button>
+
+        </section>
 
     </main>
 
