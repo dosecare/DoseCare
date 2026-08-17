@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DoseCare — Ask</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="ask.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         BACKGROUND
+    ========================================== -->
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+        <div class="bubble bubble-two"></div>
+        <div class="bubble bubble-three"></div>
+        <div class="bubble bubble-four"></div>
+        <div class="bubble bubble-five"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         ASK PAGE
+    ========================================== -->
+
+    <main class="ask-page">
+
+
+        <!-- HEADER -->
+
+        <header class="ask-header">
+
+            <button
+                id="back-button"
+                class="ask-back"
+                type="button"
+            >
+                ←
+            </button>
+
+
+            <div class="ask-title">
+
+                <span>
+                    DOSECARE
+                </span>
+
+                <h1>
+                    Ask
+                </h1>
+
+                <p>
+                    Ask a clinical question and organize
+                    the information you need.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================================
+             SAFETY NOTICE
+        ========================================== -->
+
+        <section class="ask-notice">
+
+            <div class="notice-icon">
+                !
+            </div>
+
+            <div>
+
+                <strong>
+                    Clinical support
+                </strong>
+
+                <p>
+                    DoseCare provides educational support
+                    and calculation tools. Always verify
+                    clinical decisions with trusted references
+                    and professional judgment.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             QUESTION CARD
+        ========================================== -->
+
+        <section class="ask-card">
+
+
+            <div class="section-heading">
+
+                <span>
+                    ASK DOSECARE
+                </span>
+
+                <h2>
+                    What would you like to ask?
+                </h2>
+
+            </div>
+
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label for="question-category">
+                    Question type
+                </label>
+
+                <select
+                    id="question-category"
+                >
+
+                    <option value="">
+                        Select question type
+                    </option>
+
+                    <option value="dose">
+                        Pediatric dose
+                    </option>
+
+                    <option value="medicine">
+                        Medicine information
+                    </option>
+
+                    <option value="interaction">
+                        Drug interaction
+                    </option>
+
+                    <option value="side-effects">
+                        Side effects
+                    </option>
+
+                    <option value="administration">
+                        Administration
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- MEDICINE -->
+
+            <div class="form-group">
+
+                <label for="ask-medicine">
+                    Medicine
+                    <span>
+                        Optional
+                    </span>
+                </label>
+
+                <input
+                    id="ask-medicine"
+                    type="text"
+                    placeholder="e.g. Paracetamol"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+
+            <!-- PATIENT INFO -->
+
+            <div class="patient-grid">
+
+
+                <div class="form-group">
+
+                    <label for="ask-age">
+                        Age
+                        <span>
+                            Optional
+                        </span>
+                    </label>
+
+                    <input
+                        id="ask-age"
+                        type="number"
+                        min="0"
+                        placeholder="Age"
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="ask-age-unit">
+                        Unit
+                    </label>
+
+                    <select
+                        id="ask-age-unit"
+                    >
+
+                        <option value="years">
+                            Years
+                        </option>
+
+                        <option value="months">
+                            Months
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="ask-weight">
+                        Weight
+                        <span>
+                            Optional
+                        </span>
+                    </label>
+
+                    <input
+                        id="ask-weight"
+                        type="number"
+                        min="0"
+                        step="0.1"
+                        placeholder="kg"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- QUESTION -->
+
+            <div class="form-group">
+
+                <label for="question">
+                    Your question
+                </label>
+
+                <textarea
+                    id="question"
+                    rows="6"
+                    maxlength="1000"
+                    placeholder="Write your question here..."
+                ></textarea>
+
+
+                <div class="character-count">
+
+                    <span id="character-count">
+                        0
+                    </span>
+
+                    / 1000
+
+                </div>
+
+            </div>
+
+
+
+            <!-- VALIDATION -->
+
+            <div
+                id="ask-validation"
+                class="ask-validation"
+            >
+
+                <span>
+                    !
+                </span>
+
+                <p></p>
+
+            </div>
+
+
+
+            <!-- ACTIONS -->
+
+            <div class="ask-actions">
+
+                <button
+                    id="clear-question"
+                    class="secondary-button"
+                    type="button"
+                >
+                    Clear
+                </button>
+
+
+                <button
+                    id="review-question"
+                    class="primary-button"
+                    type="button"
+                >
+                    Review Question
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             REVIEW
+        ========================================== -->
+
+        <section
+            id="question-review"
+            class="question-review"
+        >
+
+            <div class="review-header">
+
+                <div>
+
+                    <span>
+                        REVIEW
+                    </span>
+
+                    <h2>
+                        Your question
+                    </h2>
+
+                </div>
+
+                <button
+                    id="close-review"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                id="review-content"
+                class="review-content"
+            ></div>
+
+
+            <div class="review-actions">
+
+                <button
+                    id="edit-question"
+                    class="secondary-button"
+                    type="button"
+                >
+                    Edit
+                </button>
+
+
+                <button
+                    id="save-question"
+                    class="primary-button"
+                    type="button"
+                >
+                    Save Question
+                    <span>✓</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             QUICK QUESTIONS
+        ========================================== -->
+
+        <section class="quick-questions">
+
+            <div class="section-heading">
+
+                <span>
+                    QUICK START
+                </span>
+
+                <h2>
+                    Common questions
+                </h2>
+
+            </div>
+
+
+            <div class="quick-grid">
+
+
+                <button
+                    class="quick-question"
+                    data-question="How do I calculate a pediatric dose based on weight?"
+                    data-category="dose"
+                >
+
+                    <span>
+                        ⚖
+                    </span>
+
+                    <strong>
+                        Pediatric dose
+                    </strong>
+
+                    <small>
+                        Dose calculation basics
+                    </small>
+
+                </button>
+
+
+
+                <button
+                    class="quick-question"
+                    data-question="What should I check before dispensing a medicine to a child?"
+                    data-category="medicine"
+                >
+
+                    <span>
+                        💊
+                    </span>
+
+                    <strong>
+                        Before dispensing
+                    </strong>
+
+                    <small>
+                        Important checks
+                    </small>
+
+                </button>
+
+
+
+                <button
+                    class="quick-question"
+                    data-question="What information should I check when evaluating a possible drug interaction?"
+                    data-category="interaction"
+                >
+
+                    <span>
+                        ⇄
+                    </span>
+
+                    <strong>
+                        Drug interactions
+                    </strong>
+
+                    <small>
+                        What to review
+                    </small>
+
+                </button>
+
+
+
+                <button
+                    class="quick-question"
+                    data-question="What are important side effects I should counsel a patient about?"
+                    data-category="side-effects"
+                >
+
+                    <span>
+                        !
+                    </span>
+
+                    <strong>
+                        Side effects
+                    </strong>
+
+                    <small>
+                        Patient counselling
+                    </small>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="ask.js"></script>
+
+</body>
+
+</html>
