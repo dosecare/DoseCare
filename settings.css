@@ -1,0 +1,705 @@
+/* =========================================
+   DoseCare
+   SETTINGS PAGE
+========================================= */
+
+.settings-page {
+
+    position: relative;
+
+    z-index: 5;
+
+    width: min(
+        760px,
+        calc(100% - 32px)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        35px
+        0
+        70px;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.settings-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+
+    margin-bottom: 32px;
+
+}
+
+
+.settings-back {
+
+    width: 46px;
+
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+
+}
+
+
+.settings-back:hover {
+
+    transform:
+        translateX(-3px);
+
+    background:
+        rgba(255,255,255,.11);
+
+}
+
+
+.settings-label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    font-weight: 800;
+
+    opacity: .5;
+
+}
+
+
+.settings-header h1 {
+
+    margin:
+        0
+        0
+        6px;
+
+    font-size:
+        clamp(30px, 6vw, 44px);
+
+}
+
+
+.settings-header p {
+
+    margin: 0;
+
+    opacity: .62;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================
+   SETTINGS SECTION
+========================================= */
+
+.settings-section {
+
+    margin-bottom: 30px;
+
+}
+
+
+.settings-section-title {
+
+    margin-bottom: 12px;
+
+}
+
+
+.settings-section-title span {
+
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 2.5px;
+
+    font-weight: 800;
+
+    opacity: .42;
+
+}
+
+
+.settings-section-title h2 {
+
+    margin:
+        5px
+        0
+        0;
+
+    font-size: 21px;
+
+}
+
+
+/* =========================================
+   SETTINGS CARD
+========================================= */
+
+.settings-card {
+
+    min-height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        15px
+        17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.12);
+
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.settings-card-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 23px;
+
+}
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.settings-card-content {
+
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.settings-card-content strong {
+
+    font-size: 15px;
+
+}
+
+
+.settings-card-content span {
+
+    font-size: 12px;
+
+    opacity: .5;
+
+}
+
+
+/* =========================================
+   THEME TOGGLE BUTTON
+========================================= */
+
+.theme-toggle {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    flex-shrink: 0;
+
+    padding: 5px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+}
+
+
+.theme-toggle-icon {
+
+    width: 30px;
+
+    height: 30px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    font-size: 15px;
+
+}
+
+
+/* =========================================
+   TOGGLE TRACK
+========================================= */
+
+.toggle-track {
+
+    position: relative;
+
+    width: 48px;
+
+    height: 27px;
+
+    display: block;
+
+    border-radius: 50px;
+
+    background:
+        rgba(255,255,255,.16);
+
+    transition:
+        background .25s ease;
+
+}
+
+
+.toggle-thumb {
+
+    position: absolute;
+
+    top: 4px;
+
+    left: 4px;
+
+    width: 19px;
+
+    height: 19px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    transition:
+        transform .25s ease;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,.25);
+
+}
+
+
+/* =========================================
+   LIGHT MODE STATE
+========================================= */
+
+.theme-toggle.light
+.toggle-track {
+
+    background:
+        rgba(99,201,255,.65);
+
+}
+
+
+.theme-toggle.light
+.toggle-thumb {
+
+    transform:
+        translateX(21px);
+
+}
+
+
+/* =========================================
+   ABOUT CARD
+========================================= */
+
+.about-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.055);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.12);
+
+}
+
+
+/* =========================================
+   ABOUT LOGO
+========================================= */
+
+.about-logo {
+
+    width: 66px;
+
+    height: 66px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    font-size: 36px;
+
+    font-weight: 300;
+
+}
+
+
+/* =========================================
+   ABOUT CONTENT
+========================================= */
+
+.about-content {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.about-content h2 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    letter-spacing: -.5px;
+
+}
+
+
+.about-content h2 span {
+
+    opacity: .6;
+
+}
+
+
+.about-content > p {
+
+    margin:
+        5px
+        0
+        16px;
+
+    font-size: 12px;
+
+    opacity: .5;
+
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.about-divider {
+
+    height: 1px;
+
+    margin-bottom: 13px;
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+
+/* =========================================
+   ABOUT ROW
+========================================= */
+
+.about-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        5px
+        0;
+
+}
+
+
+.about-row span {
+
+    font-size: 12px;
+
+    opacity: .45;
+
+}
+
+
+.about-row strong {
+
+    font-size: 12px;
+
+    text-align: right;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.settings-footer {
+
+    padding-top: 10px;
+
+    text-align: center;
+
+    opacity: .45;
+
+}
+
+
+.settings-footer > span {
+
+    font-size: 9px;
+
+    letter-spacing: 3px;
+
+    font-weight: 800;
+
+}
+
+
+.settings-footer p {
+
+    margin:
+        7px
+        0
+        0;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .settings-page {
+
+        width:
+            calc(100% - 22px);
+
+        padding-top: 22px;
+
+    }
+
+
+    .settings-header {
+
+        gap: 13px;
+
+        margin-bottom: 27px;
+
+    }
+
+
+    .settings-back {
+
+        width: 43px;
+
+        height: 43px;
+
+    }
+
+
+    .settings-card {
+
+        padding: 13px;
+
+        min-height: 76px;
+
+    }
+
+
+    .settings-card-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 21px;
+
+    }
+
+
+    .theme-toggle-icon {
+
+        display: none;
+
+    }
+
+
+    .about-card {
+
+        padding: 20px;
+
+        gap: 15px;
+
+    }
+
+
+    .about-logo {
+
+        width: 56px;
+
+        height: 56px;
+
+        border-radius: 17px;
+
+        font-size: 30px;
+
+    }
+
+}
+
+
+@media (max-width: 380px) {
+
+    .settings-card-content strong {
+
+        font-size: 14px;
+
+    }
+
+
+    .settings-card-content span {
+
+        font-size: 11px;
+
+    }
+
+
+    .about-card {
+
+        align-items: flex-start;
+
+    }
+
+}
