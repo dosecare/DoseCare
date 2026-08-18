@@ -1912,10 +1912,8 @@ function calculateDose() {
     });
 
 }
-
-
 /* =========================================
-   BACK BUTTON
+   BACK BUTTON → HOME
 ========================================= */
 
 if (backButton) {
@@ -1924,6 +1922,16 @@ if (backButton) {
         "click",
         () => {
 
+            /*
+                Tell the Home page that the
+                welcome screen has already been shown.
+            */
+
+            sessionStorage.setItem(
+                "dosecareWelcomeShown",
+                "true"
+            );
+
             window.location.href =
                 "index.html";
 
@@ -1931,8 +1939,6 @@ if (backButton) {
     );
 
 }
-
-
 /* =========================================
    ESC → CLOSE SEARCH
 ========================================= */
