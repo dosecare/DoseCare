@@ -703,3 +703,295 @@
     }
 
 }
+/* =========================================
+   DoseCare
+   SETTINGS — LIGHT MODE
+========================================= */
+
+body.light-mode .settings-page {
+
+    color: #17324d;
+
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+body.light-mode .settings-back {
+
+    border-color:
+        rgba(40,120,170,.16);
+
+    background:
+        rgba(255,255,255,.70);
+
+    color: #17324d;
+
+    box-shadow:
+        0 8px 25px
+        rgba(40,100,140,.06);
+
+}
+
+
+body.light-mode .settings-back:hover {
+
+    background:
+        rgba(255,255,255,.90);
+
+}
+
+
+body.light-mode .settings-label {
+
+    color: #287da8;
+
+    opacity: .65;
+
+}
+
+
+body.light-mode .settings-header h1 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .settings-header p {
+
+    color:
+        rgba(35,70,95,.62);
+
+}
+
+
+/* =========================================
+   SECTION TITLES
+========================================= */
+
+body.light-mode .settings-section-title span {
+
+    color: #287da8;
+
+    opacity: .65;
+
+}
+
+
+body.light-mode .settings-section-title h2 {
+
+    color: #17324d;
+
+}
+
+
+/* =========================================
+   SETTINGS CARD
+========================================= */
+
+body.light-mode .settings-card {
+
+    background:
+        rgba(255,255,255,.62);
+
+    border-color:
+        rgba(50,140,190,.14);
+
+    box-shadow:
+        0 15px 45px
+        rgba(40,100,140,.08);
+
+}
+
+
+body.light-mode .settings-card-icon {
+
+    background:
+        rgba(60,160,215,.08);
+
+    border:
+        1px solid
+        rgba(60,160,215,.10);
+
+}
+
+
+body.light-mode .settings-card-content strong {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .settings-card-content span {
+
+    color:
+        rgba(35,70,95,.60);
+
+}
+
+
+/* =========================================
+   THEME TOGGLE
+========================================= */
+
+body.light-mode .theme-toggle {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .theme-toggle-icon {
+
+    background:
+        rgba(60,160,215,.09);
+
+}
+
+
+body.light-mode .toggle-track {
+
+    background:
+        rgba(50,130,175,.22);
+
+}
+
+
+body.light-mode .theme-toggle.light
+.toggle-track {
+
+    background:
+        rgba(55,170,220,.65);
+
+}
+
+
+body.light-mode .theme-toggle.light
+.toggle-thumb {
+
+    background: #ffffff;
+
+    box-shadow:
+        0 2px 8px
+        rgba(30,100,140,.20);
+
+}
+
+
+/* =========================================
+   ABOUT CARD
+========================================= */
+
+body.light-mode .about-card {
+
+    background:
+        rgba(255,255,255,.62);
+
+    border-color:
+        rgba(50,140,190,.14);
+
+    box-shadow:
+        0 15px 45px
+        rgba(40,100,140,.08);
+
+}
+
+
+body.light-mode .about-logo {
+
+    background:
+        rgba(60,160,215,.08);
+
+    border-color:
+        rgba(60,160,215,.12);
+
+    color: #287da8;
+
+}
+
+
+body.light-mode .about-content h2 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .about-content h2 span {
+
+    color: #287da8;
+
+    opacity: .75;
+
+}
+
+
+body.light-mode .about-content > p {
+
+    color:
+        rgba(35,70,95,.58);
+
+}
+
+
+body.light-mode .about-divider {
+
+    background:
+        rgba(40,110,155,.12);
+
+}
+
+
+body.light-mode .about-row span {
+
+    color:
+        rgba(35,70,95,.58);
+
+}
+
+
+body.light-mode .about-row strong {
+
+    color: #17324d;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+body.light-mode .settings-footer {
+
+    color:
+        rgba(35,70,95,.60);
+
+}
+
+
+/* =========================================
+   LIGHT MODE TRANSITION
+========================================= */
+
+body,
+.background,
+.settings-card,
+.about-card,
+.settings-back,
+.settings-card-icon,
+.about-logo,
+.theme-toggle-icon,
+.toggle-track {
+
+    transition:
+        background .35s ease,
+        background-color .35s ease,
+        border-color .35s ease,
+        color .35s ease,
+        box-shadow .35s ease;
+
+}
