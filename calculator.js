@@ -80,90 +80,36 @@ let selectedMedicine = null;
    CONDITIONS
 ========================================= */
 
-function getAllConditions() {
-
-    const conditionSet =
-        new Set();
-
-
-    medicines.forEach(
-        medicine => {
-
-            if (!medicine.conditions) {
-                return;
-            }
-
-
-            medicine.conditions.forEach(
-                condition => {
-
-                    conditionSet.add(
-                        condition
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    return Array.from(
-        conditionSet
-    ).sort();
-
-}
-
-
-/* =========================================
-   INITIALIZE CONDITIONS
-========================================= */
-
 function initializeConditions() {
 
     if (!conditionSelect) {
         return;
     }
 
-    /*
-        Keep the default option already
-        موجودة بالـHTML.
-    */
+    const conditions =
+        typeof getAllMedicineConditions === "function"
+            ? getAllMedicineConditions()
+            : [];
 
-    const existingValues =
-        Array.from(
-            conditionSelect.options
-        ).map(
-            option => option.value
-        );
 
-    getAllConditions().forEach(
+    conditionSelect.innerHTML = `
+        <option value="">
+            Select a condition
+        </option>
+    `;
+
+
+    conditions.forEach(
         condition => {
 
-            /*
-                Don't add duplicate conditions.
-            */
-
-            if (
-                existingValues.includes(
-                    condition
-                )
-            ) {
-                return;
-            }
-
             const option =
-                document.createElement(
-                    "option"
-                );
+                document.createElement("option");
 
             option.value =
                 condition;
 
             option.textContent =
-                formatConditionName(
-                    condition
-                );
+                formatConditionName(condition);
 
             conditionSelect.appendChild(
                 option
@@ -173,15 +119,19 @@ function initializeConditions() {
     );
 
 }
+
+
 /* =========================================
    FORMAT CONDITION NAME
 ========================================= */
 
-function formatConditionName(
-    condition
-) {
+function formatConditionName(condition) {
 
-    return condition
+    if (!condition) {
+        return "";
+    }
+
+    return String(condition)
         .split(" ")
         .map(
             word =>
@@ -207,22 +157,31 @@ function getFilteredMedicines() {
 
     if (!selectedCondition) {
 
-        return medicines;
+        return [];
+
+    }
+
+
+    if (
+        typeof getMedicinesByCondition ===
+        "function"
+    ) {
+
+        return getMedicinesByCondition(
+            selectedCondition
+        );
 
     }
 
 
     return medicines.filter(
-        medicine => {
-
-            return (
-                medicine.conditions &&
-                medicine.conditions.includes(
-                    selectedCondition
-                )
-            );
-
-        }
+        medicine =>
+            Array.isArray(
+                medicine.conditions
+            ) &&
+            medicine.conditions.includes(
+                selectedCondition
+            )
     );
 
 }
@@ -243,45 +202,41 @@ function populateMedicineSelect() {
         getFilteredMedicines();
 
 
-    medicineSelect.innerHTML = "";
+    medicineSelect.innerHTML = `
+        <option value="">
+            ${
+                conditionSelect &&
+                conditionSelect.value
+                    ? "Select a medicine"
+                    : "Select a condition first"
+            }
+        </option>
+    `;
 
 
-    const defaultOption =
-        document.createElement(
-            "option"
+    /*
+        Do not allow medicine selection
+        before choosing a condition.
+    */
+
+    medicineSelect.disabled =
+        !(
+            conditionSelect &&
+            conditionSelect.value
         );
-
-
-    defaultOption.value = "";
-
-
-    defaultOption.textContent =
-        "Select a medicine";
-
-
-    medicineSelect.appendChild(
-        defaultOption
-    );
 
 
     availableMedicines.forEach(
         medicine => {
 
             const option =
-                document.createElement(
-                    "option"
-                );
-
+                document.createElement("option");
 
             option.value =
                 String(medicine.id);
 
-
             option.textContent =
-                medicine.genericName ||
-                medicine.name ||
-                "Medicine";
-
+                getMedicineName(medicine);
 
             medicineSelect.appendChild(
                 option
@@ -289,9 +244,6 @@ function populateMedicineSelect() {
 
         }
     );
-
-
-    medicineSelect.disabled = false;
 
 }
 
@@ -306,21 +258,12 @@ if (conditionSelect) {
         "change",
         () => {
 
+            clearSelectedMedicine();
+
             populateMedicineSelect();
 
-
-            if (
-                selectedMedicine &&
-                conditionSelect.value &&
-                selectedMedicine.conditions &&
-                !selectedMedicine.conditions.includes(
-                    conditionSelect.value
-                )
-            ) {
-
-                clearSelectedMedicine();
-
-            }
+            hideValidation();
+            hideResult();
 
         }
     );
@@ -352,11 +295,16 @@ if (medicineSelect) {
 
 
             const medicine =
-                medicines.find(
-                    item =>
-                        String(item.id) ===
-                        String(medicineId)
-                );
+                typeof getMedicineById ===
+                "function"
+                    ? getMedicineById(
+                        medicineId
+                    )
+                    : medicines.find(
+                        item =>
+                            String(item.id) ===
+                            String(medicineId)
+                    );
 
 
             selectMedicine(
@@ -370,36 +318,10 @@ if (medicineSelect) {
 
 
 /* =========================================
-   GET MEDICINE NAME
-========================================= */
-
-function getMedicineName(
-    medicine
-) {
-
-    if (!medicine) {
-
-        return "Medicine";
-
-    }
-
-
-    return (
-        medicine.genericName ||
-        medicine.name ||
-        "Medicine"
-    );
-
-}
-
-
-/* =========================================
    SELECT MEDICINE
 ========================================= */
 
-function selectMedicine(
-    medicine
-) {
+function selectMedicine(medicine) {
 
     if (!medicine) {
         return;
@@ -437,9 +359,7 @@ function selectMedicine(
 
 
     hideSearchResults();
-
     hideValidation();
-
     hideResult();
 
 }
@@ -480,7 +400,6 @@ function clearSelectedMedicine() {
 
 
     hideValidation();
-
     hideResult();
 
 }
@@ -522,40 +441,21 @@ if (medicineSearch) {
 
 
             const filteredMedicines =
-                medicines.filter(
-                    medicine => {
-
-                        const name =
+                typeof searchMedicines ===
+                "function"
+                    ? searchMedicines(
+                        searchTerm
+                    )
+                    : medicines.filter(
+                        medicine =>
                             getMedicineName(
                                 medicine
-                            ).toLowerCase();
-
-
-                        const brands =
-                            medicine.brandNames ||
-                            [];
-
-
-                        const brandMatch =
-                            brands.some(
-                                brand =>
-                                    String(brand)
-                                        .toLowerCase()
-                                        .includes(
-                                            searchTerm
-                                        )
-                            );
-
-
-                        return (
-                            name.includes(
-                                searchTerm
-                            ) ||
-                            brandMatch
-                        );
-
-                    }
-                );
+                            )
+                                .toLowerCase()
+                                .includes(
+                                    searchTerm
+                                )
+                    );
 
 
             showSearchResults(
@@ -572,9 +472,7 @@ if (medicineSearch) {
    SHOW SEARCH RESULTS
 ========================================= */
 
-function showSearchResults(
-    results
-) {
+function showSearchResults(results) {
 
     if (!medicineResults) {
         return;
@@ -588,14 +486,10 @@ function showSearchResults(
     if (!results.length) {
 
         const empty =
-            document.createElement(
-                "div"
-            );
-
+            document.createElement("div");
 
         empty.className =
             "medicine-result-item";
-
 
         empty.innerHTML = `
             <span>
@@ -603,15 +497,12 @@ function showSearchResults(
             </span>
         `;
 
-
         medicineResults.appendChild(
             empty
         );
 
-
         medicineResults.style.display =
             "block";
-
 
         return;
 
@@ -622,10 +513,7 @@ function showSearchResults(
         medicine => {
 
             const item =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             item.className =
                 "medicine-result-item";
@@ -645,7 +533,6 @@ function showSearchResults(
                         " · "
                     )
                     : (
-                        medicine.drugClass ||
                         medicine.class ||
                         "Medicine"
                     );
@@ -665,6 +552,16 @@ function showSearchResults(
             item.addEventListener(
                 "click",
                 () => {
+
+                    /*
+                        If the user searched directly,
+                        automatically select the medicine
+                        and sync its condition when possible.
+                    */
+
+                    syncConditionWithMedicine(
+                        medicine
+                    );
 
                     selectMedicine(
                         medicine
@@ -689,6 +586,61 @@ function showSearchResults(
 
 
 /* =========================================
+   SYNC CONDITION WITH MEDICINE
+========================================= */
+
+function syncConditionWithMedicine(
+    medicine
+) {
+
+    if (
+        !medicine ||
+        !conditionSelect ||
+        !Array.isArray(
+            medicine.conditions
+        ) ||
+        !medicine.conditions.length
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+        Keep the currently selected condition
+        if it is valid for this medicine.
+    */
+
+    if (
+        conditionSelect.value &&
+        medicine.conditions.includes(
+            conditionSelect.value
+        )
+    ) {
+
+        populateMedicineSelect();
+
+        return;
+
+    }
+
+
+    /*
+        Otherwise select the first available
+        condition for the searched medicine.
+    */
+
+    conditionSelect.value =
+        medicine.conditions[0];
+
+
+    populateMedicineSelect();
+
+}
+
+
+/* =========================================
    HIDE SEARCH RESULTS
 ========================================= */
 
@@ -697,7 +649,6 @@ function hideSearchResults() {
     if (!medicineResults) {
         return;
     }
-
 
     medicineResults.style.display =
         "none";
@@ -756,9 +707,7 @@ document.addEventListener(
    VALIDATION
 ========================================= */
 
-function showValidation(
-    message
-) {
+function showValidation(message) {
 
     if (!validationMessage) {
         return;
@@ -766,9 +715,7 @@ function showValidation(
 
 
     const messageText =
-        validationMessage.querySelector(
-            "p"
-        );
+        validationMessage.querySelector("p");
 
 
     if (messageText) {
@@ -791,7 +738,6 @@ function hideValidation() {
         return;
     }
 
-
     validationMessage.style.display =
         "none";
 
@@ -808,7 +754,6 @@ function hideResult() {
         return;
     }
 
-
     resultCard.style.display =
         "none";
 
@@ -821,7 +766,6 @@ function showResult() {
         return;
     }
 
-
     resultCard.style.display =
         "block";
 
@@ -832,21 +776,15 @@ function showResult() {
    NUMBER FORMAT
 ========================================= */
 
-function formatNumber(
-    number
-) {
+function formatNumber(number) {
 
     if (!Number.isFinite(number)) {
-
         return "—";
-
     }
 
 
     if (Number.isInteger(number)) {
-
         return String(number);
-
     }
 
 
@@ -861,15 +799,13 @@ function formatNumber(
 
 
 /* =========================================
-   GET SELECTED REGIMEN
+   GET SELECTED DOSING REGIMEN
 ========================================= */
 
 function getSelectedDosingRegimen() {
 
     if (!selectedMedicine) {
-
         return null;
-
     }
 
 
@@ -878,110 +814,17 @@ function getSelectedDosingRegimen() {
 
 
     if (!dosing) {
-
         return null;
-
     }
 
 
     /*
-        Dose per administration
+        Do not calculate medicines
+        that are not configured.
     */
 
     if (
-        dosing.type ===
-        "mg_per_kg_per_dose"
-    ) {
-
-        return dosing;
-
-    }
-
-
-    /*
-        Dose per day
-        selected by condition
-    */
-
-    if (
-        dosing.type ===
-        "mg_per_kg_per_day"
-    ) {
-
-        const condition =
-            conditionSelect
-                ? conditionSelect.value
-                : "";
-
-
-        if (
-            !condition ||
-            !dosing.regimens
-        ) {
-
-            return null;
-
-        }
-
-
-        return (
-            dosing.regimens[condition] ||
-            null
-        );
-
-    }
-
-
-    /*
-        Condition based
-    */
-
-    if (
-        dosing.type ===
-        "condition_based"
-    ) {
-
-        const condition =
-            conditionSelect
-                ? conditionSelect.value
-                : "";
-
-
-        if (
-            !condition ||
-            !dosing.regimens
-        ) {
-
-            return null;
-
-        }
-
-
-        return (
-            dosing.regimens[condition] ||
-            null
-        );
-
-    }
-
-
-    return null;
-
-}
-
-
-/* =========================================
-   CALCULATE DOSE IN MG
-========================================= */
-
-function calculateDoseInMg(
-    weight,
-    dosing
-) {
-
-    if (
-        !dosing ||
-        !Number.isFinite(weight)
+        dosing.configured !== true
     ) {
 
         return null;
@@ -998,47 +841,133 @@ function calculateDoseInMg(
         "mg_per_kg_per_dose"
     ) {
 
-        const minMg =
-            weight *
-            Number(dosing.minDose);
+        return dosing;
+
+    }
 
 
-        const maxMg =
-            weight *
-            Number(dosing.maxDose);
+    const condition =
+        conditionSelect
+            ? conditionSelect.value
+            : "";
 
 
-        let finalMin =
-            minMg;
+    if (
+        !condition ||
+        !dosing.regimens
+    ) {
+
+        return null;
+
+    }
 
 
-        let finalMax =
-            maxMg;
+    const regimen =
+        dosing.regimens[condition];
+
+
+    if (!regimen) {
+        return null;
+    }
+
+
+    /*
+        Attach the parent dosing type
+        so the calculation function
+        knows how to process it.
+    */
+
+    return {
+        ...regimen,
+        type:
+            dosing.type,
+        route:
+            dosing.route
+    };
+
+}
+
+
+/* =========================================
+   CALCULATE DOSE IN MG
+========================================= */
+
+function calculateDoseInMg(
+    weight,
+    dosing
+) {
+
+    if (
+        !dosing ||
+        !Number.isFinite(weight) ||
+        weight <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    /* -------------------------------------
+       MG / KG / DOSE
+    ------------------------------------- */
+
+    if (
+        dosing.type ===
+        "mg_per_kg_per_dose"
+    ) {
+
+        const minDose =
+            Number(
+                dosing.minDose
+            );
+
+        const maxDose =
+            Number(
+                dosing.maxDose
+            );
+
+
+        if (
+            !Number.isFinite(minDose) ||
+            !Number.isFinite(maxDose)
+        ) {
+
+            return null;
+
+        }
+
+
+        let minMg =
+            weight * minDose;
+
+        let maxMg =
+            weight * maxDose;
 
 
         /*
-            Apply maximum single dose
-            if configured.
+            Maximum single dose
         */
 
         if (
             Number.isFinite(
-                Number(dosing.maxPerDose)
+                Number(
+                    dosing.maxPerDose
+                )
             )
         ) {
 
-            finalMin =
+            minMg =
                 Math.min(
-                    finalMin,
+                    minMg,
                     Number(
                         dosing.maxPerDose
                     )
                 );
 
-
-            finalMax =
+            maxMg =
                 Math.min(
-                    finalMax,
+                    maxMg,
                     Number(
                         dosing.maxPerDose
                     )
@@ -1050,10 +979,10 @@ function calculateDoseInMg(
         return {
 
             minMg:
-                finalMin,
+                minMg,
 
             maxMg:
-                finalMax,
+                maxMg,
 
             frequency:
                 dosing.frequency ||
@@ -1082,11 +1011,24 @@ function calculateDoseInMg(
             );
 
 
+        const minDose =
+            Number(
+                dosing.minDose
+            );
+
+        const maxDose =
+            Number(
+                dosing.maxDose
+            );
+
+
         if (
             !Number.isFinite(
                 frequency
             ) ||
-            frequency <= 0
+            frequency <= 0 ||
+            !Number.isFinite(minDose) ||
+            !Number.isFinite(maxDose)
         ) {
 
             return null;
@@ -1094,34 +1036,33 @@ function calculateDoseInMg(
         }
 
 
-        const minDailyMg =
+        const dailyMinMg =
             weight *
-            Number(dosing.minDose);
+            minDose;
 
-
-        const maxDailyMg =
+        const dailyMaxMg =
             weight *
-            Number(dosing.maxDose);
+            maxDose;
 
 
         let minPerDose =
-            minDailyMg /
+            dailyMinMg /
             frequency;
 
-
         let maxPerDose =
-            maxDailyMg /
+            dailyMaxMg /
             frequency;
 
 
         /*
-            Apply maximum dose
-            per administration.
+            Maximum dose per administration
         */
 
         if (
             Number.isFinite(
-                Number(dosing.maxPerDose)
+                Number(
+                    dosing.maxPerDose
+                )
             )
         ) {
 
@@ -1132,7 +1073,6 @@ function calculateDoseInMg(
                         dosing.maxPerDose
                     )
                 );
-
 
             maxPerDose =
                 Math.min(
@@ -1154,10 +1094,10 @@ function calculateDoseInMg(
                 maxPerDose,
 
             dailyMinMg:
-                minDailyMg,
+                dailyMinMg,
 
             dailyMaxMg:
-                maxDailyMg,
+                dailyMaxMg,
 
             frequency:
                 `${frequency} doses/day`,
@@ -1186,16 +1126,18 @@ function convertMgToMl(
     concentrationMl
 ) {
 
-    /*
-        Example:
+    if (
+        !Number.isFinite(minMg) ||
+        !Number.isFinite(maxMg) ||
+        !Number.isFinite(concentrationMg) ||
+        !Number.isFinite(concentrationMl) ||
+        concentrationMg <= 0 ||
+        concentrationMl <= 0
+    ) {
 
-        250 mg / 5 mL
+        return null;
 
-        If dose = 375 mg:
-
-        375 × 5 / 250
-        = 7.5 mL
-    */
+    }
 
 
     const minMl =
@@ -1248,13 +1190,11 @@ function displayDoseResult(
 
     const mgText =
         hasRange
-
             ? `${formatNumber(
                 mgResult.minMg
             )}–${formatNumber(
                 mgResult.maxMg
             )} mg`
-
             : `${formatNumber(
                 mgResult.minMg
             )} mg`;
@@ -1262,28 +1202,32 @@ function displayDoseResult(
 
     const mlText =
         hasRange
-
             ? `${formatNumber(
                 mlResult.minMl
             )}–${formatNumber(
                 mlResult.maxMl
             )} mL`
-
             : `${formatNumber(
                 mlResult.minMl
             )} mL`;
 
 
     /*
-        Main result:
-        mL is what the user needs
-        when using a liquid formulation.
+        Main result
     */
 
     if (doseResult) {
 
         doseResult.textContent =
-            mlText;
+            hasRange
+                ? `${formatNumber(
+                    mlResult.minMl
+                )}–${formatNumber(
+                    mlResult.maxMl
+                )}`
+                : formatNumber(
+                    mlResult.minMl
+                );
 
     }
 
@@ -1291,7 +1235,7 @@ function displayDoseResult(
     if (doseUnit) {
 
         doseUnit.textContent =
-            "per dose";
+            "mL per dose";
 
     }
 
@@ -1382,9 +1326,7 @@ function getCalculationHistory() {
 
 
     if (!saved) {
-
         return [];
-
     }
 
 
@@ -1392,7 +1334,6 @@ function getCalculationHistory() {
 
         const history =
             JSON.parse(saved);
-
 
         return Array.isArray(history)
             ? history
@@ -1417,9 +1358,7 @@ function getCalculationHistory() {
    SAVE CALCULATION TO HISTORY
 ========================================= */
 
-function saveCalculationToHistory(
-    data
-) {
+function saveCalculationToHistory(data) {
 
     let history =
         getCalculationHistory();
@@ -1493,10 +1432,6 @@ function saveCalculationToHistory(
     );
 
 
-    /*
-        Keep latest 50 calculations.
-    */
-
     history =
         history.slice(
             0,
@@ -1535,7 +1470,6 @@ if (calculateButton) {
 function calculateDose() {
 
     hideValidation();
-
     hideResult();
 
 
@@ -1555,7 +1489,25 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       2. CONDITION
+       2. DOSING CONFIGURATION
+    ------------------------------------- */
+
+    if (
+        !selectedMedicine.dosing ||
+        selectedMedicine.dosing.configured !== true
+    ) {
+
+        showValidation(
+            "A verified dosing rule is not configured for this medicine yet."
+        );
+
+        return;
+
+    }
+
+
+    /* -------------------------------------
+       3. CONDITION
     ------------------------------------- */
 
     const selectedCondition =
@@ -1564,13 +1516,16 @@ function calculateDose() {
             : "";
 
 
+    const dosingType =
+        selectedMedicine.dosing.type;
+
+
     if (
-        selectedMedicine.dosing &&
         (
-            selectedMedicine.dosing.type ===
+            dosingType ===
                 "mg_per_kg_per_day" ||
 
-            selectedMedicine.dosing.type ===
+            dosingType ===
                 "condition_based"
         ) &&
         !selectedCondition
@@ -1586,7 +1541,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       3. AGE
+       4. AGE
     ------------------------------------- */
 
     const age =
@@ -1597,35 +1552,8 @@ function calculateDose() {
             : NaN;
 
 
-    /* -------------------------------------
-       4. WEIGHT
-    ------------------------------------- */
-
-    const weight =
-        weightInput
-            ? parseFloat(
-                weightInput.value
-            )
-            : NaN;
-
-
     const hasAge =
         Number.isFinite(age);
-
-
-    const hasWeight =
-        Number.isFinite(weight);
-
-
-    if (!hasWeight) {
-
-        showValidation(
-            "Please enter the patient's weight."
-        );
-
-        return;
-
-    }
 
 
     if (hasAge && age < 0) {
@@ -1639,10 +1567,25 @@ function calculateDose() {
     }
 
 
-    if (weight <= 0) {
+    /* -------------------------------------
+       5. WEIGHT
+    ------------------------------------- */
+
+    const weight =
+        weightInput
+            ? parseFloat(
+                weightInput.value
+            )
+            : NaN;
+
+
+    if (
+        !Number.isFinite(weight) ||
+        weight <= 0
+    ) {
 
         showValidation(
-            "Please enter a valid weight."
+            "Please enter a valid patient weight."
         );
 
         return;
@@ -1651,7 +1594,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       5. AGE RESTRICTION
+       6. AGE RESTRICTION
     ------------------------------------- */
 
     const dosing =
@@ -1659,7 +1602,6 @@ function calculateDose() {
 
 
     if (
-        dosing &&
         Number.isFinite(
             Number(
                 dosing.minimumAgeMonths
@@ -1667,20 +1609,21 @@ function calculateDose() {
         )
     ) {
 
-        let ageMonths =
-            NaN;
+        if (!hasAge) {
+
+            showValidation(
+                "Please enter the patient's age."
+            );
+
+            return;
+
+        }
+
+
+        let ageMonths;
 
 
         if (
-            ageUnit &&
-            ageUnit.value === "months"
-        ) {
-
-            ageMonths =
-                age;
-
-        }
-        else if (
             ageUnit &&
             ageUnit.value === "years"
         ) {
@@ -1689,14 +1632,19 @@ function calculateDose() {
                 age * 12;
 
         }
+        else {
+
+            ageMonths =
+                age;
+
+        }
 
 
         if (
-            Number.isFinite(ageMonths) &&
             ageMonths <
-                Number(
-                    dosing.minimumAgeMonths
-                )
+            Number(
+                dosing.minimumAgeMonths
+            )
         ) {
 
             showValidation(
@@ -1711,7 +1659,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       6. CONCENTRATION
+       7. CONCENTRATION
     ------------------------------------- */
 
     const concentrationMg =
@@ -1751,7 +1699,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       7. DOSING RULE
+       8. DOSING REGIMEN
     ------------------------------------- */
 
     const dosingRegimen =
@@ -1770,19 +1718,13 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       8. CALCULATE MG
+       9. CALCULATE MG
     ------------------------------------- */
 
     const mgResult =
         calculateDoseInMg(
             weight,
-            dosingRegimen.type
-                ? dosingRegimen
-                : {
-                    ...dosingRegimen,
-                    type:
-                        dosing.type
-                }
+            dosingRegimen
         );
 
 
@@ -1806,7 +1748,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       9. CONVERT MG → ML
+       10. CONVERT MG → ML
     ------------------------------------- */
 
     const mlResult =
@@ -1819,6 +1761,7 @@ function calculateDose() {
 
 
     if (
+        !mlResult ||
         !Number.isFinite(
             mlResult.minMl
         ) ||
@@ -1837,7 +1780,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       10. DISPLAY RESULT
+       11. DISPLAY RESULT
     ------------------------------------- */
 
     displayDoseResult(
@@ -1850,7 +1793,7 @@ function calculateDose() {
 
 
     /* -------------------------------------
-       11. SAVE TO HISTORY
+       12. SAVE TO HISTORY
     ------------------------------------- */
 
     const hasRange =
@@ -1862,13 +1805,11 @@ function calculateDose() {
 
     const historyDose =
         hasRange
-
             ? `${formatNumber(
                 mlResult.minMl
             )}–${formatNumber(
                 mlResult.maxMl
             )}`
-
             : formatNumber(
                 mlResult.minMl
             );
@@ -1912,8 +1853,10 @@ function calculateDose() {
     });
 
 }
+
+
 /* =========================================
-   BACK BUTTON → HOME
+   BACK BUTTON
 ========================================= */
 
 if (backButton) {
@@ -1922,16 +1865,6 @@ if (backButton) {
         "click",
         () => {
 
-            /*
-                Tell the Home page that the
-                welcome screen has already been shown.
-            */
-
-            sessionStorage.setItem(
-                "dosecareWelcomeShown",
-                "true"
-            );
-
             window.location.href =
                 "index.html";
 
@@ -1939,6 +1872,8 @@ if (backButton) {
     );
 
 }
+
+
 /* =========================================
    ESC → CLOSE SEARCH
 ========================================= */
@@ -1966,3 +1901,7 @@ document.addEventListener(
 initializeConditions();
 
 populateMedicineSelect();
+
+hideSearchResults();
+hideValidation();
+hideResult();
