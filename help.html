@@ -531,7 +531,546 @@
 
     </main>
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+  <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DoseCare — Help</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="help.css"
+    >
+
+</head>
+
+<body>
+
+
+    <div class="background">
+
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+        <div class="glow glow-three"></div>
+
+        <div class="bubble bubble-one"></div>
+        <div class="bubble bubble-two"></div>
+        <div class="bubble bubble-three"></div>
+        <div class="bubble bubble-four"></div>
+        <div class="bubble bubble-five"></div>
+
+        <div id="particles"></div>
+
+    </div>
+
+
+
+    <main class="help-page">
+
+
+        <!-- HEADER -->
+
+        <header class="help-header">
+
+            <button
+                id="back-button"
+                class="help-back"
+                type="button"
+            >
+                ←
+            </button>
+
+
+            <div>
+
+                <span class="help-label">
+                    DOSECARE
+                </span>
+
+                <h1>
+                    Help Center
+                </h1>
+
+                <p>
+                    Learn how to use DoseCare
+                    and understand its features.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- SEARCH -->
+
+        <section class="help-search">
+
+            <div class="search-icon">
+                ⌕
+            </div>
+
+            <input
+                id="help-search"
+                type="search"
+                placeholder="Search help..."
+                autocomplete="off"
+            >
+
+            <button
+                id="clear-help-search"
+                type="button"
+            >
+                ×
+            </button>
+
+        </section>
+
+
+
+        <!-- QUICK LINKS -->
+
+        <section class="help-topics">
+
+            <button
+                class="topic-card"
+                data-target="calculator"
+            >
+
+                <span>
+                    🧮
+                </span>
+
+                <strong>
+                    Calculator
+                </strong>
+
+                <small>
+                    Learn dose calculation
+                </small>
+
+            </button>
+
+
+            <button
+                class="topic-card"
+                data-target="library"
+            >
+
+                <span>
+                    💊
+                </span>
+
+                <strong>
+                    Medicine Library
+                </strong>
+
+                <small>
+                    Explore medicines
+                </small>
+
+            </button>
+
+
+            <button
+                class="topic-card"
+                data-target="history"
+            >
+
+                <span>
+                    ◷
+                </span>
+
+                <strong>
+                    History
+                </strong>
+
+                <small>
+                    Review calculations
+                </small>
+
+            </button>
+
+
+            <button
+                class="topic-card"
+                data-target="favorites"
+            >
+
+                <span>
+                    ★
+                </span>
+
+                <strong>
+                    Favorites
+                </strong>
+
+                <small>
+                    Save medicines
+                </small>
+
+            </button>
+
+        </section>
+
+
+
+        <!-- FAQ -->
+
+        <section class="faq-section">
+
+            <div class="section-heading">
+
+                <span>
+                    FAQ
+                </span>
+
+                <h2>
+                    Frequently asked questions
+                </h2>
+
+            </div>
+
+
+            <div
+                id="faq-list"
+                class="faq-list"
+            >
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="calculator dose calculation weight age concentration"
+                    data-topic="calculator"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            How do I use the Dose Calculator?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            Select the clinical condition
+                            and medicine, enter the available
+                            patient information, then enter the
+                            medicine concentration and calculate.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="age months years pediatric"
+                    data-topic="calculator"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            Can I enter age in months?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            Yes. DoseCare supports age input
+                            in years and months where the
+                            calculator provides that option.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="concentration mg ml medicine syrup"
+                    data-topic="calculator"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            What does 250 mg / 5 mL mean?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            It means every 5 mL of the
+                            formulation contains 250 mg
+                            of the active medicine.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="history calculations saved"
+                    data-topic="history"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            Where can I find previous calculations?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            Open Calculation History from
+                            the menu. Completed calculations
+                            are stored locally on your device.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="favorites star medicine library"
+                    data-topic="favorites"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            How do I add a medicine to Favorites?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            Open the Medicine Library and
+                            tap the star beside a medicine.
+                            The selected medicine will be
+                            stored in your Favorites.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="ask question consultation"
+                    data-topic="ask"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            What is the Ask section?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            Ask is designed to help you
+                            organize clinical questions,
+                            patient information and medicine
+                            details for educational review.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+
+                <article
+                    class="faq-item"
+                    data-keywords="medical safety clinical decision"
+                    data-topic="safety"
+                >
+
+                    <button
+                        class="faq-question"
+                        type="button"
+                    >
+
+                        <span>
+                            Can DoseCare replace clinical judgment?
+                        </span>
+
+                        <b>
+                            +
+                        </b>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <p>
+                            No. DoseCare is a support and
+                            educational tool. Clinical decisions
+                            should be verified using appropriate
+                            references and professional judgment.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <div
+                id="no-results"
+                class="no-results"
+            >
+
+                <span>
+                    ⌕
+                </span>
+
+                <h3>
+                    No help articles found
+                </h3>
+
+                <p>
+                    Try another search term.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <section class="help-footer">
+
+            <span>
+                DOSECARE
+            </span>
+
+            <h2>
+                Need more help?
+            </h2>
+
+            <p>
+                Start with the Help Center or use
+                the Ask section to organize your
+                clinical question.
+            </p>
+
+            <button
+                id="go-ask"
+                class="primary-button"
+                type="button"
+            >
+                Go to Ask
+                <span>→</span>
+            </button>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="help.js"></script>
+
+</body>
+
+</html>
+  <script src="theme.js"></script>
     <script src="help.js"></script>
 
 </body>
