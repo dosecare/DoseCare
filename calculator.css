@@ -36,20 +36,23 @@
 
 }
 
-
 /* =========================================
    BACK BUTTON
 ========================================= */
 
 .back-button {
 
-    display: flex;
+    display: inline-flex;
 
     align-items: center;
 
+    justify-content: center;
+
     gap: 9px;
 
-    padding: 11px 16px;
+    min-height: 44px;
+
+    padding: 10px 16px;
 
     border-radius: 13px;
 
@@ -62,20 +65,36 @@
     color:
         rgba(225, 242, 255, 0.8);
 
+    font-family: inherit;
+
     font-size: 14px;
+
+    font-weight: 500;
 
     cursor: pointer;
 
     backdrop-filter: blur(12px);
 
-    transition: 0.3s ease;
+    -webkit-backdrop-filter: blur(12px);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 
 }
 
 
 .back-button span {
 
-    font-size: 20px;
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
 
     line-height: 1;
 
@@ -85,7 +104,7 @@
 .back-button:hover {
 
     transform:
-        translateX(-3px);
+        translateY(-2px);
 
     background:
         rgba(70, 170, 240, 0.10);
@@ -98,6 +117,12 @@
 }
 
 
+.back-button:active {
+
+    transform:
+        translateY(0);
+
+}
 /* =========================================
    LOGO
 ========================================= */
@@ -1732,14 +1757,15 @@
 
     }
 
-}
-/* =========================================
+}/* =========================================
    AGE INPUT
 ========================================= */
 
 .age-input-row {
 
     display: flex;
+
+    align-items: center;
 
     gap: 10px;
 
@@ -1761,11 +1787,12 @@
 
     width: 125px;
 
-    height: 55px;
+    height: 52px;
 
-    padding: 0 14px;
+    padding:
+        0 14px;
 
-    border-radius: 15px;
+    border-radius: 14px;
 
     border:
         1px solid
@@ -1779,6 +1806,8 @@
     color:
         rgba(235, 247, 255, 0.9);
 
+    font-family: inherit;
+
     font-size: 14px;
 
     cursor: pointer;
@@ -1787,7 +1816,8 @@
 
     -webkit-appearance: none;
 
-    transition: 0.25s ease;
+    transition:
+        0.25s ease;
 
 }
 
@@ -1797,6 +1827,9 @@
     border-color:
         rgba(110, 215, 255, 0.22);
 
+    background:
+        rgba(70, 170, 240, 0.055);
+
 }
 
 
@@ -1804,6 +1837,9 @@
 
     border-color:
         rgba(105, 210, 255, 0.4);
+
+    background:
+        rgba(65, 160, 225, 0.07);
 
     box-shadow:
         0 0 25px
@@ -1814,9 +1850,11 @@
 
 .age-input-row select option {
 
-    background: #102d50;
+    background:
+        #102d50;
 
-    color: #eef9ff;
+    color:
+        #eef9ff;
 
 }
 
@@ -1833,6 +1871,8 @@
     .age-input-row select {
 
         width: 110px;
+
+        height: 52px;
 
         font-size: 13px;
 
