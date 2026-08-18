@@ -25,22 +25,100 @@ const themeStatus =
 const THEME_STORAGE_KEY =
     "dosecareTheme";
 
-
 /* =========================================
-   GET SAVED THEME
+   THEME SETTINGS
 ========================================= */
 
-function getSavedTheme() {
+function updateThemeUI(theme) {
 
-    return (
-        localStorage.getItem(
-            THEME_STORAGE_KEY
-        ) || "dark"
-    );
+    const isLight =
+        theme === "light";
+
+
+    if (themeToggle) {
+
+        themeToggle.classList.toggle(
+            "light",
+            isLight
+        );
+
+        themeToggle.setAttribute(
+            "aria-pressed",
+            String(isLight)
+        );
+
+    }
+
+
+    if (themeStatus) {
+
+        themeStatus.textContent =
+            isLight
+                ? "Light Mode"
+                : "Dark Mode";
+
+    }
+
+
+    const themeIcon =
+        document.querySelector(
+            ".theme-toggle-icon"
+        );
+
+
+    if (themeIcon) {
+
+        themeIcon.textContent =
+            isLight
+                ? "☀"
+                : "☾";
+
+    }
 
 }
 
 
+/* =========================================
+   INITIALIZE SETTINGS UI
+========================================= */
+
+updateThemeUI(
+    getSavedTheme()
+);
+
+
+/* =========================================
+   TOGGLE THEME
+========================================= */
+
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        () => {
+
+            const currentTheme =
+                getSavedTheme();
+
+            const newTheme =
+                currentTheme === "dark"
+                    ? "light"
+                    : "dark";
+
+
+            saveGlobalTheme(
+                newTheme
+            );
+
+
+            updateThemeUI(
+                newTheme
+            );
+
+        }
+    );
+
+}
 /* =========================================
    APPLY THEME
 ========================================= */
