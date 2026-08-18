@@ -11,7 +11,8 @@
 const particlesContainer =
     document.getElementById("particles");
 
-const PARTICLE_COUNT = 70;
+const PARTICLE_COUNT = 35;
+
 
 if (particlesContainer) {
 
@@ -24,7 +25,9 @@ if (particlesContainer) {
         const particle =
             document.createElement("span");
 
-        particle.classList.add("particle");
+        particle.classList.add(
+            "particle"
+        );
 
         particle.style.left =
             `${Math.random() * 100}%`;
@@ -70,6 +73,7 @@ if (particlesContainer) {
 
 /* =========================================
    SPLASH SCREEN → HOME
+   Show welcome only on first visit
 ========================================= */
 
 const welcomeScreen =
@@ -77,15 +81,31 @@ const welcomeScreen =
         "welcome-screen"
     );
 
+
 const homeScreen =
     document.getElementById(
         "home-screen"
     );
 
 
-if (welcomeScreen && homeScreen) {
+const WELCOME_SHOWN_KEY =
+    "dosecareWelcomeShown";
 
-    setTimeout(() => {
+
+if (
+    welcomeScreen &&
+    homeScreen
+) {
+
+    const welcomeAlreadyShown =
+        sessionStorage.getItem(
+            WELCOME_SHOWN_KEY
+        );
+
+
+    if (
+        welcomeAlreadyShown === "true"
+    ) {
 
         welcomeScreen.classList.add(
             "hide"
@@ -95,7 +115,27 @@ if (welcomeScreen && homeScreen) {
             "show"
         );
 
-    }, 4000);
+    }
+    else {
+
+        setTimeout(() => {
+
+            welcomeScreen.classList.add(
+                "hide"
+            );
+
+            homeScreen.classList.add(
+                "show"
+            );
+
+            sessionStorage.setItem(
+                WELCOME_SHOWN_KEY,
+                "true"
+            );
+
+        }, 3000);
+
+    }
 
 }
 
@@ -109,15 +149,18 @@ const menuButton =
         "menu-button"
     );
 
+
 const sideMenu =
     document.getElementById(
         "side-menu"
     );
 
+
 const closeMenu =
     document.getElementById(
         "close-menu"
     );
+
 
 const menuOverlay =
     document.getElementById(
@@ -138,6 +181,7 @@ function openMenu() {
         );
 
     }
+
 
     if (menuOverlay) {
 
@@ -164,6 +208,7 @@ function closeSideMenu() {
 
     }
 
+
     if (menuOverlay) {
 
         menuOverlay.classList.remove(
@@ -188,6 +233,7 @@ if (menuButton) {
 
 }
 
+
 if (closeMenu) {
 
     closeMenu.addEventListener(
@@ -196,6 +242,7 @@ if (closeMenu) {
     );
 
 }
+
 
 if (menuOverlay) {
 
@@ -243,10 +290,12 @@ const calculatorMenuButton =
         "calculator-menu-button"
     );
 
+
 const startCalculator =
     document.getElementById(
         "start-calculator"
     );
+
 
 const quickCalculator =
     document.getElementById(
@@ -306,6 +355,7 @@ const medicinesMenuButton =
     document.getElementById(
         "medicines-menu-button"
     );
+
 
 const quickMedicines =
     document.getElementById(
@@ -389,6 +439,7 @@ const historyMenuButton =
     document.getElementById(
         "history-menu-button"
     );
+
 
 const quickHistory =
     document.getElementById(
