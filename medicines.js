@@ -55,10 +55,6 @@ const medicines = [
         pediatric:
             "Pediatric dosing should be calculated according to the child's weight and the specific formulation concentration.",
 
-        /* =================================
-           DOSING CONFIGURATION
-        ================================= */
-
         dosing: {
 
             type:
@@ -77,7 +73,13 @@ const medicines = [
                 60,
 
             route:
-                "oral"
+                "oral",
+
+            minimumAgeMonths:
+                0,
+
+            configured:
+                true
 
         },
 
@@ -85,7 +87,7 @@ const medicines = [
             true,
 
         notes:
-            "Verified pediatric dosing data must be configured before calculation."
+            "Verify the formulation, dosing interval, maximum daily dose, and approved pediatric dosing guidance before administration."
 
     },
 
@@ -137,10 +139,6 @@ const medicines = [
         pediatric:
             "Use should consider age, hydration status, renal function and the clinical condition of the child.",
 
-        /* =================================
-           DOSING CONFIGURATION
-        ================================= */
-
         dosing: {
 
             type:
@@ -162,7 +160,10 @@ const medicines = [
                 "oral",
 
             minimumAgeMonths:
-                3
+                3,
+
+            configured:
+                true
 
         },
 
@@ -170,7 +171,7 @@ const medicines = [
             true,
 
         notes:
-            "Verify age restrictions and clinical suitability before configuring pediatric dosing."
+            "Verify age restrictions, hydration status, renal function, formulation, and approved pediatric dosing guidance before administration."
 
     },
 
@@ -219,10 +220,6 @@ const medicines = [
         pediatric:
             "Pediatric dosing depends on weight, infection type, severity and formulation concentration.",
 
-        /* =================================
-           DOSING CONFIGURATION
-        ================================= */
-
         dosing: {
 
             type:
@@ -265,7 +262,10 @@ const medicines = [
             },
 
             route:
-                "oral"
+                "oral",
+
+            configured:
+                true
 
         },
 
@@ -273,7 +273,7 @@ const medicines = [
             true,
 
         notes:
-            "Pediatric dose varies according to infection and clinical indication."
+            "Pediatric dosing varies according to infection and clinical indication. Verify the indication-specific regimen before use."
 
     },
 
@@ -322,10 +322,6 @@ const medicines = [
         pediatric:
             "Dose and duration depend on the infection and the child's weight.",
 
-        /* =================================
-           DOSING CONFIGURATION
-        ================================= */
-
         dosing: {
 
             type:
@@ -334,7 +330,10 @@ const medicines = [
             regimens: {},
 
             route:
-                "oral"
+                "oral",
+
+            configured:
+                false
 
         },
 
@@ -342,7 +341,7 @@ const medicines = [
             true,
 
         notes:
-            "Dose and duration must be selected according to the verified indication-specific regimen."
+            "Indication-specific pediatric dosing has not yet been configured in DoseCare."
 
     }
 
@@ -360,11 +359,15 @@ const medicines = [
 
 function getMedicineById(id) {
 
+    if (!id) {
+        return null;
+    }
+
     return medicines.find(
         medicine =>
             String(medicine.id) ===
             String(id)
-    );
+    ) || null;
 
 }
 
@@ -376,9 +379,7 @@ function getMedicineById(id) {
 function getMedicineByName(name) {
 
     if (!name) {
-
         return null;
-
     }
 
     const search =
@@ -388,10 +389,10 @@ function getMedicineByName(name) {
 
     return medicines.find(
         medicine =>
-            medicine.genericName
-                .toLowerCase() ===
-            search
-    );
+            String(
+                medicine.genericName || ""
+            ).toLowerCase() === search
+    ) || null;
 
 }
 
@@ -403,9 +404,7 @@ function getMedicineByName(name) {
 function getMedicineName(medicine) {
 
     if (!medicine) {
-
         return "Medicine";
-
     }
 
     return (
@@ -424,9 +423,7 @@ function getMedicineName(medicine) {
 function searchMedicines(searchTerm) {
 
     if (!searchTerm) {
-
         return medicines;
-
     }
 
     const search =
@@ -438,11 +435,42 @@ function searchMedicines(searchTerm) {
         medicine => {
 
             const genericName =
-                medicine.genericName
-                    .toLowerCase();
+                String(
+                    medicine.genericName || ""
+                ).toLowerCase();
 
             const brands =
-                medicine.brandNames || [];
+                Array.isArray(
+                    medicine.brandNames
+                )
+                    ? medicine.brandNames
+                    : [];
+
+            const drugClass =
+                Array.isArray(
+                    medicine.drugClass
+                )
+                    ? medicine.drugClass.join(" ")
+                    : String(
+                        medicine.drugClass || ""
+                    );
+
+            const className =
+                String(
+                    medicine.class || ""
+                ).toLowerCase();
+
+            const condition =
+                String(
+                    medicine.condition || ""
+                ).toLowerCase();
+
+            const conditions =
+                Array.isArray(
+                    medicine.conditions
+                )
+                    ? medicine.conditions.join(" ")
+                    : "";
 
             const brandMatch =
                 brands.some(
@@ -452,21 +480,15 @@ function searchMedicines(searchTerm) {
                             .includes(search)
                 );
 
-            const classMatch =
-                medicine.class
-                    .toLowerCase()
-                    .includes(search);
-
-            const conditionMatch =
-                medicine.condition
-                    .toLowerCase()
-                    .includes(search);
-
             return (
                 genericName.includes(search) ||
                 brandMatch ||
-                classMatch ||
-                conditionMatch
+                drugClass
+                    .toLowerCase()
+                    .includes(search) ||
+                className.includes(search) ||
+                condition.includes(search) ||
+                conditions.includes(search)
             );
 
         }
@@ -492,17 +514,19 @@ function getAllMedicineConditions() {
                     medicine.conditions
                 )
             ) {
-
                 return;
-
             }
 
             medicine.conditions.forEach(
                 condition => {
 
-                    conditionSet.add(
-                        condition
-                    );
+                    if (condition) {
+
+                        conditionSet.add(
+                            condition
+                        );
+
+                    }
 
                 }
             );
@@ -526,9 +550,7 @@ function getMedicinesByCondition(
 ) {
 
     if (!condition) {
-
         return medicines;
-
     }
 
     return medicines.filter(
@@ -559,9 +581,7 @@ function getMedicineDosing(id) {
         getMedicineById(id);
 
     if (!medicine) {
-
         return null;
-
     }
 
     return medicine.dosing || null;
@@ -587,7 +607,7 @@ function isMedicineDosingConfigured(id) {
 
 
 /* =========================================
-   FAVORITES
+   FAVORITES STORAGE
 ========================================= */
 
 const FAVORITES_STORAGE_KEY =
@@ -606,9 +626,7 @@ function getFavoriteMedicines() {
         );
 
     if (!saved) {
-
         return [];
-
     }
 
     try {
@@ -644,6 +662,10 @@ function getFavoriteMedicines() {
 function saveFavoriteMedicines(
     favorites
 ) {
+
+    if (!Array.isArray(favorites)) {
+        return;
+    }
 
     localStorage.setItem(
         FAVORITES_STORAGE_KEY,
@@ -681,9 +703,7 @@ function toggleFavoriteMedicine(id) {
         getMedicineById(id);
 
     if (!medicine) {
-
         return false;
-
     }
 
     let favorites =
@@ -698,7 +718,7 @@ function toggleFavoriteMedicine(id) {
 
 
     /* -------------------------------------
-       REMOVE
+       REMOVE FROM FAVORITES
     ------------------------------------- */
 
     if (existingIndex !== -1) {
@@ -708,41 +728,41 @@ function toggleFavoriteMedicine(id) {
             1
         );
 
+        saveFavoriteMedicines(
+            favorites
+        );
+
+        return false;
+
     }
 
 
     /* -------------------------------------
-       ADD
+       ADD TO FAVORITES
     ------------------------------------- */
 
-    else {
+    favorites.push({
 
-        favorites.push({
+        id:
+            medicine.id,
 
-            id:
-                medicine.id,
+        name:
+            medicine.genericName,
 
-            name:
-                medicine.genericName,
+        class:
+            medicine.class,
 
-            class:
-                medicine.class,
+        condition:
+            medicine.condition
 
-            condition:
-                medicine.condition
-
-        });
-
-    }
+    });
 
 
     saveFavoriteMedicines(
         favorites
     );
 
-    return (
-        existingIndex === -1
-    );
+    return true;
 
 }
 
@@ -802,18 +822,11 @@ function initializeFavoriteButtons() {
         .forEach(
             button => {
 
-                /*
-                    Prevent duplicate
-                    event listeners.
-                */
-
                 if (
                     button.dataset.favoriteReady ===
                     "true"
                 ) {
-
                     return;
-
                 }
 
                 button.dataset.favoriteReady =
@@ -853,26 +866,27 @@ function initializeFavoriteButtons() {
 
 function validateMedicineDatabase() {
 
+    const requiredFields = [
+
+        "id",
+        "genericName",
+        "name",
+        "brandNames",
+        "drugClass",
+        "class",
+        "conditions",
+        "condition",
+        "route",
+        "indications",
+        "moa",
+        "pediatric",
+        "dosing"
+
+    ];
+
+
     medicines.forEach(
         medicine => {
-
-            const requiredFields = [
-
-                "id",
-                "genericName",
-                "name",
-                "brandNames",
-                "drugClass",
-                "class",
-                "conditions",
-                "condition",
-                "route",
-                "indications",
-                "moa",
-                "pediatric",
-                "dosing"
-
-            ];
 
             requiredFields.forEach(
                 field => {
@@ -891,14 +905,88 @@ function validateMedicineDatabase() {
                 }
             );
 
+
+            /* ---------------------------------
+               Validate CONDITIONS
+            --------------------------------- */
+
             if (
-                medicine.dosing &&
+                !Array.isArray(
+                    medicine.conditions
+                )
+            ) {
+
+                console.warn(
+                    `Medicine "${medicine.genericName}" has invalid conditions data.`
+                );
+
+            }
+
+
+            /* ---------------------------------
+               Validate BRAND NAMES
+            --------------------------------- */
+
+            if (
+                !Array.isArray(
+                    medicine.brandNames
+                )
+            ) {
+
+                console.warn(
+                    `Medicine "${medicine.genericName}" has invalid brandNames data.`
+                );
+
+            }
+
+
+            /* ---------------------------------
+               Validate DRUG CLASS
+            --------------------------------- */
+
+            if (
+                !Array.isArray(
+                    medicine.drugClass
+                )
+            ) {
+
+                console.warn(
+                    `Medicine "${medicine.genericName}" has invalid drugClass data.`
+                );
+
+            }
+
+
+            /* ---------------------------------
+               Validate DOSING
+            --------------------------------- */
+
+            if (
+                !medicine.dosing ||
                 typeof medicine.dosing !==
                 "object"
             ) {
 
                 console.warn(
                     `Medicine "${medicine.genericName}" has an invalid dosing configuration.`
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------
+               CONFIGURATION STATUS
+            --------------------------------- */
+
+            if (
+                medicine.dosing.configured !==
+                true
+            ) {
+
+                console.warn(
+                    `Medicine "${medicine.genericName}" is not configured for dose calculation.`
                 );
 
             }
