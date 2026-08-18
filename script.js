@@ -13,7 +13,6 @@ const particlesContainer =
 
 const PARTICLE_COUNT = 70;
 
-
 if (particlesContainer) {
 
     for (
@@ -25,131 +24,105 @@ if (particlesContainer) {
         const particle =
             document.createElement("span");
 
-
-        particle.classList.add(
-            "particle"
-        );
-
+        particle.classList.add("particle");
 
         particle.style.left =
             `${Math.random() * 100}%`;
 
-
         particle.style.top =
             `${Math.random() * 100}%`;
-
 
         const size =
             Math.random() * 2.5 + 1.5;
 
-
         particle.style.width =
             `${size}px`;
-
 
         particle.style.height =
             `${size}px`;
 
-
         const movementDuration =
             Math.random() * 8 + 8;
-
 
         const glowDuration =
             Math.random() * 3 + 2;
 
-
         particle.style.animationDuration =
             `${movementDuration}s, ${glowDuration}s`;
-
 
         const movementDelay =
             Math.random() * 8;
 
-
         const glowDelay =
             Math.random() * 3;
-
 
         particle.style.animationDelay =
             `${movementDelay}s, ${glowDelay}s`;
 
-
         particlesContainer.appendChild(
             particle
         );
-
     }
-
 }
 
 
 /* =========================================
-   SPLASH SCREEN → HOME
+   WELCOME SCREEN → HOME
 ========================================= */
 
 const welcomeScreen =
-    document.getElementById(
-        "welcome-screen"
-    );
-
+    document.getElementById("welcome-screen");
 
 const homeScreen =
-    document.getElementById(
-        "home-screen"
-    );
+    document.getElementById("home-screen");
 
 
-const WELCOME_SHOWN_KEY =
-    "dosecareWelcomeShown";
+if (welcomeScreen && homeScreen) {
 
+    /*
+        Welcome appears only once
+        during the current browser session.
+    */
 
-if (
-    welcomeScreen &&
-    homeScreen
-) {
-
-    const welcomeAlreadyShown =
+    const welcomeShown =
         sessionStorage.getItem(
-            WELCOME_SHOWN_KEY
+            "dosecareWelcomeShown"
         );
 
 
-    if (welcomeAlreadyShown) {
+    if (welcomeShown === "true") {
 
-        welcomeScreen.classList.add(
-            "hide"
-        );
+        /*
+            User already saw Welcome.
+            Show Home immediately.
+        */
 
+        welcomeScreen.classList.add("hide");
 
-        homeScreen.classList.add(
-            "show"
-        );
+        homeScreen.classList.add("show");
 
     }
     else {
 
+        /*
+            First visit:
+            keep Welcome visible for 4 seconds.
+        */
+
         setTimeout(() => {
 
-            welcomeScreen.classList.add(
-                "hide"
-            );
+            welcomeScreen.classList.add("hide");
 
-
-            homeScreen.classList.add(
-                "show"
-            );
-
+            homeScreen.classList.add("show");
 
             sessionStorage.setItem(
-                WELCOME_SHOWN_KEY,
+                "dosecareWelcomeShown",
                 "true"
             );
 
         }, 4000);
 
     }
-
 }
 
 
@@ -158,27 +131,16 @@ if (
 ========================================= */
 
 const menuButton =
-    document.getElementById(
-        "menu-button"
-    );
-
+    document.getElementById("menu-button");
 
 const sideMenu =
-    document.getElementById(
-        "side-menu"
-    );
-
+    document.getElementById("side-menu");
 
 const closeMenu =
-    document.getElementById(
-        "close-menu"
-    );
-
+    document.getElementById("close-menu");
 
 const menuOverlay =
-    document.getElementById(
-        "menu-overlay"
-    );
+    document.getElementById("menu-overlay");
 
 
 /* =========================================
@@ -189,21 +151,15 @@ function openMenu() {
 
     if (sideMenu) {
 
-        sideMenu.classList.add(
-            "open"
-        );
+        sideMenu.classList.add("open");
 
     }
-
 
     if (menuOverlay) {
 
-        menuOverlay.classList.add(
-            "open"
-        );
+        menuOverlay.classList.add("open");
 
     }
-
 }
 
 
@@ -215,21 +171,15 @@ function closeSideMenu() {
 
     if (sideMenu) {
 
-        sideMenu.classList.remove(
-            "open"
-        );
+        sideMenu.classList.remove("open");
 
     }
-
 
     if (menuOverlay) {
 
-        menuOverlay.classList.remove(
-            "open"
-        );
+        menuOverlay.classList.remove("open");
 
     }
-
 }
 
 
@@ -285,7 +235,6 @@ if (homeMenuButton) {
 
             closeSideMenu();
 
-
             window.location.href =
                 "index.html";
 
@@ -304,12 +253,10 @@ const calculatorMenuButton =
         "calculator-menu-button"
     );
 
-
 const startCalculator =
     document.getElementById(
         "start-calculator"
     );
-
 
 const quickCalculator =
     document.getElementById(
@@ -369,7 +316,6 @@ const medicinesMenuButton =
     document.getElementById(
         "medicines-menu-button"
     );
-
 
 const quickMedicines =
     document.getElementById(
@@ -453,7 +399,6 @@ const historyMenuButton =
     document.getElementById(
         "history-menu-button"
     );
-
 
 const quickHistory =
     document.getElementById(
@@ -623,7 +568,6 @@ menuItems.forEach(
 
                     }
                 );
-
 
                 item.classList.add(
                     "active"
