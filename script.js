@@ -62,67 +62,41 @@ if (particlesContainer) {
         particlesContainer.appendChild(
             particle
         );
+
     }
+
 }
 
 
 /* =========================================
-   WELCOME SCREEN → HOME
+   SPLASH SCREEN → HOME
 ========================================= */
 
 const welcomeScreen =
-    document.getElementById("welcome-screen");
+    document.getElementById(
+        "welcome-screen"
+    );
 
 const homeScreen =
-    document.getElementById("home-screen");
+    document.getElementById(
+        "home-screen"
+    );
 
 
 if (welcomeScreen && homeScreen) {
 
-    /*
-        Welcome appears only once
-        during the current browser session.
-    */
+    setTimeout(() => {
 
-    const welcomeShown =
-        sessionStorage.getItem(
-            "dosecareWelcomeShown"
+        welcomeScreen.classList.add(
+            "hide"
         );
 
+        homeScreen.classList.add(
+            "show"
+        );
 
-    if (welcomeShown === "true") {
+    }, 4000);
 
-        /*
-            User already saw Welcome.
-            Show Home immediately.
-        */
-
-        welcomeScreen.classList.add("hide");
-
-        homeScreen.classList.add("show");
-
-    }
-    else {
-
-        /*
-            First visit:
-            keep Welcome visible for 4 seconds.
-        */
-
-        setTimeout(() => {
-
-            welcomeScreen.classList.add("hide");
-
-            homeScreen.classList.add("show");
-
-            sessionStorage.setItem(
-                "dosecareWelcomeShown",
-                "true"
-            );
-
-        }, 4000);
-
-    }
 }
 
 
@@ -131,16 +105,24 @@ if (welcomeScreen && homeScreen) {
 ========================================= */
 
 const menuButton =
-    document.getElementById("menu-button");
+    document.getElementById(
+        "menu-button"
+    );
 
 const sideMenu =
-    document.getElementById("side-menu");
+    document.getElementById(
+        "side-menu"
+    );
 
 const closeMenu =
-    document.getElementById("close-menu");
+    document.getElementById(
+        "close-menu"
+    );
 
 const menuOverlay =
-    document.getElementById("menu-overlay");
+    document.getElementById(
+        "menu-overlay"
+    );
 
 
 /* =========================================
@@ -151,15 +133,20 @@ function openMenu() {
 
     if (sideMenu) {
 
-        sideMenu.classList.add("open");
+        sideMenu.classList.add(
+            "open"
+        );
 
     }
 
     if (menuOverlay) {
 
-        menuOverlay.classList.add("open");
+        menuOverlay.classList.add(
+            "open"
+        );
 
     }
+
 }
 
 
@@ -171,15 +158,20 @@ function closeSideMenu() {
 
     if (sideMenu) {
 
-        sideMenu.classList.remove("open");
+        sideMenu.classList.remove(
+            "open"
+        );
 
     }
 
     if (menuOverlay) {
 
-        menuOverlay.classList.remove("open");
+        menuOverlay.classList.remove(
+            "open"
+        );
 
     }
+
 }
 
 
@@ -196,7 +188,6 @@ if (menuButton) {
 
 }
 
-
 if (closeMenu) {
 
     closeMenu.addEventListener(
@@ -205,7 +196,6 @@ if (closeMenu) {
     );
 
 }
-
 
 if (menuOverlay) {
 
@@ -553,14 +543,14 @@ const menuItems =
 
 
 menuItems.forEach(
-    item => {
+    (item) => {
 
         item.addEventListener(
             "click",
             () => {
 
                 menuItems.forEach(
-                    otherItem => {
+                    (otherItem) => {
 
                         otherItem.classList.remove(
                             "active"
@@ -578,79 +568,3 @@ menuItems.forEach(
 
     }
 );
-
-
-/* =========================================
-   USER DISPLAY
-========================================= */
-
-const currentUser =
-    localStorage.getItem(
-        "dosecareUser"
-    ) || "User";
-
-
-const userName =
-    document.getElementById(
-        "user-name"
-    );
-
-
-const profileInitials =
-    document.getElementById(
-        "profile-initials"
-    );
-
-
-if (userName) {
-
-    userName.textContent =
-        currentUser;
-
-}
-
-
-if (profileInitials) {
-
-    profileInitials.textContent =
-        getInitials(
-            currentUser
-        );
-
-}
-
-
-/* =========================================
-   GET INITIALS
-========================================= */
-
-function getInitials(name) {
-
-    if (!name) {
-
-        return "U";
-
-    }
-
-
-    const words =
-        name
-            .trim()
-            .split(/\s+/);
-
-
-    if (words.length === 1) {
-
-        return words[0]
-            .substring(0, 2)
-            .toUpperCase();
-
-    }
-
-
-    return (
-        words[0][0] +
-        words[words.length - 1][0]
-    ).toUpperCase();
-
-}
