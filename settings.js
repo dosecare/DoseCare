@@ -9,40 +9,21 @@
 ========================================= */
 
 const backButton =
-    document.getElementById(
-        "back-button"
-    );
-
+    document.getElementById("back-button");
 
 const themeToggle =
-    document.getElementById(
-        "theme-toggle"
-    );
-
+    document.getElementById("theme-toggle");
 
 const themeStatus =
-    document.getElementById(
-        "theme-status"
-    );
+    document.getElementById("theme-status");
 
 
 /* =========================================
-   BACK TO HOME
+   THEME STORAGE
 ========================================= */
 
-if (backButton) {
-
-    backButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "index.html";
-
-        }
-    );
-
-}
+const THEME_STORAGE_KEY =
+    "dosecareTheme";
 
 
 /* =========================================
@@ -53,7 +34,7 @@ function getSavedTheme() {
 
     return (
         localStorage.getItem(
-            "dosecareTheme"
+            THEME_STORAGE_KEY
         ) || "dark"
     );
 
@@ -69,12 +50,20 @@ function applyTheme(theme) {
     const isLight =
         theme === "light";
 
+    document.documentElement.classList.toggle(
+        "light-mode",
+        isLight
+    );
 
     document.body.classList.toggle(
         "light-mode",
         isLight
     );
 
+
+    /* -------------------------------------
+       Toggle
+    ------------------------------------- */
 
     if (themeToggle) {
 
@@ -83,7 +72,6 @@ function applyTheme(theme) {
             isLight
         );
 
-
         themeToggle.setAttribute(
             "aria-pressed",
             String(isLight)
@@ -91,6 +79,10 @@ function applyTheme(theme) {
 
     }
 
+
+    /* -------------------------------------
+       Status
+    ------------------------------------- */
 
     if (themeStatus) {
 
@@ -102,11 +94,14 @@ function applyTheme(theme) {
     }
 
 
+    /* -------------------------------------
+       Icon
+    ------------------------------------- */
+
     const themeIcon =
         document.querySelector(
             ".theme-toggle-icon"
         );
-
 
     if (themeIcon) {
 
@@ -127,7 +122,7 @@ function applyTheme(theme) {
 function saveTheme(theme) {
 
     localStorage.setItem(
-        "dosecareTheme",
+        THEME_STORAGE_KEY,
         theme
     );
 
@@ -147,21 +142,33 @@ if (themeToggle) {
             const currentTheme =
                 getSavedTheme();
 
-
             const newTheme =
                 currentTheme === "dark"
                     ? "light"
                     : "dark";
 
+            saveTheme(newTheme);
 
-            saveTheme(
-                newTheme
-            );
+            applyTheme(newTheme);
+
+        }
+    );
+
+}
 
 
-            applyTheme(
-                newTheme
-            );
+/* =========================================
+   BACK TO HOME
+========================================= */
+
+if (backButton) {
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "index.html";
 
         }
     );
