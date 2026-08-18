@@ -2663,3 +2663,512 @@ body {
     }
 
 }
+/* =========================================
+   LIGHT MODE
+========================================= */
+
+body.light-mode {
+
+    color: #17324d;
+
+    background: #eef7fc;
+
+}
+
+
+/* =========================================
+   LIGHT MODE BACKGROUND
+========================================= */
+
+body.light-mode .background {
+
+    background:
+
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(38, 150, 220, 0.14),
+            transparent 32%
+        ),
+
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(110, 100, 210, 0.10),
+            transparent 34%
+        ),
+
+        linear-gradient(
+            135deg,
+            #f4fbff 0%,
+            #eaf6fc 50%,
+            #f2f9fd 100%
+        );
+
+}
+
+
+/* =========================================
+   LIGHT MODE GLOWS
+========================================= */
+
+body.light-mode .glow {
+
+    opacity: 0.16;
+
+}
+
+
+/* =========================================
+   LIGHT MODE BUBBLES
+========================================= */
+
+body.light-mode .bubble {
+
+    background:
+
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(255,255,255,0.85),
+            rgba(76,156,238,0.10) 38%,
+            rgba(76,156,238,0.02) 72%
+        );
+
+    border-color:
+        rgba(70,160,220,0.15);
+
+    box-shadow:
+
+        inset 0 0 25px
+        rgba(92,186,255,0.08),
+
+        0 0 25px
+        rgba(54,143,220,0.05);
+
+}
+
+
+/* =========================================
+   LIGHT MODE STARS
+========================================= */
+
+body.light-mode .particle {
+
+    background:
+        rgba(50,150,210,0.55);
+
+    box-shadow:
+
+        0 0 5px
+        rgba(70,170,220,0.45),
+
+        0 0 12px
+        rgba(80,190,255,0.25);
+
+}
+
+
+/* =========================================
+   LIGHT MODE HOME
+========================================= */
+
+body.light-mode .top-logo {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .top-logo > span > span {
+
+    color: #168fc4;
+
+}
+
+
+body.light-mode .user-name small {
+
+    color:
+        rgba(35,70,95,0.55);
+
+}
+
+
+body.light-mode .user-name strong {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .profile {
+
+    background:
+        rgba(50,160,220,0.10);
+
+    border-color:
+        rgba(50,150,210,0.20);
+
+    color: #24516d;
+
+}
+
+
+/* =========================================
+   LIGHT MODE MENU BUTTON
+========================================= */
+
+body.light-mode .menu-button {
+
+    background:
+        rgba(255,255,255,0.65);
+
+    border-color:
+        rgba(50,140,200,0.16);
+
+}
+
+
+body.light-mode .menu-button span {
+
+    background:
+        rgba(30,70,95,0.8);
+
+}
+
+
+/* =========================================
+   LIGHT MODE SIDE MENU
+========================================= */
+
+body.light-mode .side-menu {
+
+    background:
+        rgba(245,252,255,0.92);
+
+    border-color:
+        rgba(70,160,215,0.18);
+
+    box-shadow:
+        0 25px 70px
+        rgba(30,90,120,0.16);
+
+}
+
+
+body.light-mode .menu-header {
+
+    border-bottom-color:
+        rgba(50,130,180,0.10);
+
+}
+
+
+body.light-mode .menu-header h2 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .close-menu {
+
+    background:
+        rgba(30,100,140,0.06);
+
+    color: #214860;
+
+}
+
+
+body.light-mode .menu-item {
+
+    color:
+        rgba(30,65,90,0.70);
+
+}
+
+
+body.light-mode .menu-item:hover,
+body.light-mode .menu-item.active {
+
+    color: #17324d;
+
+    background:
+        rgba(60,165,220,0.10);
+
+    border-color:
+        rgba(70,165,220,0.15);
+
+}
+
+
+body.light-mode .menu-bottom {
+
+    border-top-color:
+        rgba(50,130,180,0.10);
+
+}
+
+
+body.light-mode .appearance-button {
+
+    background:
+        rgba(30,120,170,0.055);
+
+    color:
+        rgba(30,65,90,0.78);
+
+}
+
+
+/* =========================================
+   LIGHT MODE DASHBOARD
+========================================= */
+
+body.light-mode .dashboard-heading h1,
+body.light-mode .hero-card h2,
+body.light-mode .quick-card h3 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .dashboard-heading p,
+body.light-mode .hero-card p,
+body.light-mode .quick-card p {
+
+    color:
+        rgba(35,70,95,0.62);
+
+}
+
+
+/* =========================================
+   LIGHT MODE HERO
+========================================= */
+
+body.light-mode .hero-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(65,170,225,0.12),
+            rgba(100,90,190,0.07)
+        );
+
+    border-color:
+        rgba(70,160,215,0.18);
+
+}
+
+
+body.light-mode .hero-symbol {
+
+    background:
+        rgba(70,170,230,0.07);
+
+    border-color:
+        rgba(70,160,215,0.18);
+
+}
+
+
+/* =========================================
+   LIGHT MODE QUICK CARDS
+========================================= */
+
+body.light-mode .quick-card {
+
+    background:
+        rgba(255,255,255,0.58);
+
+    border-color:
+        rgba(70,150,205,0.14);
+
+}
+
+
+body.light-mode .quick-card:hover {
+
+    background:
+        rgba(70,170,230,0.10);
+
+}
+
+
+/* =========================================
+   LIGHT MODE BUTTONS
+========================================= */
+
+body.light-mode .primary-button {
+
+    color: white;
+
+}
+
+
+/* =========================================
+   LIGHT MODE OVERLAY
+========================================= */
+
+body.light-mode .menu-overlay {
+
+    background:
+        rgba(30,70,95,0.18);
+
+}
+
+
+/* =========================================
+   LIGHT MODE PAGE HEADERS
+========================================= */
+
+body.light-mode .page-header h1,
+body.light-mode .page-intro h2 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .page-intro p {
+
+    color:
+        rgba(35,70,95,0.58);
+
+}
+
+
+body.light-mode .back-button {
+
+    background:
+        rgba(255,255,255,0.65);
+
+    color: #17324d;
+
+    border-color:
+        rgba(70,160,215,0.18);
+
+}
+
+
+/* =========================================
+   LIGHT MODE FAVORITES
+========================================= */
+
+body.light-mode .favorite-card {
+
+    background:
+        rgba(255,255,255,0.58);
+
+    border-color:
+        rgba(70,150,205,0.14);
+
+}
+
+
+body.light-mode .favorite-medicine-info h3 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .favorite-medicine-info p {
+
+    color:
+        rgba(35,70,95,0.52);
+
+}
+
+
+body.light-mode .remove-favorite {
+
+    background:
+        rgba(30,120,170,0.05);
+
+    color: #168fc4;
+
+}
+
+
+/* =========================================
+   LIGHT MODE HISTORY
+========================================= */
+
+body.light-mode .history-card {
+
+    background:
+        rgba(255,255,255,0.58);
+
+    border-color:
+        rgba(70,150,205,0.14);
+
+}
+
+
+body.light-mode .history-title-row h3 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .history-date {
+
+    color:
+        rgba(35,70,95,0.42);
+
+}
+
+
+body.light-mode .history-details span {
+
+    background:
+        rgba(30,120,170,0.045);
+
+    color:
+        rgba(35,70,95,0.58);
+
+}
+
+
+body.light-mode .history-result small {
+
+    color:
+        rgba(35,70,95,0.42);
+
+}
+
+
+/* =========================================
+   LIGHT MODE EMPTY STATES
+========================================= */
+
+body.light-mode .empty-favorites,
+body.light-mode .empty-history {
+
+    background:
+        rgba(255,255,255,0.45);
+
+    border-color:
+        rgba(70,160,215,0.18);
+
+}
+
+
+body.light-mode .empty-favorites h2,
+body.light-mode .empty-history h2 {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .empty-favorites p,
+body.light-mode .empty-history p {
+
+    color:
+        rgba(35,70,95,0.55);
+
+}
