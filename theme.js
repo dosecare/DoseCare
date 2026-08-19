@@ -4,50 +4,152 @@
    Default = Dark Mode
 ========================================= */
 
-const themeToggle = document.getElementById("theme-toggle");
-const themeStatus = document.getElementById("theme-status");
+
+/* =========================================
+   THEME STORAGE
+========================================= */
+
+const THEME_STORAGE_KEY =
+    "dosecare-theme";
 
 
-// =========================================
-// APPLY THEME
-// =========================================
+/* =========================================
+   GET SAVED THEME
+========================================= */
 
-function applyTheme(theme) {
+function getSavedTheme() {
 
-    if (theme === "light") {
+    const savedTheme =
+        localStorage.getItem(
+            THEME_STORAGE_KEY
+        );
 
-        document.body.classList.add("light-mode");
+    /*
+       Dark is always the default.
+    */
 
-    } else {
-
-        document.body.classList.remove("light-mode");
-
-    }
-
-    updateThemeUI(theme);
+    return savedTheme === "light"
+        ? "light"
+        : "dark";
 }
 
 
-// =========================================
-// UPDATE THEME UI
-// =========================================
+/* =========================================
+   APPLY THEME
+========================================= */
 
-function updateThemeUI(theme) {
+function applyTheme(theme) {
 
-    if (!themeToggle) return;
+    const isLight =
+        theme === "light";
 
-    const isLight = theme === "light";
 
-    themeToggle.classList.toggle(
-        "light",
+    /* -------------------------------------
+       BODY
+    ------------------------------------- */
+
+    document.body.classList.toggle(
+        "light-mode",
         isLight
     );
 
-    themeToggle.setAttribute(
-        "aria-pressed",
-        isLight ? "true" : "false"
+
+    /* -------------------------------------
+       HTML
+    ------------------------------------- */
+
+    document.documentElement.classList.toggle(
+        "light-mode",
+        isLight
     );
 
+
+    /* -------------------------------------
+       SAVE
+    ------------------------------------- */
+
+    localStorage.setItem(
+        THEME_STORAGE_KEY,
+        isLight
+            ? "light"
+            : "dark"
+    );
+
+
+    /* -------------------------------------
+       UPDATE UI
+    ------------------------------------- */
+
+    updateThemeUI(
+        isLight
+            ? "light"
+            : "dark"
+    );
+
+}
+
+
+/* =========================================
+   UPDATE THEME UI
+========================================= */
+
+function updateThemeUI(theme) {
+
+    const themeToggle =
+        document.getElementById(
+            "theme-toggle"
+        );
+
+    const themeStatus =
+        document.getElementById(
+            "theme-status"
+        );
+
+
+    const isLight =
+        theme === "light";
+
+
+    /* -------------------------------------
+       TOGGLE
+    ------------------------------------- */
+
+    if (themeToggle) {
+
+        themeToggle.classList.toggle(
+            "light",
+            isLight
+        );
+
+        themeToggle.setAttribute(
+            "aria-pressed",
+            isLight
+                ? "true"
+                : "false"
+        );
+
+
+        const icon =
+            themeToggle.querySelector(
+                ".theme-toggle-icon"
+            );
+
+
+        if (icon) {
+
+            icon.textContent =
+                isLight
+                    ? "☀"
+                    : "☾";
+
+        }
+
+    }
+
+
+    /* -------------------------------------
+       STATUS
+    ------------------------------------- */
 
     if (themeStatus) {
 
@@ -58,77 +160,48 @@ function updateThemeUI(theme) {
 
     }
 
-
-    const icon =
-        themeToggle.querySelector(
-            ".theme-toggle-icon"
-        );
-
-    if (icon) {
-
-        icon.textContent =
-            isLight
-                ? "☀"
-                : "☾";
-
-    }
-
 }
 
 
-// =========================================
-// LOAD SAVED THEME
-// =========================================
+/* =========================================
+   INITIALIZE THEME
+========================================= */
 
-const savedTheme =
-    localStorage.getItem("dosecare-theme");
-
-
-// =========================================
-// DEFAULT = DARK
-// =========================================
-
-if (savedTheme === "light") {
-
-    applyTheme("light");
-
-} else {
-
-    applyTheme("dark");
-
-}
+applyTheme(
+    getSavedTheme()
+);
 
 
-// =========================================
-// TOGGLE THEME
-// =========================================
+/* =========================================
+   THEME TOGGLE
+========================================= */
 
-if (themeToggle) {
+document.addEventListener(
+    "click",
+    function (event) {
 
-    themeToggle.addEventListener(
-        "click",
-        function () {
-
-            const isCurrentlyLight =
-                document.body.classList.contains(
-                    "light-mode"
-                );
-
-            const newTheme =
-                isCurrentlyLight
-                    ? "dark"
-                    : "light";
-
-
-            applyTheme(newTheme);
-
-
-            localStorage.setItem(
-                "dosecare-theme",
-                newTheme
+        const toggle =
+            event.target.closest(
+                "#theme-toggle"
             );
 
-        }
-    );
 
-}
+        if (!toggle) return;
+
+
+        const currentTheme =
+            getSavedTheme();
+
+
+        const newTheme =
+            currentTheme === "light"
+                ? "dark"
+                : "light";
+
+
+        applyTheme(
+            newTheme
+        );
+
+    }
+);
