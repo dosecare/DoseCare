@@ -995,39 +995,181 @@ body,
 
 }
 /* =========================================
-   SETTINGS MESSAGE
+   DOSECARE MESSAGE CARD
 ========================================= */
 
 .settings-message {
 
-    margin-top: 18px;
+    position: relative;
 
-    padding: 18px 22px;
+    margin-top: 22px;
+
+    padding: 26px 22px;
+
+    overflow: hidden;
 
     text-align: center;
 
-    border-radius: 18px;
-
-    color: rgba(210, 235, 250, 0.62);
-
-    font-size: 12px;
-
-    line-height: 1.6;
-
-    letter-spacing: 0.3px;
+    border-radius: 24px;
 
     background:
-        rgba(255,255,255,0.035);
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(90,190,255,.10),
+            transparent 55%
+        ),
+        rgba(255,255,255,.035);
 
     border:
         1px solid
-        rgba(140,215,255,0.08);
+        rgba(120,215,255,.13);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.12),
+
+        inset 0 0 35px
+        rgba(80,180,255,.025);
 
     backdrop-filter:
-        blur(12px);
+        blur(18px);
 
     -webkit-backdrop-filter:
-        blur(12px);
+        blur(18px);
+
+}
+
+
+/* =========================================
+   SOFT GLOW
+========================================= */
+
+.settings-message::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    left: 50%;
+    top: -90px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: #39bfff;
+
+    filter: blur(55px);
+
+    opacity: .08;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================
+   DECORATION
+========================================= */
+
+.message-decoration {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-bottom: 14px;
+
+}
+
+
+.message-decoration.bottom {
+
+    margin-top: 14px;
+
+    margin-bottom: 0;
+
+    opacity: .55;
+
+}
+
+
+.message-decoration span {
+
+    color: #75dcff;
+
+    font-size: 10px;
+
+    text-shadow:
+        0 0 10px
+        rgba(90,210,255,.6);
+
+}
+
+
+.message-decoration span:nth-child(3) {
+
+    font-size: 13px;
+
+}
+
+
+.message-decoration i {
+
+    width: 45px;
+
+    height: 1px;
+
+    display: block;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(110,215,255,.35),
+            transparent
+        );
+
+}
+
+
+/* =========================================
+   MESSAGE TEXT
+========================================= */
+
+.message-main {
+
+    margin: 0;
+
+    color:
+        rgba(235,248,255,.92);
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    letter-spacing: .4px;
+
+}
+
+
+.message-sub {
+
+    margin: 7px 0 0;
+
+    color:
+        rgba(190,220,240,.48);
+
+    font-size: 11px;
+
+    letter-spacing: .5px;
 
 }
 
@@ -1038,13 +1180,95 @@ body,
 
 body.light-mode .settings-message {
 
-    color:
-        rgba(35,70,95,0.58);
-
     background:
-        rgba(255,255,255,0.45);
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(50,170,220,.09),
+            transparent 55%
+        ),
+        rgba(255,255,255,.55);
 
     border-color:
-        rgba(70,160,215,0.12);
+        rgba(60,155,205,.16);
+
+    box-shadow:
+        0 15px 45px
+        rgba(40,100,140,.08),
+
+        inset 0 0 35px
+        rgba(70,170,220,.025);
+
+}
+
+
+body.light-mode .message-main {
+
+    color: #17324d;
+
+}
+
+
+body.light-mode .message-sub {
+
+    color:
+        rgba(35,70,95,.52);
+
+}
+
+
+body.light-mode .message-decoration span {
+
+    color: #168fc4;
+
+}
+
+
+body.light-mode .message-decoration i {
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(50,155,205,.30),
+            transparent
+        );
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .settings-message {
+
+        padding: 23px 15px;
+
+        border-radius: 21px;
+
+    }
+
+
+    .message-main {
+
+        font-size: 14px;
+
+    }
+
+
+    .message-sub {
+
+        font-size: 10px;
+
+    }
+
+
+    .message-decoration i {
+
+        width: 32px;
+
+    }
 
 }
