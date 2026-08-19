@@ -2586,9 +2586,14 @@ body {
 
 }
 /* =========================================
-   LIGHT MODE
-   User Controlled Theme
-   Default = DARK
+   DOSECARE
+   LIGHT MODE — COMPLETE DAY THEME
+   Dark mode above remains unchanged.
+========================================= */
+
+
+/* =========================================
+   MAIN PAGE
 ========================================= */
 
 body.light-mode {
@@ -2601,7 +2606,7 @@ body.light-mode {
 
 
 /* =========================================
-   LIGHT MODE BACKGROUND
+   BACKGROUND
 ========================================= */
 
 body.light-mode .background {
@@ -2610,40 +2615,32 @@ body.light-mode .background {
 
         radial-gradient(
             circle at 15% 20%,
-            rgba(38, 150, 220, 0.14),
+            rgba(38,150,220,.13),
             transparent 32%
         ),
 
         radial-gradient(
             circle at 85% 75%,
-            rgba(110, 100, 210, 0.10),
+            rgba(110,100,210,.09),
             transparent 34%
         ),
 
         linear-gradient(
             135deg,
-            #f4fbff 0%,
+            #f5fbff 0%,
             #eaf6fc 50%,
-            #f2f9fd 100%
+            #f3f9fd 100%
         );
 
 }
 
 
-/* =========================================
-   LIGHT MODE GLOWS
-========================================= */
-
 body.light-mode .glow {
 
-    opacity: .16;
+    opacity: .13;
 
 }
 
-
-/* =========================================
-   LIGHT MODE BUBBLES
-========================================= */
 
 body.light-mode .bubble {
 
@@ -2651,7 +2648,7 @@ body.light-mode .bubble {
 
         radial-gradient(
             circle at 30% 25%,
-            rgba(255,255,255,.9),
+            rgba(255,255,255,.95),
             rgba(76,156,238,.10) 38%,
             rgba(76,156,238,.02) 72%
         );
@@ -2670,14 +2667,10 @@ body.light-mode .bubble {
 }
 
 
-/* =========================================
-   LIGHT MODE STARS
-========================================= */
-
 body.light-mode .particle {
 
     background:
-        rgba(50,150,210,.55);
+        rgba(45,145,205,.55);
 
     box-shadow:
 
@@ -2685,40 +2678,125 @@ body.light-mode .particle {
         rgba(70,170,220,.45),
 
         0 0 12px
-        rgba(80,190,255,.25);
+        rgba(80,190,255,.25),
+
+        0 0 20px
+        rgba(80,170,255,.12);
 
 }
 
 
 /* =========================================
-   LIGHT MODE — GENERAL TEXT
+   WELCOME SCREEN
 ========================================= */
 
-body.light-mode h1,
-body.light-mode h2,
-body.light-mode h3,
-body.light-mode h4,
-body.light-mode strong {
+body.light-mode .welcome-label {
 
-    color: #17324d;
+    color:
+        rgba(35,78,105,.68);
+
+}
+
+
+body.light-mode .welcome-logo {
+
+    background:
+
+        linear-gradient(
+            100deg,
+            #17324d,
+            #168fc4,
+            #6258bd,
+            #17324d
+        );
+
+    background-size: 250% auto;
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+
+}
+
+
+body.light-mode .welcome-logo span {
+
+    color: transparent;
+
+}
+
+
+body.light-mode .welcome-description {
+
+    color:
+        rgba(35,70,95,.60);
+
+}
+
+
+body.light-mode .developer-badge {
+
+    background:
+        rgba(255,255,255,.48);
+
+    border-color:
+        rgba(70,160,215,.20);
+
+    box-shadow:
+        0 0 25px
+        rgba(60,180,255,.06);
+
+}
+
+
+body.light-mode .developer-label {
+
+    color:
+        rgba(35,70,95,.58);
+
+}
+
+
+body.light-mode .developer-badge strong {
+
+    color:
+        #17324d;
 
 }
 
 
 /* =========================================
-   LIGHT MODE — HOME TOP BAR
+   HOME — TOP BAR
 ========================================= */
 
 body.light-mode .top-logo {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
 
 body.light-mode .top-logo > span > span {
 
-    color: #168fc4;
+    color:
+        #168fc4;
+
+}
+
+
+body.light-mode .mini-logo {
+
+    color:
+        #168fc4;
+
+    background:
+        rgba(60,160,215,.09);
+
+    border-color:
+        rgba(70,160,215,.18);
 
 }
 
@@ -2733,35 +2811,37 @@ body.light-mode .user-name small {
 
 body.light-mode .user-name strong {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
 
 body.light-mode .profile {
 
+    color:
+        #24516d;
+
     background:
-        rgba(50,160,220,.10);
+        rgba(60,160,215,.10);
 
     border-color:
-        rgba(50,150,210,.20);
-
-    color: #24516d;
+        rgba(70,160,215,.20);
 
 }
 
 
 /* =========================================
-   LIGHT MODE — MENU BUTTON
+   MENU BUTTON
 ========================================= */
 
 body.light-mode .menu-button {
 
     background:
-        rgba(255,255,255,.65);
+        rgba(255,255,255,.62);
 
     border-color:
-        rgba(50,140,200,.16);
+        rgba(70,150,205,.16);
 
 }
 
@@ -2769,27 +2849,39 @@ body.light-mode .menu-button {
 body.light-mode .menu-button span {
 
     background:
-        rgba(30,70,95,.8);
+        rgba(30,70,95,.82);
+
+}
+
+
+body.light-mode .menu-button:hover {
+
+    background:
+        rgba(70,170,230,.10);
 
 }
 
 
 /* =========================================
-   LIGHT MODE — SIDE MENU
+   MENU OVERLAY
 ========================================= */
 
 body.light-mode .menu-overlay {
 
     background:
-        rgba(30,70,95,.18);
+        rgba(30,70,95,.16);
 
 }
 
 
+/* =========================================
+   SIDE MENU
+========================================= */
+
 body.light-mode .side-menu {
 
     background:
-        rgba(245,252,255,.94);
+        rgba(247,252,255,.94);
 
     border-color:
         rgba(70,160,215,.18);
@@ -2811,14 +2903,16 @@ body.light-mode .menu-header {
 
 body.light-mode .menu-header small {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
 }
 
 
 body.light-mode .menu-header h2 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -2828,7 +2922,8 @@ body.light-mode .close-menu {
     background:
         rgba(30,100,140,.06);
 
-    color: #214860;
+    color:
+        #214860;
 
 }
 
@@ -2844,7 +2939,8 @@ body.light-mode .menu-item {
 body.light-mode .menu-item:hover,
 body.light-mode .menu-item.active {
 
-    color: #17324d;
+    color:
+        #17324d;
 
     background:
         rgba(60,165,220,.10);
@@ -2857,7 +2953,8 @@ body.light-mode .menu-item.active {
 
 body.light-mode .menu-icon {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
     background:
         rgba(60,165,220,.08);
@@ -2865,40 +2962,22 @@ body.light-mode .menu-icon {
 }
 
 
-body.light-mode .menu-bottom {
-
-    border-top-color:
-        rgba(50,130,180,.10);
-
-}
-
-
-body.light-mode .appearance-button {
-
-    background:
-        rgba(30,120,170,.055);
-
-    color:
-        rgba(30,65,90,.78);
-
-}
-
-
-
 /* =========================================
-   LIGHT MODE — DASHBOARD
+   DASHBOARD
 ========================================= */
 
 body.light-mode .dashboard-heading > span {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
 }
 
 
 body.light-mode .dashboard-heading h1 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -2910,10 +2989,6 @@ body.light-mode .dashboard-heading p {
 
 }
 
-
-/* =========================================
-   LIGHT MODE — HERO
-========================================= */
 
 body.light-mode .hero-card {
 
@@ -2933,14 +3008,16 @@ body.light-mode .hero-card {
 
 body.light-mode .hero-label {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
 }
 
 
 body.light-mode .hero-card h2 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -2955,7 +3032,8 @@ body.light-mode .hero-card p {
 
 body.light-mode .hero-symbol {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
     background:
         rgba(70,170,230,.07);
@@ -2963,17 +3041,36 @@ body.light-mode .hero-symbol {
     border-color:
         rgba(70,160,215,.18);
 
+    box-shadow:
+        0 0 50px
+        rgba(60,180,255,.08);
+
 }
 
 
 /* =========================================
-   LIGHT MODE — QUICK CARDS
+   PRIMARY BUTTON
+========================================= */
+
+body.light-mode .primary-button {
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================
+   QUICK CARDS
 ========================================= */
 
 body.light-mode .quick-card {
 
+    color:
+        #17324d;
+
     background:
-        rgba(255,255,255,.58);
+        rgba(255,255,255,.60);
 
     border-color:
         rgba(70,150,205,.14);
@@ -2991,7 +3088,8 @@ body.light-mode .quick-card:hover {
 
 body.light-mode .quick-icon {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
     background:
         rgba(70,170,240,.09);
@@ -3004,7 +3102,8 @@ body.light-mode .quick-icon {
 
 body.light-mode .quick-card h3 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3018,37 +3117,29 @@ body.light-mode .quick-card p {
 
 
 /* =========================================
-   LIGHT MODE — PRIMARY BUTTON
-========================================= */
-
-body.light-mode .primary-button {
-
-    color: #ffffff;
-
-}
-
-
-/* =========================================
-   LIGHT MODE — PAGE HEADERS
+   GENERAL PAGE HEADERS
 ========================================= */
 
 body.light-mode .page-label {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
 }
 
 
 body.light-mode .page-header h1 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
 
 body.light-mode .page-intro h2 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3061,17 +3152,14 @@ body.light-mode .page-intro p {
 }
 
 
-/* =========================================
-   LIGHT MODE — BACK BUTTON
-========================================= */
-
 body.light-mode .back-button,
 body.light-mode .settings-back {
 
-    background:
-        rgba(255,255,255,.65);
+    color:
+        #17324d;
 
-    color: #17324d;
+    background:
+        rgba(255,255,255,.68);
 
     border-color:
         rgba(70,160,215,.18);
@@ -3089,13 +3177,13 @@ body.light-mode .settings-back:hover {
 
 
 /* =========================================
-   LIGHT MODE — FAVORITES
+   FAVORITES
 ========================================= */
 
 body.light-mode .favorite-card {
 
     background:
-        rgba(255,255,255,.58);
+        rgba(255,255,255,.60);
 
     border-color:
         rgba(70,150,205,.14);
@@ -3108,20 +3196,8 @@ body.light-mode .favorite-card:hover {
     background:
         rgba(70,170,230,.10);
 
-}
-
-
-body.light-mode .favorite-medicine-info h3 {
-
-    color: #17324d;
-
-}
-
-
-body.light-mode .favorite-medicine-info p {
-
-    color:
-        rgba(35,70,95,.52);
+    border-color:
+        rgba(120,215,255,.20);
 
 }
 
@@ -3137,24 +3213,94 @@ body.light-mode .favorite-medicine-icon {
 }
 
 
+body.light-mode .favorite-medicine-info h3 {
+
+    color:
+        #17324d;
+
+}
+
+
+body.light-mode .favorite-medicine-info p {
+
+    color:
+        rgba(35,70,95,.52);
+
+}
+
+
 body.light-mode .remove-favorite {
 
     background:
         rgba(30,120,170,.05);
 
-    color: #168fc4;
+    color:
+        #168fc4;
+
+}
+
+
+body.light-mode .remove-favorite:hover {
+
+    background:
+        rgba(70,170,230,.11);
 
 }
 
 
 /* =========================================
-   LIGHT MODE — HISTORY
+   EMPTY FAVORITES
+========================================= */
+
+body.light-mode .empty-favorites {
+
+    background:
+        rgba(255,255,255,.48);
+
+    border-color:
+        rgba(70,160,215,.18);
+
+}
+
+
+body.light-mode .empty-icon {
+
+    color:
+        #168fc4;
+
+    background:
+        rgba(70,170,240,.08);
+
+    border-color:
+        rgba(110,210,255,.14);
+
+}
+
+
+body.light-mode .empty-favorites h2 {
+
+    color:
+        #17324d;
+
+}
+
+
+body.light-mode .empty-favorites p {
+
+    color:
+        rgba(35,70,95,.55);
+
+}
+
+
+/* =========================================
+   HISTORY
 ========================================= */
 
 body.light-mode .history-card {
 
     background:
-        rgba(255,255,255,.58);
+        rgba(255,255,255,.60);
 
     border-color:
         rgba(70,150,205,.14);
@@ -3172,7 +3318,8 @@ body.light-mode .history-card:hover {
 
 body.light-mode .history-title-row h3 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3206,7 +3353,8 @@ body.light-mode .history-result small {
 
 body.light-mode .history-result strong {
 
-    color: #168fc4;
+    color:
+        #168fc4;
 
 }
 
@@ -3222,15 +3370,25 @@ body.light-mode .delete-history {
 }
 
 
+body.light-mode .delete-history:hover {
+
+    background:
+        rgba(255,90,110,.08);
+
+    color:
+        rgba(190,70,90,.85);
+
+}
+
+
 /* =========================================
-   LIGHT MODE — EMPTY STATES
+   EMPTY HISTORY
 ========================================= */
 
-body.light-mode .empty-favorites,
 body.light-mode .empty-history {
 
     background:
-        rgba(255,255,255,.45);
+        rgba(255,255,255,.48);
 
     border-color:
         rgba(70,160,215,.18);
@@ -3238,15 +3396,28 @@ body.light-mode .empty-history {
 }
 
 
-body.light-mode .empty-favorites h2,
-body.light-mode .empty-history h2 {
+body.light-mode .empty-history-icon {
 
-    color: #17324d;
+    color:
+        #168fc4;
+
+    background:
+        rgba(70,170,240,.08);
+
+    border-color:
+        rgba(110,210,255,.14);
 
 }
 
 
-body.light-mode .empty-favorites p,
+body.light-mode .empty-history h2 {
+
+    color:
+        #17324d;
+
+}
+
+
 body.light-mode .empty-history p {
 
     color:
@@ -3256,12 +3427,21 @@ body.light-mode .empty-history p {
 
 
 /* =========================================
-   LIGHT MODE — SETTINGS
+   SETTINGS
 ========================================= */
+
+body.light-mode .settings-page {
+
+    color:
+        #17324d;
+
+}
+
 
 body.light-mode .settings-header h1 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3277,7 +3457,10 @@ body.light-mode .settings-header p {
 body.light-mode .settings-label {
 
     color:
-        rgba(35,70,95,.55);
+        #287da8;
+
+    opacity:
+        .72;
 
 }
 
@@ -3285,44 +3468,59 @@ body.light-mode .settings-label {
 body.light-mode .settings-section-title span {
 
     color:
-        rgba(35,70,95,.50);
+        #287da8;
+
+    opacity:
+        .70;
 
 }
 
 
 body.light-mode .settings-section-title h2 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
 
 body.light-mode .settings-card {
 
+    color:
+        #17324d;
+
     background:
-        rgba(255,255,255,.58);
+        rgba(255,255,255,.62);
 
     border-color:
-        rgba(70,150,205,.14);
+        rgba(50,140,190,.14);
 
     box-shadow:
         0 15px 45px
-        rgba(30,90,120,.08);
+        rgba(40,100,140,.08);
 
 }
 
 
 body.light-mode .settings-card-icon {
 
+    color:
+        #168fc4;
+
     background:
-        rgba(70,170,240,.08);
+        rgba(60,160,215,.08);
+
+    border:
+        1px solid
+        rgba(60,160,215,.10);
 
 }
 
 
 body.light-mode .settings-card-content strong {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3330,14 +3528,15 @@ body.light-mode .settings-card-content strong {
 body.light-mode .settings-card-content span {
 
     color:
-        rgba(35,70,95,.52);
+        rgba(35,70,95,.60);
 
 }
 
 
 body.light-mode .theme-toggle {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3345,63 +3544,72 @@ body.light-mode .theme-toggle {
 body.light-mode .theme-toggle-icon {
 
     background:
-        rgba(30,120,170,.06);
+        rgba(60,160,215,.09);
 
 }
 
 
-/* =========================================
-   LIGHT MODE — SETTINGS TOGGLE
-========================================= */
-
 body.light-mode .toggle-track {
 
     background:
-        rgba(70,170,220,.55);
+        rgba(50,130,175,.22);
+
+}
+
+
+body.light-mode .theme-toggle.light .toggle-track {
+
+    background:
+        rgba(55,170,220,.65);
 
 }
 
 
 body.light-mode .toggle-thumb {
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
 }
 
 
 /* =========================================
-   LIGHT MODE — ABOUT
+   ABOUT
 ========================================= */
 
 body.light-mode .about-card {
 
     background:
-        rgba(255,255,255,.58);
+        rgba(255,255,255,.62);
 
     border-color:
-        rgba(70,150,205,.14);
+        rgba(50,140,190,.14);
 
     box-shadow:
         0 15px 45px
-        rgba(30,90,120,.08);
+        rgba(40,100,140,.08);
 
 }
 
 
 body.light-mode .about-logo {
 
+    color:
+        #287da8;
+
     background:
-        rgba(70,170,240,.08);
+        rgba(60,160,215,.08);
 
     border-color:
-        rgba(70,160,215,.14);
+        rgba(60,160,215,.12);
 
 }
 
 
 body.light-mode .about-content h2 {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
@@ -3409,7 +3617,10 @@ body.light-mode .about-content h2 {
 body.light-mode .about-content h2 span {
 
     color:
-        rgba(35,70,95,.60);
+        #287da8;
+
+    opacity:
+        .75;
 
 }
 
@@ -3417,7 +3628,7 @@ body.light-mode .about-content h2 span {
 body.light-mode .about-content > p {
 
     color:
-        rgba(35,70,95,.52);
+        rgba(35,70,95,.58);
 
 }
 
@@ -3425,7 +3636,7 @@ body.light-mode .about-content > p {
 body.light-mode .about-divider {
 
     background:
-        rgba(50,130,180,.10);
+        rgba(40,110,155,.12);
 
 }
 
@@ -3433,60 +3644,181 @@ body.light-mode .about-divider {
 body.light-mode .about-row span {
 
     color:
-        rgba(35,70,95,.45);
+        rgba(35,70,95,.58);
 
 }
 
 
 body.light-mode .about-row strong {
 
-    color: #17324d;
+    color:
+        #17324d;
 
 }
 
 
 /* =========================================
-   LIGHT MODE — FOOTER
+   SETTINGS FOOTER
 ========================================= */
 
 body.light-mode .settings-footer {
 
     color:
-        rgba(35,70,95,.50);
+        rgba(35,70,95,.60);
 
 }
 
 
 /* =========================================
-   LIGHT MODE — DEVELOPER BADGE
+   COMMON TEXT SAFETY NET
 ========================================= */
 
-body.light-mode .developer-badge {
+/*
+   This prevents inherited white text from
+   remaining on pages that contain normal
+   text elements not covered above.
+*/
+
+body.light-mode p {
+
+    color:
+        #45657b;
+
+}
+
+
+body.light-mode small {
+
+    color:
+        #557488;
+
+}
+
+
+body.light-mode label {
+
+    color:
+        #355a70;
+
+}
+
+
+body.light-mode .muted {
+
+    color:
+        #557488;
+
+}
+
+
+/* =========================================
+   INPUTS / SELECTS
+========================================= */
+
+body.light-mode input,
+body.light-mode select,
+body.light-mode textarea {
+
+    color:
+        #17324d;
 
     background:
-        rgba(70,160,230,.07);
+        rgba(255,255,255,.72);
 
     border-color:
-        rgba(70,160,215,.20);
-
-    box-shadow:
-        0 0 25px
-        rgba(60,180,255,.05);
+        rgba(70,150,205,.18);
 
 }
 
 
-body.light-mode .developer-label {
+body.light-mode input::placeholder,
+body.light-mode textarea::placeholder {
 
     color:
-        rgba(35,70,95,.55);
+        rgba(35,70,95,.42);
 
 }
 
 
-body.light-mode .developer-badge strong {
+body.light-mode option {
 
     color:
-        rgba(35,70,95,.85);
+        #17324d;
+
+    background:
+        #ffffff;
+
+}
+
+
+/* =========================================
+   BUTTON TEXT
+========================================= */
+
+body.light-mode button {
+
+    color:
+        #17324d;
+
+}
+
+
+/*
+   Keep primary action buttons white.
+*/
+
+body.light-mode .primary-button,
+body.light-mode .enter-button {
+
+    color:
+        #ffffff;
+
+}
+
+
+body.light-mode .enter-button {
+
+    background:
+        rgba(50,145,220,.10);
+
+    border-color:
+        rgba(70,160,215,.25);
+
+}
+
+
+/* =========================================
+   LIGHT MODE TRANSITIONS
+========================================= */
+
+body,
+.background,
+.glow,
+.bubble,
+.particle,
+.settings-card,
+.about-card,
+.favorite-card,
+.history-card,
+.quick-card,
+.hero-card,
+.side-menu,
+.menu-button,
+.menu-item,
+.back-button,
+.settings-back,
+.settings-card-icon,
+.about-logo,
+.theme-toggle-icon,
+.toggle-track,
+.primary-button,
+.enter-button {
+
+    transition:
+        background .35s ease,
+        background-color .35s ease,
+        border-color .35s ease,
+        color .35s ease,
+        box-shadow .35s ease;
 
 }
