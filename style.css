@@ -2884,24 +2884,6 @@ body.light-mode .appearance-button {
 }
 
 
-/* =========================================
-   LIGHT MODE — APPEARANCE TOGGLE
-========================================= */
-
-body.light-mode .toggle {
-
-    background:
-        rgba(50,160,220,.45);
-
-}
-
-
-body.light-mode .toggle span {
-
-    background: #ffffff;
-
-}
-
 
 /* =========================================
    LIGHT MODE — DASHBOARD
