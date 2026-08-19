@@ -994,3 +994,57 @@ body,
         box-shadow .35s ease;
 
 }
+/* =========================================
+   SETTINGS MESSAGE
+========================================= */
+
+.settings-message {
+
+    margin-top: 18px;
+
+    padding: 18px 22px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    color: rgba(210, 235, 250, 0.62);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    letter-spacing: 0.3px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    border:
+        1px solid
+        rgba(140,215,255,0.08);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+}
+
+
+/* =========================================
+   LIGHT MODE
+========================================= */
+
+body.light-mode .settings-message {
+
+    color:
+        rgba(35,70,95,0.58);
+
+    background:
+        rgba(255,255,255,0.45);
+
+    border-color:
+        rgba(70,160,215,0.12);
+
+}
