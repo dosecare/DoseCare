@@ -1,72 +1,134 @@
 /* =========================================
-   DoseCare
-   GLOBAL THEME
+   DOSECARE
+   THEME SYSTEM
+   Default = Dark Mode
 ========================================= */
 
-const THEME_STORAGE_KEY = "dosecareTheme";
+const themeToggle = document.getElementById("theme-toggle");
+const themeStatus = document.getElementById("theme-status");
 
 
-/* =========================================
-   GET SAVED THEME
-========================================= */
+// =========================================
+// APPLY THEME
+// =========================================
 
-function getSavedTheme() {
+function applyTheme(theme) {
 
-    return (
-        localStorage.getItem(
-            THEME_STORAGE_KEY
-        ) || "dark"
+    if (theme === "light") {
+
+        document.body.classList.add("light-mode");
+
+    } else {
+
+        document.body.classList.remove("light-mode");
+
+    }
+
+    updateThemeUI(theme);
+}
+
+
+// =========================================
+// UPDATE THEME UI
+// =========================================
+
+function updateThemeUI(theme) {
+
+    if (!themeToggle) return;
+
+    const isLight = theme === "light";
+
+    themeToggle.classList.toggle(
+        "light",
+        isLight
     );
+
+    themeToggle.setAttribute(
+        "aria-pressed",
+        isLight ? "true" : "false"
+    );
+
+
+    if (themeStatus) {
+
+        themeStatus.textContent =
+            isLight
+                ? "Light Mode"
+                : "Dark Mode";
+
+    }
+
+
+    const icon =
+        themeToggle.querySelector(
+            ".theme-toggle-icon"
+        );
+
+    if (icon) {
+
+        icon.textContent =
+            isLight
+                ? "☀"
+                : "☾";
+
+    }
 
 }
 
 
-/* =========================================
-   APPLY THEME
-========================================= */
+// =========================================
+// LOAD SAVED THEME
+// =========================================
 
-function applyGlobalTheme(theme) {
-
-    const selectedTheme =
-        theme === "light"
-            ? "light"
-            : "dark";
-
-    document.body.classList.toggle(
-        "light-mode",
-        selectedTheme === "light"
-    );
-
-}
+const savedTheme =
+    localStorage.getItem("dosecare-theme");
 
 
-/* =========================================
-   SAVE THEME
-========================================= */
+// =========================================
+// DEFAULT = DARK
+// =========================================
 
-function saveGlobalTheme(theme) {
+if (savedTheme === "light") {
 
-    const selectedTheme =
-        theme === "light"
-            ? "light"
-            : "dark";
+    applyTheme("light");
 
-    localStorage.setItem(
-        THEME_STORAGE_KEY,
-        selectedTheme
-    );
+} else {
 
-    applyGlobalTheme(
-        selectedTheme
-    );
+    applyTheme("dark");
 
 }
 
 
-/* =========================================
-   INITIALIZE
-========================================= */
+// =========================================
+// TOGGLE THEME
+// =========================================
 
-applyGlobalTheme(
-    getSavedTheme()
-);
+if (themeToggle) {
+
+    themeToggle.addEventListener(
+        "click",
+        function () {
+
+            const isCurrentlyLight =
+                document.body.classList.contains(
+                    "light-mode"
+                );
+
+            const newTheme =
+                isCurrentlyLight
+                    ? "dark"
+                    : "light";
+
+
+            applyTheme(newTheme);
+
+
+            localStorage.setItem(
+                "dosecare-theme",
+                newTheme
+            );
+
+        }
+    );
+
+}
