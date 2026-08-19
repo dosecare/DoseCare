@@ -1002,3 +1002,629 @@ function validateMedicineDatabase() {
 ========================================= */
 
 validateMedicineDatabase();
+/* =========================================
+   MEDICINE LIBRARY PAGE
+   RENDER + SEARCH + FILTERS + BACK
+========================================= */
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const medicineList =
+    document.getElementById("medicine-list");
+
+const medicineSearch =
+    document.getElementById("medicine-search");
+
+const clearSearch =
+    document.getElementById("clear-search");
+
+const classFilter =
+    document.getElementById("class-filter");
+
+const conditionFilter =
+    document.getElementById("condition-filter");
+
+const medicineCount =
+    document.getElementById("medicine-count");
+
+const emptyState =
+    document.getElementById("empty-state");
+
+const backButton =
+    document.getElementById("back-button");
+
+const medicineModal =
+    document.getElementById("medicine-modal");
+
+const closeModal =
+    document.getElementById("close-modal");
+
+
+/* =========================================
+   RENDER MEDICINES
+========================================= */
+
+function renderMedicines(list) {
+
+    if (!medicineList) {
+        return;
+    }
+
+    medicineList.innerHTML = "";
+
+
+    /* -------------------------------------
+       EMPTY STATE
+    ------------------------------------- */
+
+    if (!list || list.length === 0) {
+
+        if (emptyState) {
+            emptyState.style.display = "block";
+        }
+
+        if (medicineCount) {
+            medicineCount.textContent =
+                "0 medicines";
+        }
+
+        return;
+
+    }
+
+
+    if (emptyState) {
+        emptyState.style.display = "none";
+    }
+
+
+    /* -------------------------------------
+       COUNT
+    ------------------------------------- */
+
+    if (medicineCount) {
+
+        medicineCount.textContent =
+            `${list.length} ${
+                list.length === 1
+                    ? "medicine"
+                    : "medicines"
+            }`;
+
+    }
+
+
+    /* -------------------------------------
+       CREATE CARDS
+    ------------------------------------- */
+
+    list.forEach(medicine => {
+
+        const card =
+            document.createElement("article");
+
+        card.className =
+            "medicine-card";
+
+        card.dataset.id =
+            medicine.id;
+
+
+        card.innerHTML = `
+
+            <div class="medicine-card-main">
+
+                <div class="medicine-symbol">
+                    +
+                </div>
+
+                <div class="medicine-card-content">
+
+                    <span class="medicine-card-class">
+                        ${medicine.class || ""}
+                    </span>
+
+                    <h3>
+                        ${medicine.genericName || medicine.name}
+                    </h3>
+
+                    <p>
+                        ${
+                            medicine.condition ||
+                            "General use"
+                        }
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="medicine-card-footer">
+
+                <span>
+                    ${medicine.route || ""}
+                </span>
+
+                <button
+                    class="favorite-button"
+                    data-id="${medicine.id}"
+                    type="button"
+                    aria-label="Add to favorites"
+                >
+                    ☆
+                </button>
+
+            </div>
+
+        `;
+
+
+        /* ---------------------------------
+           OPEN MEDICINE
+        --------------------------------- */
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                openMedicineModal(
+                    medicine.id
+                );
+
+            }
+        );
+
+
+        medicineList.appendChild(card);
+
+    });
+
+
+    initializeFavoriteButtons();
+
+}
+
+
+/* =========================================
+   POPULATE CLASS FILTER
+========================================= */
+
+function populateClassFilter() {
+
+    if (!classFilter) {
+        return;
+    }
+
+    const classes =
+        new Set();
+
+
+    medicines.forEach(medicine => {
+
+        if (
+            Array.isArray(
+                medicine.drugClass
+            )
+        ) {
+
+            medicine.drugClass.forEach(
+                drugClass => {
+
+                    if (drugClass) {
+                        classes.add(drugClass);
+                    }
+
+                }
+            );
+
+        }
+
+    });
+
+
+    Array.from(classes)
+        .sort()
+        .forEach(drugClass => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                drugClass;
+
+            option.textContent =
+                drugClass;
+
+            classFilter.appendChild(
+                option
+            );
+
+        });
+
+}
+
+
+/* =========================================
+   POPULATE CONDITION FILTER
+========================================= */
+
+function populateConditionFilter() {
+
+    if (!conditionFilter) {
+        return;
+    }
+
+    getAllMedicineConditions()
+        .forEach(condition => {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                condition;
+
+            option.textContent =
+                condition;
+
+            conditionFilter.appendChild(
+                option
+            );
+
+        });
+
+}
+
+
+/* =========================================
+   FILTER MEDICINES
+========================================= */
+
+function filterMedicines() {
+
+    const search =
+        medicineSearch
+            ? medicineSearch.value
+            : "";
+
+    const selectedClass =
+        classFilter
+            ? classFilter.value
+            : "all";
+
+    const selectedCondition =
+        conditionFilter
+            ? conditionFilter.value
+            : "all";
+
+
+    let results =
+        searchMedicines(search);
+
+
+    /* -------------------------------------
+       CLASS FILTER
+    ------------------------------------- */
+
+    if (selectedClass !== "all") {
+
+        results =
+            results.filter(
+                medicine => {
+
+                    return (
+                        Array.isArray(
+                            medicine.drugClass
+                        ) &&
+                        medicine.drugClass.includes(
+                            selectedClass
+                        )
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* -------------------------------------
+       CONDITION FILTER
+    ------------------------------------- */
+
+    if (selectedCondition !== "all") {
+
+        results =
+            results.filter(
+                medicine => {
+
+                    return (
+                        Array.isArray(
+                            medicine.conditions
+                        ) &&
+                        medicine.conditions.includes(
+                            selectedCondition
+                        )
+                    );
+
+                }
+            );
+
+    }
+
+
+    renderMedicines(results);
+
+}
+
+
+/* =========================================
+   OPEN MEDICINE MODAL
+========================================= */
+
+function openMedicineModal(id) {
+
+    const medicine =
+        getMedicineById(id);
+
+    if (!medicine || !medicineModal) {
+        return;
+    }
+
+
+    const modalName =
+        document.getElementById(
+            "modal-name"
+        );
+
+    const modalClass =
+        document.getElementById(
+            "modal-class"
+        );
+
+    const modalCondition =
+        document.getElementById(
+            "modal-condition"
+        );
+
+    const modalRoute =
+        document.getElementById(
+            "modal-route"
+        );
+
+    const modalIndications =
+        document.getElementById(
+            "modal-indications"
+        );
+
+    const modalMoa =
+        document.getElementById(
+            "modal-moa"
+        );
+
+    const modalPediatric =
+        document.getElementById(
+            "modal-pediatric"
+        );
+
+
+    if (modalName) {
+
+        modalName.textContent =
+            medicine.genericName ||
+            medicine.name;
+
+    }
+
+
+    if (modalClass) {
+
+        modalClass.textContent =
+            medicine.class || "";
+
+    }
+
+
+    if (modalCondition) {
+
+        modalCondition.textContent =
+            medicine.condition || "";
+
+    }
+
+
+    if (modalRoute) {
+
+        modalRoute.textContent =
+            medicine.route || "";
+
+    }
+
+
+    if (modalIndications) {
+
+        modalIndications.textContent =
+            medicine.indications || "";
+
+    }
+
+
+    if (modalMoa) {
+
+        modalMoa.textContent =
+            medicine.moa || "";
+
+    }
+
+
+    if (modalPediatric) {
+
+        modalPediatric.textContent =
+            medicine.pediatric || "";
+
+    }
+
+
+    medicineModal.classList.add(
+        "active"
+    );
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+}
+
+
+/* =========================================
+   CLOSE MEDICINE MODAL
+========================================= */
+
+function closeMedicineModal() {
+
+    if (!medicineModal) {
+        return;
+    }
+
+    medicineModal.classList.remove(
+        "active"
+    );
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+}
+
+
+/* =========================================
+   SEARCH EVENTS
+========================================= */
+
+if (medicineSearch) {
+
+    medicineSearch.addEventListener(
+        "input",
+        filterMedicines
+    );
+
+}
+
+
+/* =========================================
+   CLEAR SEARCH
+========================================= */
+
+if (clearSearch) {
+
+    clearSearch.addEventListener(
+        "click",
+        () => {
+
+            if (medicineSearch) {
+                medicineSearch.value = "";
+            }
+
+            filterMedicines();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CLASS FILTER
+========================================= */
+
+if (classFilter) {
+
+    classFilter.addEventListener(
+        "change",
+        filterMedicines
+    );
+
+}
+
+
+/* =========================================
+   CONDITION FILTER
+========================================= */
+
+if (conditionFilter) {
+
+    conditionFilter.addEventListener(
+        "change",
+        filterMedicines
+    );
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+if (closeModal) {
+
+    closeModal.addEventListener(
+        "click",
+        closeMedicineModal
+    );
+
+}
+
+
+/* =========================================
+   CLOSE MODAL BY OVERLAY
+========================================= */
+
+if (medicineModal) {
+
+    const overlay =
+        medicineModal.querySelector(
+            ".modal-overlay"
+        );
+
+    if (overlay) {
+
+        overlay.addEventListener(
+            "click",
+            closeMedicineModal
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+if (backButton) {
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   INITIALIZE MEDICINE PAGE
+========================================= */
+
+populateClassFilter();
+
+populateConditionFilter();
+
+renderMedicines(medicines);
