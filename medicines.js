@@ -1,35 +1,28 @@
- /* =========================================
-    DoseCare
-    Unified Medicine Database
- ========================================= */
+/* =========================================
+   DoseCare
+   Unified Medicine Database
+========================================= */
 
 
 /* =========================================
-   MEDICINE DATABASE
+   CENTRAL MEDICINE DATABASE
 ========================================= */
 
 /*
-    This array is the central medicine database.
+    جميع الأدوية راح تنضاف من ملفات منفصلة
+    حسب الـ System.
 
-    Medicine data will be loaded from separate
-    system files such as:
+    مثال:
 
-        antibiotics.js
-        analgesics.js
-        respiratory.js
-        gastrointestinal.js
-        etc.
+    medicines/analgesics.js
+    medicines/antibiotics.js
+    medicines/respiratory.js
+    medicines/gastrointestinal.js
 
-    Do not add individual medicines directly
-    to this file.
+    لا تضيفي أدوية مباشرة هنا.
 */
 
 const medicines = [];
-
-
-/* =========================================
-   MEDICINE HELPER FUNCTIONS
-========================================= */
 
 
 /* =========================================
@@ -70,7 +63,9 @@ function getMedicineByName(name) {
         medicine =>
             String(
                 medicine.genericName || ""
-            ).toLowerCase() === search
+            )
+            .trim()
+            .toLowerCase() === search
     ) || null;
 
 }
@@ -110,12 +105,22 @@ function searchMedicines(searchTerm) {
             .trim()
             .toLowerCase();
 
+    if (!search) {
+        return medicines;
+    }
+
     return medicines.filter(
         medicine => {
 
             const genericName =
                 String(
                     medicine.genericName || ""
+                ).toLowerCase();
+
+
+            const medicineName =
+                String(
+                    medicine.name || ""
                 ).toLowerCase();
 
 
@@ -157,6 +162,12 @@ function searchMedicines(searchTerm) {
                     : "";
 
 
+            const indications =
+                String(
+                    medicine.indications || ""
+                ).toLowerCase();
+
+
             const brandMatch =
                 brands.some(
                     brand =>
@@ -167,20 +178,42 @@ function searchMedicines(searchTerm) {
 
 
             return (
+
                 genericName.includes(search) ||
+
+                medicineName.includes(search) ||
+
                 brandMatch ||
+
                 drugClass
                     .toLowerCase()
                     .includes(search) ||
+
                 className.includes(search) ||
+
                 condition.includes(search) ||
+
                 conditions
                     .toLowerCase()
-                    .includes(search)
+                    .includes(search) ||
+
+                indications.includes(search)
+
             );
 
         }
     );
+
+}
+
+
+/* =========================================
+   GET ALL MEDICINES
+========================================= */
+
+function getAllMedicines() {
+
+    return medicines;
 
 }
 
@@ -246,16 +279,72 @@ function getMedicinesByCondition(condition) {
     }
 
 
+    const searchCondition =
+        String(condition)
+            .trim()
+            .toLowerCase();
+
+
     return medicines.filter(
         medicine => {
 
-            return (
-                Array.isArray(
+            if (
+                !Array.isArray(
                     medicine.conditions
-                ) &&
-                medicine.conditions.includes(
-                    condition
                 )
+            ) {
+                return false;
+            }
+
+
+            return medicine.conditions.some(
+                item =>
+                    String(item)
+                        .trim()
+                        .toLowerCase() ===
+                    searchCondition
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   GET MEDICINES BY DRUG CLASS
+========================================= */
+
+function getMedicinesByDrugClass(drugClass) {
+
+    if (!drugClass) {
+        return medicines;
+    }
+
+    const searchClass =
+        String(drugClass)
+            .trim()
+            .toLowerCase();
+
+
+    return medicines.filter(
+        medicine => {
+
+            if (
+                !Array.isArray(
+                    medicine.drugClass
+                )
+            ) {
+                return false;
+            }
+
+
+            return medicine.drugClass.some(
+                item =>
+                    String(item)
+                        .trim()
+                        .toLowerCase() ===
+                    searchClass
             );
 
         }
@@ -298,6 +387,30 @@ function isMedicineDosingConfigured(id) {
         dosing &&
         dosing.configured === true
     );
+
+}
+
+
+/* =========================================
+   GET MEDICINE REFERENCES
+========================================= */
+
+function getMedicineReferences(id) {
+
+    const medicine =
+        getMedicineById(id);
+
+
+    if (!medicine) {
+        return [];
+    }
+
+
+    return Array.isArray(
+        medicine.references
+    )
+        ? medicine.references
+        : [];
 
 }
 
@@ -455,8 +568,19 @@ function toggleFavoriteMedicine(id) {
             medicine.genericName ||
             medicine.name,
 
+        genericName:
+            medicine.genericName ||
+            medicine.name,
+
         class:
             medicine.class || "",
+
+        drugClass:
+            Array.isArray(
+                medicine.drugClass
+            )
+                ? medicine.drugClass
+                : [],
 
         condition:
             medicine.condition || ""
@@ -597,7 +721,8 @@ function validateMedicineDatabase() {
         "indications",
         "moa",
         "pediatric",
-        "dosing"
+        "dosing",
+        "references"
 
     ];
 
@@ -614,13 +739,28 @@ function validateMedicineDatabase() {
                     ) {
 
                         console.warn(
-                            `Medicine "${medicine.genericName}" is missing "${field}".`
+                            `Medicine "${medicine.genericName || medicine.id}" is missing "${field}".`
                         );
 
                     }
 
                 }
             );
+
+
+            /* ---------------------------------
+               ID
+            --------------------------------- */
+
+            if (
+                !medicine.id
+            ) {
+
+                console.warn(
+                    "Medicine is missing a valid ID."
+                );
+
+            }
 
 
             /* ---------------------------------
@@ -709,6 +849,23 @@ function validateMedicineDatabase() {
 
             }
 
+
+            /* ---------------------------------
+               REFERENCES
+            --------------------------------- */
+
+            if (
+                !Array.isArray(
+                    medicine.references
+                )
+            ) {
+
+                console.warn(
+                    `Medicine "${medicine.genericName}" has invalid references data.`
+                );
+
+            }
+
         }
     );
 
@@ -716,7 +873,86 @@ function validateMedicineDatabase() {
 
 
 /* =========================================
-   INITIALIZE DATABASE
+   CHECK DUPLICATE MEDICINE IDS
 ========================================= */
 
-validateMedicineDatabase();
+function checkDuplicateMedicineIds() {
+
+    const ids =
+        new Set();
+
+
+    medicines.forEach(
+        medicine => {
+
+            if (!medicine.id) {
+                return;
+            }
+
+
+            if (
+                ids.has(
+                    String(medicine.id)
+                )
+            ) {
+
+                console.error(
+                    `Duplicate medicine ID found: ${medicine.id}`
+                );
+
+            }
+
+
+            ids.add(
+                String(medicine.id)
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CHECK DATABASE
+========================================= */
+
+function checkMedicineDatabase() {
+
+    checkDuplicateMedicineIds();
+
+    validateMedicineDatabase();
+
+}
+
+
+/* =========================================
+   DATABASE STATUS
+========================================= */
+
+function getMedicineDatabaseStatus() {
+
+    return {
+
+        totalMedicines:
+            medicines.length,
+
+        configuredMedicines:
+            medicines.filter(
+                medicine =>
+                    medicine.dosing &&
+                    medicine.dosing.configured === true
+            ).length,
+
+        medicinesWithReferences:
+            medicines.filter(
+                medicine =>
+                    Array.isArray(
+                        medicine.references
+                    ) &&
+                    medicine.references.length > 0
+            ).length
+
+    };
+
+}
