@@ -1,14 +1,31 @@
-/* =========================================
-   DoseCare
-   Unified Medicine Database
-========================================= */
+ /* =========================================
+    DoseCare
+    Unified Medicine Database
+ ========================================= */
 
 
 /* =========================================
    MEDICINE DATABASE
 ========================================= */
 
-const medicines = [
+/*
+    This array is the central medicine database.
+
+    Medicine data will be loaded from separate
+    system files such as:
+
+        antibiotics.js
+        analgesics.js
+        respiratory.js
+        gastrointestinal.js
+        etc.
+
+    Do not add individual medicines directly
+    to this file.
+*/
+
+const medicines = [];
+
 
 /* =========================================
    MEDICINE HELPER FUNCTIONS
@@ -101,12 +118,14 @@ function searchMedicines(searchTerm) {
                     medicine.genericName || ""
                 ).toLowerCase();
 
+
             const brands =
                 Array.isArray(
                     medicine.brandNames
                 )
                     ? medicine.brandNames
                     : [];
+
 
             const drugClass =
                 Array.isArray(
@@ -117,15 +136,18 @@ function searchMedicines(searchTerm) {
                         medicine.drugClass || ""
                     );
 
+
             const className =
                 String(
                     medicine.class || ""
                 ).toLowerCase();
 
+
             const condition =
                 String(
                     medicine.condition || ""
                 ).toLowerCase();
+
 
             const conditions =
                 Array.isArray(
@@ -134,6 +156,7 @@ function searchMedicines(searchTerm) {
                     ? medicine.conditions.join(" ")
                     : "";
 
+
             const brandMatch =
                 brands.some(
                     brand =>
@@ -141,6 +164,7 @@ function searchMedicines(searchTerm) {
                             .toLowerCase()
                             .includes(search)
                 );
+
 
             return (
                 genericName.includes(search) ||
@@ -170,6 +194,7 @@ function getAllMedicineConditions() {
     const conditionSet =
         new Set();
 
+
     medicines.forEach(
         medicine => {
 
@@ -180,6 +205,7 @@ function getAllMedicineConditions() {
             ) {
                 return;
             }
+
 
             medicine.conditions.forEach(
                 condition => {
@@ -197,6 +223,7 @@ function getAllMedicineConditions() {
 
         }
     );
+
 
     return Array.from(
         conditionSet
@@ -217,6 +244,7 @@ function getMedicinesByCondition(condition) {
     ) {
         return medicines;
     }
+
 
     return medicines.filter(
         medicine => {
@@ -245,9 +273,11 @@ function getMedicineDosing(id) {
     const medicine =
         getMedicineById(id);
 
+
     if (!medicine) {
         return null;
     }
+
 
     return medicine.dosing || null;
 
@@ -262,6 +292,7 @@ function isMedicineDosingConfigured(id) {
 
     const dosing =
         getMedicineDosing(id);
+
 
     return Boolean(
         dosing &&
@@ -290,14 +321,17 @@ function getFavoriteMedicines() {
             FAVORITES_STORAGE_KEY
         );
 
+
     if (!saved) {
         return [];
     }
+
 
     try {
 
         const favorites =
             JSON.parse(saved);
+
 
         return Array.isArray(
             favorites
@@ -312,6 +346,7 @@ function getFavoriteMedicines() {
             "Favorites loading error:",
             error
         );
+
 
         return [];
 
@@ -330,6 +365,7 @@ function saveFavoriteMedicines(favorites) {
         return;
     }
 
+
     localStorage.setItem(
         FAVORITES_STORAGE_KEY,
         JSON.stringify(favorites)
@@ -346,6 +382,7 @@ function isFavoriteMedicine(id) {
 
     const favorites =
         getFavoriteMedicines();
+
 
     return favorites.some(
         medicine =>
@@ -365,12 +402,15 @@ function toggleFavoriteMedicine(id) {
     const medicine =
         getMedicineById(id);
 
+
     if (!medicine) {
         return false;
     }
 
+
     let favorites =
         getFavoriteMedicines();
+
 
     const existingIndex =
         favorites.findIndex(
@@ -391,9 +431,11 @@ function toggleFavoriteMedicine(id) {
             1
         );
 
+
         saveFavoriteMedicines(
             favorites
         );
+
 
         return false;
 
@@ -426,6 +468,7 @@ function toggleFavoriteMedicine(id) {
         favorites
     );
 
+
     return true;
 
 }
@@ -447,18 +490,22 @@ function updateFavoriteButtons() {
                 const id =
                     button.dataset.id;
 
+
                 const active =
                     isFavoriteMedicine(id);
+
 
                 button.classList.toggle(
                     "active",
                     active
                 );
 
+
                 button.textContent =
                     active
                         ? "★"
                         : "☆";
+
 
                 button.setAttribute(
                     "aria-label",
@@ -493,8 +540,10 @@ function initializeFavoriteButtons() {
                     return;
                 }
 
+
                 button.dataset.favoriteReady =
                     "true";
+
 
                 button.addEventListener(
                     "click",
@@ -504,12 +553,15 @@ function initializeFavoriteButtons() {
 
                         event.stopPropagation();
 
+
                         const id =
                             button.dataset.id;
+
 
                         toggleFavoriteMedicine(
                             id
                         );
+
 
                         updateFavoriteButtons();
 
@@ -518,6 +570,7 @@ function initializeFavoriteButtons() {
 
             }
         );
+
 
     updateFavoriteButtons();
 
@@ -570,6 +623,10 @@ function validateMedicineDatabase() {
             );
 
 
+            /* ---------------------------------
+               CONDITIONS
+            --------------------------------- */
+
             if (
                 !Array.isArray(
                     medicine.conditions
@@ -582,6 +639,10 @@ function validateMedicineDatabase() {
 
             }
 
+
+            /* ---------------------------------
+               BRAND NAMES
+            --------------------------------- */
 
             if (
                 !Array.isArray(
@@ -596,6 +657,10 @@ function validateMedicineDatabase() {
             }
 
 
+            /* ---------------------------------
+               DRUG CLASS
+            --------------------------------- */
+
             if (
                 !Array.isArray(
                     medicine.drugClass
@@ -609,6 +674,10 @@ function validateMedicineDatabase() {
             }
 
 
+            /* ---------------------------------
+               DOSING
+            --------------------------------- */
+
             if (
                 !medicine.dosing ||
                 typeof medicine.dosing !==
@@ -619,10 +688,15 @@ function validateMedicineDatabase() {
                     `Medicine "${medicine.genericName}" has invalid dosing configuration.`
                 );
 
+
                 return;
 
             }
 
+
+            /* ---------------------------------
+               CONFIGURATION
+            --------------------------------- */
 
             if (
                 medicine.dosing.configured !==
