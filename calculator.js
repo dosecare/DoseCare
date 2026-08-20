@@ -1466,7 +1466,8 @@ function getApplicableRegimen(
 
 
 /* =========================================
-   CALCULATE MG DOSE
+   CALCULATE DOSING RULE
+   Unified condition-based calculator
 ========================================= */
 
 function calculateDosingRule(
@@ -1510,33 +1511,93 @@ function calculateDosingRule(
     ) {
 
         const minDose =
-            weight *
-            Number(
-                dosing.minDose
-            );
-
+            Number(dosing.minDose);
 
         const maxDose =
+            Number(dosing.maxDose);
+
+
+        if (
+            !Number.isFinite(minDose) ||
+            !Number.isFinite(maxDose)
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "The dosing rule is incomplete."
+
+            };
+
+        }
+
+
+        let minMg =
             weight *
+            minDose;
+
+
+        let maxMg =
+            weight *
+            maxDose;
+
+
+        /*
+            Maximum dose per dose
+        */
+
+        if (
+            Number.isFinite(
+                Number(
+                    dosing.maxPerDose
+                )
+            )
+        ) {
+
+            maxMg =
+                Math.min(
+                    maxMg,
+                    Number(
+                        dosing.maxPerDose
+                    )
+                );
+
+        }
+
+
+        /*
+            Maximum daily dose
+        */
+
+        const frequency =
             Number(
-                dosing.maxDose
-            );
+                dosing.frequency
+            ) || 1;
 
 
-        const maxDaily =
+        if (
             Number.isFinite(
                 Number(
                     dosing.maxDailyDose
                 )
             )
-                ? Math.min(
-                    maxDose,
-                    weight *
-                    Number(
-                        dosing.maxDailyDose
-                    )
-                )
-                : maxDose;
+        ) {
+
+            const maxDaily =
+                Number(
+                    dosing.maxDailyDose
+                );
+
+
+            maxMg =
+                Math.min(
+                    maxMg,
+                    maxDaily / frequency
+                );
+
+        }
 
 
         return {
@@ -1544,36 +1605,35 @@ function calculateDosingRule(
             success: true,
 
             minMg:
-                minDose,
+                minMg,
 
             maxMg:
-                maxDaily,
+                maxMg,
 
             dailyMinMg:
-                minDose *
-                Number(
-                    dosing.maxDosesPer24Hours ||
-                    1
-                ),
+                minMg * frequency,
 
             dailyMaxMg:
-                maxDaily *
-                Number(
-                    dosing.maxDosesPer24Hours ||
-                    1
-                ),
+                maxMg * frequency,
 
             frequency:
-                dosing.frequency ||
-                "",
+                dosing.interval ||
+                (
+                    frequency === 1
+                        ? "once daily"
+                        : `${frequency} times daily`
+                ),
 
             dosesPerDay:
-                dosing.maxDosesPer24Hours ||
-                null,
+                frequency,
 
             unit:
                 dosing.unit ||
                 "mg/kg/dose",
+
+            duration:
+                dosing.duration ||
+                "",
 
             regimen:
                 null
@@ -1592,33 +1652,65 @@ function calculateDosingRule(
         "mg_per_kg_per_day"
     ) {
 
-        const minDailyMg =
+        const minDailyDose =
+            Number(dosing.minDose);
+
+        const maxDailyDose =
+            Number(dosing.maxDose);
+
+
+        if (
+            !Number.isFinite(
+                minDailyDose
+            ) ||
+            !Number.isFinite(
+                maxDailyDose
+            )
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "The dosing rule is incomplete."
+
+            };
+
+        }
+
+
+        let dailyMinMg =
             weight *
-            Number(
-                dosing.minDose
-            );
+            minDailyDose;
 
 
-        const maxDailyMgRaw =
+        let dailyMaxMg =
             weight *
-            Number(
-                dosing.maxDose
-            );
+            maxDailyDose;
 
 
-        const maxDailyMg =
+        /*
+            Maximum total daily dose
+        */
+
+        if (
             Number.isFinite(
                 Number(
                     dosing.maxDailyDose
                 )
             )
-                ? Math.min(
-                    maxDailyMgRaw,
+        ) {
+
+            dailyMaxMg =
+                Math.min(
+                    dailyMaxMg,
                     Number(
                         dosing.maxDailyDose
                     )
-                )
-                : maxDailyMgRaw;
+                );
+
+        }
 
 
         const frequency =
@@ -1627,15 +1719,19 @@ function calculateDosingRule(
             ) || 1;
 
 
-        let minPerDose =
-            minDailyMg /
+        const minMg =
+            dailyMinMg /
             frequency;
 
 
-        let maxPerDose =
-            maxDailyMg /
+        let maxMg =
+            dailyMaxMg /
             frequency;
 
+
+        /*
+            Maximum dose per administration
+        */
 
         if (
             Number.isFinite(
@@ -1645,17 +1741,9 @@ function calculateDosingRule(
             )
         ) {
 
-            minPerDose =
+            maxMg =
                 Math.min(
-                    minPerDose,
-                    Number(
-                        dosing.maxPerDose
-                    )
-                );
-
-            maxPerDose =
-                Math.min(
-                    maxPerDose,
+                    maxMg,
                     Number(
                         dosing.maxPerDose
                     )
@@ -1669,16 +1757,16 @@ function calculateDosingRule(
             success: true,
 
             minMg:
-                minPerDose,
+                minMg,
 
             maxMg:
-                maxPerDose,
+                maxMg,
 
             dailyMinMg:
-                minDailyMg,
+                dailyMinMg,
 
             dailyMaxMg:
-                maxDailyMg,
+                dailyMaxMg,
 
             frequency:
                 dosing.interval ||
@@ -1695,6 +1783,10 @@ function calculateDosingRule(
             unit:
                 dosing.unit ||
                 "mg/kg/day",
+
+            duration:
+                dosing.duration ||
+                "",
 
             regimen:
                 null
@@ -1740,9 +1832,9 @@ function calculateDosingRule(
             selected.regimen;
 
 
-        /*
-            Age restrictions inside regimen
-        */
+        /* ---------------------------------
+           AGE RESTRICTIONS
+        --------------------------------- */
 
         const ageMonths =
             getAgeInMonths();
@@ -1756,10 +1848,14 @@ function calculateDosingRule(
 
             if (
                 Number.isFinite(
-                    regimen.minimumAgeMonths
+                    Number(
+                        regimen.minimumAgeMonths
+                    )
                 ) &&
                 ageMonths <
-                    regimen.minimumAgeMonths
+                    Number(
+                        regimen.minimumAgeMonths
+                    )
             ) {
 
                 return {
@@ -1767,7 +1863,7 @@ function calculateDosingRule(
                     success: false,
 
                     message:
-                        `This regimen is not configured for the entered age.`
+                        "This regimen is not configured for the entered age."
 
                 };
 
@@ -1776,11 +1872,14 @@ function calculateDosingRule(
 
             if (
                 Number.isFinite(
-                    regimen.minimumAgeYears
+                    Number(
+                        regimen.minimumAgeYears
+                    )
                 ) &&
                 ageMonths <
-                    regimen.minimumAgeYears *
-                    12
+                    Number(
+                        regimen.minimumAgeYears
+                    ) * 12
             ) {
 
                 return {
@@ -1788,7 +1887,7 @@ function calculateDosingRule(
                     success: false,
 
                     message:
-                        `This regimen is not configured for the entered age.`
+                        "This regimen is not configured for the entered age."
 
                 };
 
@@ -1797,32 +1896,24 @@ function calculateDosingRule(
         }
 
 
-        /*
-            Determine whether the regimen
-            is mg/kg/day or mg/kg/dose.
+        /* ---------------------------------
+           READ UNIT FROM REGIMEN
+        --------------------------------- */
 
-            For our current database:
-            most condition-based antibiotic
-            regimens are daily doses.
-        */
-
-        let doseMin;
-        let doseMax;
-
-        let dailyMin;
-        let dailyMax;
-
-        let frequency;
-
-        let frequencyText = "";
+        const regimenUnit =
+            String(
+                regimen.unit ||
+                dosing.unit ||
+                ""
+            ).toLowerCase();
 
 
-        /*
-            Explicit day-based dosing
-        */
+        /* =================================
+           MG / KG / DAY
+        ================================= */
 
         if (
-            dosing.unit ===
+            regimenUnit ===
             "mg/kg/day"
         ) {
 
@@ -1875,19 +1966,23 @@ function calculateDosingRule(
             }
 
 
-            dailyMin =
+            /* -----------------------------
+               DAILY DOSE
+            ----------------------------- */
+
+            let dailyMinMg =
                 weight *
                 minDose;
 
 
-            dailyMax =
+            let dailyMaxMg =
                 weight *
                 maxDose;
 
 
-            /*
-                Apply max daily dose
-            */
+            /* -----------------------------
+               MAX DAILY DOSE
+            ----------------------------- */
 
             if (
                 Number.isFinite(
@@ -1897,9 +1992,9 @@ function calculateDosingRule(
                 )
             ) {
 
-                dailyMax =
+                dailyMaxMg =
                     Math.min(
-                        dailyMax,
+                        dailyMaxMg,
                         Number(
                             regimen.maxDailyDose
                         )
@@ -1908,43 +2003,33 @@ function calculateDosingRule(
             }
 
 
-            frequency =
+            /* -----------------------------
+               FREQUENCY
+            ----------------------------- */
+
+            const frequency =
                 Number(
                     regimen.frequency
                 ) || 1;
 
 
-            /*
-                Alternative frequency
+            /* -----------------------------
+               DOSE PER ADMINISTRATION
+            ----------------------------- */
 
-                Example:
-                cefixime = once daily OR
-                divided every 12 hours.
-            */
-
-            let selectedFrequency =
+            let minMg =
+                dailyMinMg /
                 frequency;
 
 
-            let alternativeFrequency =
-                Number(
-                    regimen.alternativeFrequency
-                );
+            let maxMg =
+                dailyMaxMg /
+                frequency;
 
 
-            /*
-                Use primary frequency by default.
-            */
-
-            doseMin =
-                dailyMin /
-                selectedFrequency;
-
-
-            doseMax =
-                dailyMax /
-                selectedFrequency;
-
+            /* -----------------------------
+               MAX PER DOSE
+            ----------------------------- */
 
             if (
                 Number.isFinite(
@@ -1954,15 +2039,22 @@ function calculateDosingRule(
                 )
             ) {
 
-                doseMax =
+                maxMg =
                     Math.min(
-                        doseMax,
+                        maxMg,
                         Number(
                             regimen.maxPerDose
                         )
                     );
 
             }
+
+
+            /* -----------------------------
+               FREQUENCY TEXT
+            ----------------------------- */
+
+            let frequencyText;
 
 
             if (
@@ -1974,7 +2066,7 @@ function calculateDosingRule(
 
             }
             else if (
-                selectedFrequency === 1
+                frequency === 1
             ) {
 
                 frequencyText =
@@ -1984,19 +2076,27 @@ function calculateDosingRule(
             else {
 
                 frequencyText =
-                    `${selectedFrequency} times daily`;
+                    `${frequency} times daily`;
 
             }
 
 
+            /*
+                Alternative frequency
+            */
+
             if (
                 Number.isFinite(
-                    alternativeFrequency
+                    Number(
+                        regimen.alternativeFrequency
+                    )
                 )
             ) {
 
                 frequencyText +=
-                    ` (or divided into ${alternativeFrequency} doses/day)`;
+                    ` (or ${Number(
+                        regimen.alternativeFrequency
+                    )} times daily)`;
 
             }
 
@@ -2006,25 +2106,25 @@ function calculateDosingRule(
                 success: true,
 
                 minMg:
-                    doseMin,
+                    minMg,
 
                 maxMg:
-                    doseMax,
+                    maxMg,
 
                 dailyMinMg:
-                    dailyMin,
+                    dailyMinMg,
 
                 dailyMaxMg:
-                    dailyMax,
+                    dailyMaxMg,
 
                 frequency:
                     frequencyText,
 
                 dosesPerDay:
-                    selectedFrequency,
+                    frequency,
 
                 unit:
-                    dosing.unit,
+                    regimenUnit,
 
                 duration:
                     regimen.duration ||
@@ -2038,145 +2138,279 @@ function calculateDosingRule(
         }
 
 
-        /*
-            Dose is explicitly mg/kg/dose
-        */
-
-        const minDose =
-            Number.isFinite(
-                Number(
-                    regimen.minDose
-                )
-            )
-                ? Number(
-                    regimen.minDose
-                )
-                : Number(
-                    regimen.dose
-                );
-
-
-        const maxDose =
-            Number.isFinite(
-                Number(
-                    regimen.maxDose
-                )
-            )
-                ? Number(
-                    regimen.maxDose
-                )
-                : Number(
-                    regimen.dose
-                );
-
+        /* =================================
+           MG / KG / DOSE
+        ================================= */
 
         if (
-            !Number.isFinite(
-                minDose
-            ) ||
-            !Number.isFinite(
-                maxDose
-            )
+            regimenUnit ===
+            "mg/kg/dose"
         ) {
+
+            const minDose =
+                Number.isFinite(
+                    Number(
+                        regimen.minDose
+                    )
+                )
+                    ? Number(
+                        regimen.minDose
+                    )
+                    : Number(
+                        regimen.dose
+                    );
+
+
+            const maxDose =
+                Number.isFinite(
+                    Number(
+                        regimen.maxDose
+                    )
+                )
+                    ? Number(
+                        regimen.maxDose
+                    )
+                    : Number(
+                        regimen.dose
+                    );
+
+
+            if (
+                !Number.isFinite(
+                    minDose
+                ) ||
+                !Number.isFinite(
+                    maxDose
+                )
+            ) {
+
+                return {
+
+                    success: false,
+
+                    message:
+                        "The selected regimen does not contain a valid pediatric dose."
+
+                };
+
+            }
+
+
+            let minMg =
+                weight *
+                minDose;
+
+
+            let maxMg =
+                weight *
+                maxDose;
+
+
+            const frequency =
+                Number(
+                    regimen.frequency
+                ) || 1;
+
+
+            /* -----------------------------
+               MAX PER DOSE
+            ----------------------------- */
+
+            if (
+                Number.isFinite(
+                    Number(
+                        regimen.maxPerDose
+                    )
+                )
+            ) {
+
+                maxMg =
+                    Math.min(
+                        maxMg,
+                        Number(
+                            regimen.maxPerDose
+                        )
+                    );
+
+            }
+
+
+            /* -----------------------------
+               MAX DAILY DOSE
+            ----------------------------- */
+
+            if (
+                Number.isFinite(
+                    Number(
+                        regimen.maxDailyDose
+                    )
+                )
+            ) {
+
+                maxMg =
+                    Math.min(
+                        maxMg,
+                        Number(
+                            regimen.maxDailyDose
+                        ) /
+                        frequency
+                    );
+
+            }
+
+
+            let frequencyText;
+
+
+            if (
+                regimen.interval
+            ) {
+
+                frequencyText =
+                    regimen.interval;
+
+            }
+            else if (
+                frequency === 1
+            ) {
+
+                frequencyText =
+                    "once daily";
+
+            }
+            else {
+
+                frequencyText =
+                    `${frequency} times daily`;
+
+            }
+
 
             return {
 
-                success: false,
+                success: true,
 
-                message:
-                    "The selected regimen does not contain a valid pediatric dose."
+                minMg:
+                    minMg,
+
+                maxMg:
+                    maxMg,
+
+                dailyMinMg:
+                    minMg *
+                    frequency,
+
+                dailyMaxMg:
+                    maxMg *
+                    frequency,
+
+                frequency:
+                    frequencyText,
+
+                dosesPerDay:
+                    frequency,
+
+                unit:
+                    regimenUnit,
+
+                duration:
+                    regimen.duration ||
+                    "",
+
+                regimen:
+                    selected.key
 
             };
 
         }
 
 
-        doseMin =
-            weight *
-            minDose;
-
-
-        doseMax =
-            weight *
-            maxDose;
-
-
-        frequency =
-            Number(
-                regimen.frequency
-            ) || 1;
-
+        /* =================================
+           SINGLE DOSE
+        ================================= */
 
         if (
-            Number.isFinite(
-                Number(
-                    regimen.maxPerDose
-                )
-            )
+            regimenUnit ===
+            "mg/kg"
         ) {
 
-            doseMax =
-                Math.min(
-                    doseMax,
-                    Number(
-                        regimen.maxPerDose
-                    )
+            const dose =
+                Number(
+                    regimen.dose
                 );
 
+
+            if (
+                !Number.isFinite(
+                    dose
+                )
+            ) {
+
+                return {
+
+                    success: false,
+
+                    message:
+                        "The selected regimen does not contain a valid dose."
+
+                };
+
+            }
+
+
+            const doseMg =
+                weight *
+                dose;
+
+
+            return {
+
+                success: true,
+
+                minMg:
+                    doseMg,
+
+                maxMg:
+                    doseMg,
+
+                dailyMinMg:
+                    doseMg,
+
+                dailyMaxMg:
+                    doseMg,
+
+                frequency:
+                    regimen.frequency ||
+                    "single dose",
+
+                dosesPerDay:
+                    1,
+
+                unit:
+                    regimenUnit,
+
+                duration:
+                    regimen.duration ||
+                    "1 day",
+
+                regimen:
+                    selected.key
+
+            };
+
         }
 
 
-        if (
-            regimen.interval
-        ) {
-
-            frequencyText =
-                regimen.interval;
-
-        }
-        else {
-
-            frequencyText =
-                frequency === 1
-                    ? "once daily"
-                    : `${frequency} times daily`;
-
-        }
-
+        /* =================================
+           UNKNOWN REGIMEN UNIT
+        ================================= */
 
         return {
 
-            success: true,
+            success: false,
 
-            minMg:
-                doseMin,
-
-            maxMg:
-                doseMax,
-
-            dailyMinMg:
-                doseMin *
-                frequency,
-
-            dailyMaxMg:
-                doseMax *
-                frequency,
-
-            frequency:
-                frequencyText,
-
-            dosesPerDay:
-                frequency,
-
-            unit:
-                "mg/kg/dose",
-
-            duration:
-                regimen.duration ||
-                "",
-
-            regimen:
-                selected.key
+            message:
+                `Unsupported dosing unit: ${regimenUnit || "not specified"}`
 
         };
 
@@ -2184,7 +2418,7 @@ function calculateDosingRule(
 
 
     /* =====================================
-       UNKNOWN TYPE
+       UNKNOWN DOSING TYPE
     ===================================== */
 
     return {
@@ -2197,8 +2431,6 @@ function calculateDosingRule(
     };
 
 }
-
-
 /* =========================================
    CONVERT MG TO ML
 ========================================= */
