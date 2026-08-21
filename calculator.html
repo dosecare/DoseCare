@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>DoseCare | Pediatric Dose Calculator</title>
+    <title>DoseCare | Pediatric Syrup Dose Calculator</title>
 
     <link
         rel="stylesheet"
@@ -24,11 +24,13 @@
 
 </head>
 
+
 <body>
 
-    <!-- =================================
+
+    <!-- =========================================
          BACKGROUND
-    ================================= -->
+    ========================================== -->
 
     <div class="background">
 
@@ -46,16 +48,18 @@
 
     </div>
 
-    <!-- =================================
+
+
+    <!-- =========================================
          CALCULATOR PAGE
-    ================================= -->
+    ========================================== -->
 
     <main class="calculator-page">
 
 
-        <!-- =================================
+        <!-- =========================================
              TOP BAR
-        ================================= -->
+        ========================================== -->
 
         <header class="calculator-topbar">
 
@@ -64,12 +68,11 @@
                 class="back-button"
                 id="back-button"
                 type="button"
+                aria-label="Back to Home"
             >
 
-                <span>
-                    ←
-                </span>
-     
+                <span>←</span>
+
             </button>
 
 
@@ -89,14 +92,16 @@
 
         </header>
 
-        <!-- =================================
+
+
+        <!-- =========================================
              PAGE HEADER
-        ================================= -->
+        ========================================== -->
 
         <section class="calculator-header">
 
             <span class="section-label">
-                PEDIATRIC CARE
+                PEDIATRIC SYRUP CARE
             </span>
 
 
@@ -107,26 +112,25 @@
 
 
             <p>
-                Select the medicine, enter the
-                patient's information, and calculate
-                the appropriate pediatric dose.
+                Select the medicine, choose the available
+                syrup concentration, enter the child's
+                information, and calculate the appropriate dose.
             </p>
 
         </section>
 
 
 
-        <!-- =================================
+        <!-- =========================================
              CALCULATOR CARD
-        ================================= -->
+        ========================================== -->
 
         <section class="calculator-card">
 
 
-
-            <!-- =================================
+            <!-- =====================================
                  STEP 01 — MEDICINE
-            ================================= -->
+            ====================================== -->
 
             <div class="calculator-section">
 
@@ -145,9 +149,8 @@
                         </h2>
 
                         <p>
-                            Choose a medical condition
-                            and the medicine you want
-                            to calculate.
+                            Choose the pediatric syrup you
+                            want to calculate.
                         </p>
 
                     </div>
@@ -156,104 +159,20 @@
 
 
 
-                <!-- MEDICAL CONDITION -->
-
-                <div class="medicine-field">
-
-                    <label for="condition">
-
-                        Medical Condition
-
-                    </label>
-
-
-                    <div class="select-wrapper">
-
-                        <select
-                            id="condition"
-                        >
-
-                            <option value="">
-                                Select a condition
-                            </option>
-
-                            <!-- Conditions will be
-                                 added dynamically -->
-
-                        </select>
-
-
-                        <span class="select-arrow">
-                            ▾
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MEDICINE -->
-
-                <div class="medicine-field">
-
-                    <label for="medicine-select">
-
-                        Medicine
-
-                    </label>
-
-
-                    <div class="select-wrapper">
-
-                        <select
-                            id="medicine-select"
-                            disabled
-                        >
-
-                            <option value="">
-                                Select a medicine
-                            </option>
-
-                            <!-- Medicines will be
-                                 filtered dynamically -->
-
-                        </select>
-
-
-                        <span class="select-arrow">
-                            ▾
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- DIRECT SEARCH -->
-
-                <div class="direct-search-label">
-
-                    <span>
-                        OR SEARCH DIRECTLY
-                    </span>
-
-                </div>
-
-
+                <!-- =================================
+                     MEDICINE SEARCH
+                ================================== -->
 
                 <div class="medicine-search">
 
 
                     <label for="medicine">
-
-                        Search Medicine
-
+                        Medicine
                     </label>
 
 
                     <div class="search-wrapper">
+
 
                         <span class="search-icon">
                             ⌕
@@ -263,7 +182,7 @@
                         <input
                             type="text"
                             id="medicine"
-                            placeholder="Search medicine..."
+                            placeholder="Search syrup medicine..."
                             autocomplete="off"
                         >
 
@@ -272,9 +191,11 @@
                             class="clear-search"
                             id="clear-medicine"
                             type="button"
+                            aria-label="Clear medicine"
                         >
                             ×
                         </button>
+
 
                     </div>
 
@@ -291,21 +212,78 @@
                 </div>
 
 
+
+                <!-- =================================
+                     MEDICINE SELECT
+                ================================== -->
+
+                <div class="medicine-field">
+
+
+                    <label for="medicine-select">
+                        Selected Medicine
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+
+                        <select
+                            id="medicine-select"
+                        >
+
+                            <option value="">
+                                Select a medicine
+                            </option>
+
+                        </select>
+
+
+                        <span class="select-arrow">
+                            ▾
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     MEDICINE INFORMATION
+                ================================== -->
+
+                <div
+                    class="selected-medicine-info"
+                    id="selected-medicine-info"
+                >
+
+                    <!--
+                        Medicine information will be
+                        inserted dynamically by calculator.js
+                    -->
+
+
+                </div>
+
+
             </div>
 
 
 
-            <!-- =================================
+            <!-- =========================================
                  DIVIDER
-            ================================= -->
+            ========================================== -->
 
             <div class="calculator-divider"></div>
 
 
 
-            <!-- =================================
+            <!-- =========================================
                  STEP 02 — PATIENT
-            ================================= -->
+            ========================================== -->
 
             <div class="calculator-section">
 
@@ -324,9 +302,8 @@
                         </h2>
 
                         <p>
-                            Enter age, weight, or both.
-                            Requirements depend on
-                            the selected medicine.
+                            Enter the child's age and weight
+                            to calculate the pediatric dose.
                         </p>
 
                     </div>
@@ -338,56 +315,64 @@
                 <div class="input-grid">
 
 
-                    <!-- AGE -->
-<div class="input-group age-group">
+                    <!-- =================================
+                         AGE
+                    ================================== -->
 
-    <label for="age">
-        Age
-    </label>
-
-    <div class="age-input-row">
-
-        <input
-            type="number"
-            id="age"
-            min="0"
-            step="1"
-            placeholder="Enter age"
-        >
-
-        <select id="age-unit">
-
-            <option value="months">
-                Months
-            </option>
-
-            <option value="years">
-                Years
-            </option>
-
-        </select>
-
-    </div>
-
-</div>
+                    <div class="input-group age-group">
 
 
-                    <!-- WEIGHT -->
+                        <label for="age">
+                            Age
+                        </label>
+
+
+                        <div class="age-input-row">
+
+
+                            <input
+                                type="number"
+                                id="age"
+                                min="0"
+                                step="1"
+                                placeholder="Enter age"
+                            >
+
+
+                            <select id="age-unit">
+
+                                <option value="months">
+                                    Months
+                                </option>
+
+                                <option value="years">
+                                    Years
+                                </option>
+
+                            </select>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         WEIGHT
+                    ================================== -->
 
                     <div class="input-group">
 
+
                         <label for="weight">
-
                             Weight
-
-                            <span>
-                                Optional
-                            </span>
-
                         </label>
 
 
                         <div class="input-wrapper">
+
 
                             <input
                                 type="number"
@@ -397,11 +382,14 @@
                                 step="0.1"
                             >
 
+
                             <span>
                                 kg
                             </span>
 
+
                         </div>
+
 
                     </div>
 
@@ -412,17 +400,18 @@
 
                 <div class="information-note">
 
+
                     <span class="note-icon">
                         i
                     </span>
 
+
                     <p>
-                        You do not always need to enter
-                        both age and weight. The required
-                        information will depend on the
-                        dosing method of the selected
-                        medicine.
+                        Pediatric dose calculation requires
+                        the child's body weight. Make sure the
+                        entered weight is accurate.
                     </p>
+
 
                 </div>
 
@@ -431,17 +420,17 @@
 
 
 
-            <!-- =================================
+            <!-- =========================================
                  DIVIDER
-            ================================= -->
+            ========================================== -->
 
             <div class="calculator-divider"></div>
 
 
 
-            <!-- =================================
+            <!-- =========================================
                  STEP 03 — CONCENTRATION
-            ================================= -->
+            ========================================== -->
 
             <div class="calculator-section">
 
@@ -456,12 +445,13 @@
                     <div>
 
                         <h2>
-                            Medicine Concentration
+                            Syrup Concentration
                         </h2>
 
+
                         <p>
-                            Enter the concentration
-                            written on the medicine package.
+                            Select the concentration available
+                            on the medicine bottle.
                         </p>
 
                     </div>
@@ -470,64 +460,64 @@
 
 
 
-                <div class="concentration-area">
+                <!-- =================================
+                     CONCENTRATION SELECT
+                ================================== -->
+
+                <div class="medicine-field">
 
 
-                    <label>
-
-                        Concentration
-
+                    <label for="concentration-select">
+                        Available Concentration
                     </label>
 
 
-                    <div class="concentration-inputs">
+                    <div class="select-wrapper">
 
 
-                        <div class="concentration-box">
+                        <select
+                            id="concentration-select"
+                            disabled
+                        >
 
-                            <input
-                                type="number"
-                                id="concentration-value"
-                                placeholder="125"
-                                min="0"
-                                step="0.01"
-                            >
+                            <option value="">
+                                Select a concentration
+                            </option>
 
-                            <span>
-                                mg
-                            </span>
-
-                        </div>
+                        </select>
 
 
-                        <span class="concentration-slash">
-                            /
+                        <span class="select-arrow">
+                            ▾
                         </span>
-
-
-                        <div class="concentration-box">
-
-                            <input
-                                type="number"
-                                id="concentration-volume"
-                                placeholder="5"
-                                min="0"
-                                step="0.01"
-                            >
-
-                            <span>
-                                mL
-                            </span>
-
-                        </div>
 
 
                     </div>
 
 
                     <p class="input-hint">
-                        Example: 125 mg / 5 mL
+                        Only syrup concentrations available
+                        for the selected medicine will appear.
                     </p>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     SELECTED CONCENTRATION
+                ================================== -->
+
+                <div
+                    class="selected-concentration"
+                    id="selected-concentration"
+                >
+
+                    <!--
+                        Selected concentration information
+                        will appear dynamically.
+                    -->
 
 
                 </div>
@@ -537,11 +527,12 @@
 
 
 
-            <!-- =================================
+            <!-- =========================================
                  CALCULATE
-            ================================= -->
+            ========================================== -->
 
             <div class="calculate-area">
+
 
                 <button
                     id="calculate-button"
@@ -553,38 +544,44 @@
                         Calculate Dose
                     </span>
 
+
                     <strong>
                         →
                     </strong>
 
+
                 </button>
+
 
             </div>
 
 
 
-            <!-- =================================
+            <!-- =========================================
                  VALIDATION MESSAGE
-            ================================= -->
+            ========================================== -->
 
             <div
                 id="validation-message"
                 class="validation-message"
+                role="alert"
             >
 
                 <span>
                     !
                 </span>
 
+
                 <p></p>
+
 
             </div>
 
 
 
-            <!-- =================================
-                 RESULT
-            ================================= -->
+            <!-- =========================================
+                 RESULT CARD
+            ========================================== -->
 
             <div
                 id="result-card"
@@ -592,16 +589,22 @@
             >
 
 
+                <!-- =====================================
+                     RESULT HEADER
+                ====================================== -->
+
                 <div class="result-header">
+
 
                     <div>
 
                         <span>
-                            CALCULATED DOSE
+                            CALCULATED PEDIATRIC DOSE
                         </span>
 
+
                         <h2>
-                            Your Result
+                            Recommended Dose
                         </h2>
 
                     </div>
@@ -611,33 +614,105 @@
                         ✓
                     </div>
 
+
                 </div>
 
 
+
+                <!-- =====================================
+                     MAIN DOSE
+                ====================================== -->
 
                 <div class="result-main">
 
 
                     <div class="result-value">
 
+
                         <strong id="dose-result">
                             —
                         </strong>
+
 
                         <span id="dose-unit">
                             mL
                         </span>
 
+
                     </div>
 
 
-                    <div
-                        class="result-details"
-                        id="result-details"
+                    <p
+                        class="result-per-dose"
+                        id="result-per-dose"
                     >
+                        Per dose
+                    </p>
 
-                        <!-- Result details
-                             will appear here -->
+
+                </div>
+
+
+
+                <!-- =====================================
+                     DOSE SUMMARY
+                ====================================== -->
+
+                <div class="dose-summary">
+
+
+                    <!-- MINIMUM DOSE -->
+
+                    <div class="dose-summary-item">
+
+
+                        <span>
+                            Minimum Dose
+                        </span>
+
+
+                        <strong id="minimum-dose">
+                            —
+                        </strong>
+
+
+                    </div>
+
+
+
+                    <!-- MAXIMUM DOSE -->
+
+                    <div class="dose-summary-item">
+
+
+                        <span>
+                            Maximum Dose
+                        </span>
+
+
+                        <strong id="maximum-dose">
+                            —
+                        </strong>
+
+
+                    </div>
+
+
+
+                    <!-- FREQUENCY -->
+
+                    <div class="dose-summary-item">
+
+
+                        <span>
+                            Frequency
+                        </span>
+
+
+                        <strong id="dose-frequency">
+                            —
+                        </strong>
+
 
                     </div>
 
@@ -646,18 +721,64 @@
 
 
 
+                <!-- =====================================
+                     RESULT DETAILS
+                ====================================== -->
+
+                <div
+                    class="result-details"
+                    id="result-details"
+                >
+
+                    <!--
+                        Detailed dosing information
+                        will be generated by calculator.js.
+                    -->
+
+
+                </div>
+
+
+
+                <!-- =====================================
+                     IMPORTANT INFORMATION
+                ====================================== -->
+
+                <div
+                    class="result-important"
+                    id="result-important"
+                >
+
+                    <!--
+                        Important medicine-specific
+                        information will appear here.
+                    -->
+
+
+                </div>
+
+
+
+                <!-- =====================================
+                     SAFETY WARNING
+                ====================================== -->
+
                 <div class="result-warning">
+
 
                     <span>
                         ⚠
                     </span>
 
+
                     <p>
-                        Always verify the calculated
-                        dose against the medicine's
-                        approved pediatric dosing
-                        guidelines before administration.
+                        This result is a calculation aid and
+                        does not replace professional clinical
+                        judgment, the medicine's approved
+                        pediatric dosing guidelines, or
+                        verification by a pharmacist or physician.
                     </p>
+
 
                 </div>
 
@@ -669,15 +790,16 @@
 
 
 
-        <!-- =================================
+        <!-- =========================================
              FOOTER
-        ================================= -->
+        ========================================== -->
 
         <p class="calculator-footer">
 
-            DoseCare is a clinical support tool and
-            does not replace professional clinical
-            judgment or approved prescribing information.
+            DoseCare is a clinical support tool designed
+            for pediatric syrup dose calculations.
+            Always verify the calculated dose against
+            approved product information before administration.
 
         </p>
 
@@ -686,12 +808,37 @@
 
 
 
-<script src="medicines.js"></script>
-<script src="antibiotics.js"></script>
-<script src="analgesics.js"></script>
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
-<script src="script.js"></script>
-<script src="theme.js"></script>
-<script src="calculator.js"></script>
+    <!--
+        Medicine database files
+    -->
+
+    <script src="medicines.js"></script>
+
+    <script src="antibiotics.js"></script>
+
+    <script src="analgesics.js"></script>
+
+
+    <!--
+        Main application
+    -->
+
+    <script src="script.js"></script>
+
+    <script src="theme.js"></script>
+
+
+    <!--
+        Pediatric calculator logic
+    -->
+
+    <script src="calculator.js"></script>
+
+
 </body>
+
 </html>
