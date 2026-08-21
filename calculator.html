@@ -63,7 +63,6 @@
 
         <header class="calculator-topbar">
 
-
             <button
                 class="back-button"
                 id="back-button"
@@ -74,7 +73,6 @@
                 <span>←</span>
 
             </button>
-
 
 
             <div class="calculator-logo">
@@ -88,7 +86,6 @@
                 </span>
 
             </div>
-
 
         </header>
 
@@ -112,9 +109,9 @@
 
 
             <p>
-                Select the medicine, choose the available
-                syrup concentration, enter the child's
-                information, and calculate the appropriate dose.
+                Select the medicine, choose the appropriate
+                pediatric dosing regimen and available syrup
+                concentration, then calculate the dose.
             </p>
 
         </section>
@@ -134,13 +131,11 @@
 
             <div class="calculator-section">
 
-
                 <div class="section-title">
 
                     <div class="step-number">
                         01
                     </div>
-
 
                     <div>
 
@@ -159,12 +154,9 @@
 
 
 
-                <!-- =================================
-                     MEDICINE SEARCH
-                ================================== -->
+                <!-- MEDICINE SEARCH -->
 
                 <div class="medicine-search">
-
 
                     <label for="medicine">
                         Medicine
@@ -172,7 +164,6 @@
 
 
                     <div class="search-wrapper">
-
 
                         <span class="search-icon">
                             ⌕
@@ -196,29 +187,21 @@
                             ×
                         </button>
 
-
                     </div>
 
-
-
-                    <!-- Search results -->
 
                     <div
                         class="medicine-results"
                         id="medicine-results"
                     ></div>
 
-
                 </div>
 
 
 
-                <!-- =================================
-                     MEDICINE SELECT
-                ================================== -->
+                <!-- MEDICINE SELECT -->
 
                 <div class="medicine-field">
-
 
                     <label for="medicine-select">
                         Selected Medicine
@@ -226,7 +209,6 @@
 
 
                     <div class="select-wrapper">
-
 
                         <select
                             id="medicine-select"
@@ -243,39 +225,24 @@
                             ▾
                         </span>
 
-
                     </div>
-
 
                 </div>
 
 
 
-                <!-- =================================
-                     MEDICINE INFORMATION
-                ================================== -->
+                <!-- MEDICINE INFORMATION -->
 
                 <div
                     class="selected-medicine-info"
                     id="selected-medicine-info"
-                >
-
-                    <!--
-                        Medicine information will be
-                        inserted dynamically by calculator.js
-                    -->
-
-
-                </div>
-
+                ></div>
 
             </div>
 
 
 
-            <!-- =========================================
-                 DIVIDER
-            ========================================== -->
+            <!-- DIVIDER -->
 
             <div class="calculator-divider"></div>
 
@@ -286,7 +253,6 @@
             ========================================== -->
 
             <div class="calculator-section">
-
 
                 <div class="section-title">
 
@@ -315,12 +281,9 @@
                 <div class="input-grid">
 
 
-                    <!-- =================================
-                         AGE
-                    ================================== -->
+                    <!-- AGE -->
 
                     <div class="input-group age-group">
-
 
                         <label for="age">
                             Age
@@ -328,7 +291,6 @@
 
 
                         <div class="age-input-row">
-
 
                             <input
                                 type="number"
@@ -351,20 +313,15 @@
 
                             </select>
 
-
                         </div>
-
 
                     </div>
 
 
 
-                    <!-- =================================
-                         WEIGHT
-                    ================================== -->
+                    <!-- WEIGHT -->
 
                     <div class="input-group">
-
 
                         <label for="weight">
                             Weight
@@ -372,7 +329,6 @@
 
 
                         <div class="input-wrapper">
-
 
                             <input
                                 type="number"
@@ -387,19 +343,15 @@
                                 kg
                             </span>
 
-
                         </div>
 
-
                     </div>
-
 
                 </div>
 
 
 
                 <div class="information-note">
-
 
                     <span class="note-icon">
                         i
@@ -412,33 +364,115 @@
                         entered weight is accurate.
                     </p>
 
-
                 </div>
-
 
             </div>
 
 
 
-            <!-- =========================================
-                 DIVIDER
-            ========================================== -->
+            <!-- DIVIDER -->
 
             <div class="calculator-divider"></div>
 
 
 
             <!-- =========================================
-                 STEP 03 — CONCENTRATION
+                 STEP 03 — DOSE REGIMEN
             ========================================== -->
 
             <div class="calculator-section">
-
 
                 <div class="section-title">
 
                     <div class="step-number">
                         03
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Select Dose
+                        </h2>
+
+
+                        <p>
+                            Choose the pediatric dosing regimen
+                            you want to use for this medicine.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DOSE REGIMEN SELECT -->
+
+                <div class="medicine-field">
+
+                    <label for="regimen-select">
+                        Available Pediatric Dose
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+                        <select
+                            id="regimen-select"
+                            disabled
+                        >
+
+                            <option value="">
+                                Select a dose regimen
+                            </option>
+
+                        </select>
+
+
+                        <span class="select-arrow">
+                            ▾
+                        </span>
+
+                    </div>
+
+
+                    <p class="input-hint">
+                        Only dosing regimens configured for
+                        the selected medicine will appear.
+                    </p>
+
+                </div>
+
+
+
+                <!-- SELECTED REGIMEN INFORMATION -->
+
+                <div
+                    class="selected-regimen"
+                    id="selected-regimen"
+                ></div>
+
+            </div>
+
+
+
+            <!-- DIVIDER -->
+
+            <div class="calculator-divider"></div>
+
+
+
+            <!-- =========================================
+                 STEP 04 — CONCENTRATION
+            ========================================== -->
+
+            <div class="calculator-section">
+
+                <div class="section-title">
+
+                    <div class="step-number">
+                        04
                     </div>
 
 
@@ -460,12 +494,9 @@
 
 
 
-                <!-- =================================
-                     CONCENTRATION SELECT
-                ================================== -->
+                <!-- CONCENTRATION SELECT -->
 
                 <div class="medicine-field">
-
 
                     <label for="concentration-select">
                         Available Concentration
@@ -473,7 +504,6 @@
 
 
                     <div class="select-wrapper">
-
 
                         <select
                             id="concentration-select"
@@ -491,7 +521,6 @@
                             ▾
                         </span>
 
-
                     </div>
 
 
@@ -500,28 +529,16 @@
                         for the selected medicine will appear.
                     </p>
 
-
                 </div>
 
 
 
-                <!-- =================================
-                     SELECTED CONCENTRATION
-                ================================== -->
+                <!-- SELECTED CONCENTRATION -->
 
                 <div
                     class="selected-concentration"
                     id="selected-concentration"
-                >
-
-                    <!--
-                        Selected concentration information
-                        will appear dynamically.
-                    -->
-
-
-                </div>
-
+                ></div>
 
             </div>
 
@@ -532,7 +549,6 @@
             ========================================== -->
 
             <div class="calculate-area">
-
 
                 <button
                     id="calculate-button"
@@ -549,9 +565,7 @@
                         →
                     </strong>
 
-
                 </button>
-
 
             </div>
 
@@ -574,7 +588,6 @@
 
                 <p></p>
 
-
             </div>
 
 
@@ -589,12 +602,9 @@
             >
 
 
-                <!-- =====================================
-                     RESULT HEADER
-                ====================================== -->
+                <!-- RESULT HEADER -->
 
                 <div class="result-header">
-
 
                     <div>
 
@@ -614,20 +624,15 @@
                         ✓
                     </div>
 
-
                 </div>
 
 
 
-                <!-- =====================================
-                     MAIN DOSE
-                ====================================== -->
+                <!-- MAIN DOSE -->
 
                 <div class="result-main">
 
-
                     <div class="result-value">
-
 
                         <strong id="dose-result">
                             —
@@ -635,9 +640,8 @@
 
 
                         <span id="dose-unit">
-                            mL
+                            mg
                         </span>
-
 
                     </div>
 
@@ -649,14 +653,11 @@
                         Per dose
                     </p>
 
-
                 </div>
 
 
 
-                <!-- =====================================
-                     DOSE SUMMARY
-                ====================================== -->
+                <!-- DOSE SUMMARY -->
 
                 <div class="dose-summary">
 
@@ -664,7 +665,6 @@
                     <!-- MINIMUM DOSE -->
 
                     <div class="dose-summary-item">
-
 
                         <span>
                             Minimum Dose
@@ -675,7 +675,6 @@
                             —
                         </strong>
 
-
                     </div>
 
 
@@ -683,7 +682,6 @@
                     <!-- MAXIMUM DOSE -->
 
                     <div class="dose-summary-item">
-
 
                         <span>
                             Maximum Dose
@@ -694,7 +692,6 @@
                             —
                         </strong>
 
-
                     </div>
 
 
@@ -702,7 +699,6 @@
                     <!-- FREQUENCY -->
 
                     <div class="dose-summary-item">
-
 
                         <span>
                             Frequency
@@ -713,58 +709,33 @@
                             —
                         </strong>
 
-
                     </div>
-
 
                 </div>
 
 
 
-                <!-- =====================================
-                     RESULT DETAILS
-                ====================================== -->
+                <!-- RESULT DETAILS -->
 
                 <div
                     class="result-details"
                     id="result-details"
-                >
-
-                    <!--
-                        Detailed dosing information
-                        will be generated by calculator.js.
-                    -->
-
-
-                </div>
+                ></div>
 
 
 
-                <!-- =====================================
-                     IMPORTANT INFORMATION
-                ====================================== -->
+                <!-- IMPORTANT INFORMATION -->
 
                 <div
                     class="result-important"
                     id="result-important"
-                >
-
-                    <!--
-                        Important medicine-specific
-                        information will appear here.
-                    -->
-
-
-                </div>
+                ></div>
 
 
 
-                <!-- =====================================
-                     SAFETY WARNING
-                ====================================== -->
+                <!-- SAFETY WARNING -->
 
                 <div class="result-warning">
-
 
                     <span>
                         ⚠
@@ -778,7 +749,6 @@
                         pediatric dosing guidelines, or
                         verification by a pharmacist or physician.
                     </p>
-
 
                 </div>
 
@@ -812,29 +782,15 @@
          JAVASCRIPT
     ========================================== -->
 
-    <!--
-        Medicine database files
-    -->
-
     <script src="medicines.js"></script>
 
     <script src="antibiotics.js"></script>
 
     <script src="analgesics.js"></script>
 
-
-    <!--
-        Main application
-    -->
-
     <script src="script.js"></script>
 
     <script src="theme.js"></script>
-
-
-    <!--
-        Pediatric calculator logic
-    -->
 
     <script src="calculator.js"></script>
 
