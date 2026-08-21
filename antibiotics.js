@@ -4,12 +4,11 @@
    Pediatric Oral Liquid Medicines Only
 ========================================= */
 
-
 /*
     IMPORTANT:
 
     This file contains ONLY antibiotics
-    available as pediatric oral liquid
+    represented as pediatric oral liquid
     formulations.
 
     DO NOT add:
@@ -20,12 +19,14 @@
     - IM injections
     - Suppositories
 
-    All dosing data must be verified against
-    authoritative references before clinical use.
+    Dosing data must be verified against
+    current authoritative references before
+    clinical use.
 */
 
 
 medicines.push(
+
 
 /* =========================================
    1. AMOXICILLIN
@@ -69,13 +70,13 @@ medicines.push(
         "Oral suspension",
 
     indications:
-        "Used for susceptible bacterial infections including selected respiratory tract infections, acute otitis media, streptococcal pharyngitis and other infections when clinically appropriate.",
+        "Treatment of susceptible bacterial infections including selected respiratory tract, ear, skin and genitourinary infections when clinically appropriate.",
 
     moa:
-        "Binds to penicillin-binding proteins and inhibits bacterial cell-wall synthesis, resulting in bacterial cell lysis.",
+        "Binds to penicillin-binding proteins and inhibits bacterial cell-wall synthesis, leading to bacterial cell lysis.",
 
     pediatric:
-        "Pediatric dosing depends on the infection, severity, age and body weight. The indication-specific regimen should be selected before calculating the dose.",
+        "Pediatric dosing is indication-specific and should be calculated using body weight and the selected formulation concentration.",
 
     formulations: [
 
@@ -111,28 +112,28 @@ medicines.push(
             "susceptible bacterial infections": {
 
                 minDose:
-                    40,
+                    25,
 
                 maxDose:
-                    90,
+                    50,
 
                 frequency:
-                    2,
+                    3,
 
                 unit:
                     "mg/kg/day",
 
+                duration:
+                    "7-14 days",
+
                 note:
-                    "Dose depends on infection and clinical severity."
+                    "General pediatric dosing range; select the indication-specific regimen whenever available."
 
             },
 
             "community acquired pneumonia": {
 
-                minDose:
-                    80,
-
-                maxDose:
+                dose:
                     90,
 
                 frequency:
@@ -142,16 +143,19 @@ medicines.push(
                     "mg/kg/day",
 
                 maxDailyDose:
-                    4000
+                    4000,
+
+                duration:
+                    "Indication dependent",
+
+                note:
+                    "High-dose amoxicillin regimen may be used when clinically indicated."
 
             },
 
             "acute otitis media": {
 
-                minDose:
-                    80,
-
-                maxDose:
+                dose:
                     90,
 
                 frequency:
@@ -161,7 +165,13 @@ medicines.push(
                     "mg/kg/day",
 
                 maxDailyDose:
-                    4000
+                    4000,
+
+                duration:
+                    "Indication dependent",
+
+                note:
+                    "High-dose regimen; treatment duration depends on age and clinical circumstances."
 
             },
 
@@ -201,9 +211,23 @@ medicines.push(
         true,
 
     notes:
-        "Verify the indication, body weight, formulation concentration, allergy history and maximum dose. Do not use for viral infections. Reconstituted suspension storage depends on the specific product label.",
+        "Verify indication, body weight, allergy history, formulation concentration and maximum dose. Do not use for viral infections. Reconstituted suspension storage depends on the specific product label.",
 
     references: [
+
+        {
+            organization:
+                "DailyMed",
+
+            title:
+                "Amoxicillin for Oral Suspension",
+
+            year:
+                2026,
+
+            url:
+                "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=06e5c07d-d95c-4955-8d35-a4703ca2359e"
+        },
 
         {
             organization:
@@ -217,20 +241,6 @@ medicines.push(
 
             url:
                 "https://www.who.int/publications/i/item/9789240062382"
-        },
-
-        {
-            organization:
-                "World Health Organization",
-
-            title:
-                "Consensus Guidance on Pediatric Dosing Regimens",
-
-            year:
-                2019,
-
-            url:
-                "https://cdn.who.int/media/docs/default-source/essential-medicines/2019-eml-expert-committee/late-papers/abwg_paediatric_dosing_ab.pdf"
         }
 
     ]
@@ -266,11 +276,9 @@ medicines.push(
         "Aminopenicillin + Beta-lactamase inhibitor",
 
     conditions: [
-        "acute otitis media",
-        "acute bacterial sinusitis",
-        "community acquired pneumonia",
-        "skin and soft tissue infections",
-        "susceptible bacterial infections"
+        "recurrent acute otitis media",
+        "persistent acute otitis media",
+        "susceptible beta-lactamase producing bacterial infections"
     ],
 
     condition:
@@ -283,29 +291,21 @@ medicines.push(
         "Oral suspension",
 
     indications:
-        "Used for susceptible bacterial infections where beta-lactamase production may compromise amoxicillin activity.",
+        "Used for selected susceptible bacterial infections where beta-lactamase production may compromise amoxicillin activity.",
 
     moa:
         "Amoxicillin inhibits bacterial cell-wall synthesis. Clavulanate inhibits susceptible bacterial beta-lactamases and protects amoxicillin from enzymatic degradation.",
 
     pediatric:
-        "Dose is calculated using the amoxicillin component. The specific formulation must be selected carefully because different amoxicillin/clavulanate suspensions are not interchangeable.",
+        "Dose is calculated using the amoxicillin component. The 600 mg/42.9 mg per 5 mL formulation is not interchangeable with the 200 mg/28.5 mg or 400 mg/57 mg per 5 mL formulations.",
 
     formulations: [
 
         {
             form: "oral suspension",
-            concentration: "200 mg/28.5 mg per 5 mL"
-        },
-
-        {
-            form: "oral suspension",
-            concentration: "400 mg/57 mg per 5 mL"
-        },
-
-        {
-            form: "oral suspension",
-            concentration: "600 mg/42.9 mg per 5 mL"
+            concentration: "600 mg/42.9 mg per 5 mL",
+            doseComponent:
+                "amoxicillin"
         }
 
     ],
@@ -317,7 +317,7 @@ medicines.push(
 
         regimens: {
 
-            "acute otitis media": {
+            "recurrent acute otitis media": {
 
                 dose:
                     90,
@@ -331,17 +331,17 @@ medicines.push(
                 doseComponent:
                     "amoxicillin",
 
+                maxDailyDose:
+                    3600,
+
                 duration:
                     "10 days"
 
             },
 
-            "acute bacterial sinusitis": {
+            "persistent acute otitis media": {
 
                 dose:
-                    80,
-
-                maxDose:
                     90,
 
                 frequency:
@@ -351,26 +351,13 @@ medicines.push(
                     "mg/kg/day",
 
                 doseComponent:
-                    "amoxicillin"
+                    "amoxicillin",
 
-            },
+                maxDailyDose:
+                    3600,
 
-            "community acquired pneumonia": {
-
-                dose:
-                    80,
-
-                maxDose:
-                    90,
-
-                frequency:
-                    2,
-
-                unit:
-                    "mg/kg/day",
-
-                doseComponent:
-                    "amoxicillin"
+                duration:
+                    "10 days"
 
             }
 
@@ -382,6 +369,9 @@ medicines.push(
         minimumAgeMonths:
             3,
 
+        maximumWeightKg:
+            40,
+
         configured:
             true
 
@@ -391,7 +381,7 @@ medicines.push(
         true,
 
     notes:
-        "Calculate the dose using the amoxicillin component. Different formulations have different clavulanate amounts and are not interchangeable on a mg-for-mg basis. Administer at the start of a meal to reduce gastrointestinal intolerance.",
+        "Dose is based on the amoxicillin component. The 600 mg/42.9 mg per 5 mL formulation provides 90 mg/kg/day of amoxicillin divided every 12 hours. Take at the start of a meal. Do not substitute different amoxicillin/clavulanate suspension concentrations on a mg-for-mg basis.",
 
     references: [
 
@@ -402,22 +392,11 @@ medicines.push(
             title:
                 "Amoxicillin and Clavulanate Potassium for Oral Suspension",
 
-            url:
-                "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=474c822b-dc3d-4a55-8159-2b4b799d535b"
-        },
-
-        {
-            organization:
-                "World Health Organization",
-
-            title:
-                "WHO AWaRe Antibiotic Book",
-
             year:
-                2022,
+                2025,
 
             url:
-                "https://www.who.int/publications/i/item/9789240062382"
+                "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=26992a71-e4a0-4e41-aa3c-3219868c2226"
         }
 
     ]
@@ -475,7 +454,7 @@ medicines.push(
         "Binds to the 50S bacterial ribosomal subunit and inhibits bacterial protein synthesis.",
 
     pediatric:
-        "Pediatric dosing is indication-specific and depends on age and body weight.",
+        "Pediatric dosing is indication-specific and depends on age, body weight and selected regimen.",
 
     formulations: [
 
@@ -506,6 +485,9 @@ medicines.push(
                 options: [
 
                     {
+                        type:
+                            "single_dose",
+
                         dose:
                             30,
 
@@ -520,6 +502,9 @@ medicines.push(
                     },
 
                     {
+                        type:
+                            "short_course",
+
                         dose:
                             10,
 
@@ -534,10 +519,13 @@ medicines.push(
                     },
 
                     {
-                        day1:
+                        type:
+                            "five_day_regimen",
+
+                        day1Dose:
                             10,
 
-                        days2to5:
+                        days2to5Dose:
                             5,
 
                         frequency:
@@ -559,10 +547,13 @@ medicines.push(
                 minimumAgeMonths:
                     6,
 
-                day1:
+                type:
+                    "five_day_regimen",
+
+                day1Dose:
                     10,
 
-                days2to5:
+                days2to5Dose:
                     5,
 
                 frequency:
@@ -650,7 +641,7 @@ medicines.push(
         true,
 
     notes:
-        "Shake well before each use. Oral suspension may be taken with or without food. Consider QT prolongation and clinically important drug interactions. Antibiotic selection should follow the suspected organism, indication and local antimicrobial guidance.",
+        "Shake well before each use. May be taken with or without food. The 5-day regimen requires a different dose on Day 1 and Days 2-5. Consider QT prolongation and clinically important drug interactions.",
 
     references: [
 
@@ -659,24 +650,13 @@ medicines.push(
                 "DailyMed",
 
             title:
-                "Azithromycin Powder for Oral Suspension",
-
-            url:
-                "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=59c4b783-4ff7-4269-969b-58a10e12b12b"
-        },
-
-        {
-            organization:
-                "World Health Organization",
-
-            title:
-                "WHO AWaRe Antibiotic Book",
+                "Azithromycin for Oral Suspension",
 
             year:
-                2022,
+                2024,
 
             url:
-                "https://www.who.int/publications/i/item/9789240062382"
+                "https://dailymed.nlm.nih.gov/dailymed/lookup.cfm?setid=2c9de2e9-c20c-4660-a272-a22019f9fb02"
         }
 
     ]
@@ -711,11 +691,12 @@ medicines.push(
         "First-generation Cephalosporin · Beta-lactam",
 
     conditions: [
+        "acute otitis media",
         "streptococcal pharyngitis",
         "skin and soft tissue infections",
         "urinary tract infections",
-        "acute otitis media",
-        "susceptible bacterial infections"
+        "susceptible bacterial infections",
+        "severe susceptible bacterial infections"
     ],
 
     condition:
@@ -728,13 +709,13 @@ medicines.push(
         "Oral suspension",
 
     indications:
-        "Used for susceptible bacterial infections including selected skin, respiratory and urinary tract infections.",
+        "Used for susceptible respiratory tract, otitis media, skin and skin-structure, bone and genitourinary infections.",
 
     moa:
         "Inhibits bacterial cell-wall synthesis by binding to penicillin-binding proteins.",
 
     pediatric:
-        "Pediatric dose depends on the infection, severity, age, body weight and renal function.",
+        "For pediatric patients over 1 year of age, dosing depends on infection type and severity and is divided into equal doses.",
 
     formulations: [
 
@@ -757,19 +738,22 @@ medicines.push(
 
         regimens: {
 
-            "susceptible bacterial infections": {
+            "acute otitis media": {
 
                 minDose:
-                    25,
+                    75,
 
                 maxDose:
-                    50,
+                    100,
 
                 frequency:
-                    2,
+                    4,
 
                 unit:
-                    "mg/kg/day"
+                    "mg/kg/day",
+
+                duration:
+                    "7-14 days"
 
             },
 
@@ -782,17 +766,17 @@ medicines.push(
                     50,
 
                 frequency:
-                    2,
+                    4,
 
                 unit:
                     "mg/kg/day",
 
                 duration:
-                    "10 days"
+                    "10 days minimum"
 
             },
 
-            "skin and soft tissue infections": {
+            "susceptible bacterial infections": {
 
                 minDose:
                     25,
@@ -801,10 +785,32 @@ medicines.push(
                     50,
 
                 frequency:
-                    2,
+                    4,
 
                 unit:
-                    "mg/kg/day"
+                    "mg/kg/day",
+
+                duration:
+                    "7-14 days"
+
+            },
+
+            "severe susceptible bacterial infections": {
+
+                minDose:
+                    50,
+
+                maxDose:
+                    100,
+
+                frequency:
+                    4,
+
+                unit:
+                    "mg/kg/day",
+
+                duration:
+                    "Indication dependent"
 
             }
 
@@ -813,7 +819,7 @@ medicines.push(
         route:
             "oral",
 
-        minimumAgeMonths:
+        minimumAgeYears:
             1,
 
         configured:
@@ -825,36 +831,22 @@ medicines.push(
         true,
 
     notes:
-        "Verify beta-lactam allergy history, indication, body weight, renal function and formulation concentration. Dose adjustment may be required in significant renal impairment.",
+        "DailyMed specifies pediatric use over 1 year of age. Otitis media dosing is 75-100 mg/kg/day divided every 6 hours. Other indications generally use 25-50 mg/kg/day; severe infections may require 50-100 mg/kg/day. Renal dose adjustment may be required.",
 
     references: [
 
         {
             organization:
-                "World Health Organization",
+                "DailyMed",
 
             title:
-                "WHO AWaRe Antibiotic Book",
+                "Cephalexin for Oral Suspension",
 
             year:
-                2022,
+                2026,
 
             url:
-                "https://www.who.int/publications/i/item/9789240062382"
-        },
-
-        {
-            organization:
-                "World Health Organization",
-
-            title:
-                "Consensus Guidance on Pediatric Dosing Regimens",
-
-            year:
-                2019,
-
-            url:
-                "https://cdn.who.int/media/docs/default-source/essential-medicines/2019-eml-expert-committee/late-papers/abwg_paediatric_dosing_ab.pdf"
+                "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=655f38e8-1c4d-4cbc-9f52-bb881f065b2d"
         }
 
     ]
@@ -907,13 +899,13 @@ medicines.push(
         "Oral suspension",
 
     indications:
-        "Used for selected mild to moderate bacterial infections including pharyngitis/tonsillitis, acute otitis media, acute bacterial sinusitis and impetigo.",
+        "Used for selected susceptible bacterial infections including pharyngitis/tonsillitis, acute otitis media, acute bacterial sinusitis and impetigo.",
 
     moa:
         "Inhibits bacterial cell-wall synthesis by binding to penicillin-binding proteins.",
 
     pediatric:
-        "For children 3 months to 12 years, oral suspension dosing is indication-specific.",
+        "For pediatric patients 3 months to 12 years, dosing is indication-specific and administered twice daily.",
 
     formulations: [
 
@@ -1051,20 +1043,9 @@ medicines.push(
         true,
 
     notes:
-        "Oral suspension should be administered with food. Cefuroxime tablets and suspension are not interchangeable on a mg-for-mg basis. Verify renal function and formulation concentration.",
+        "Shake well before use and administer with food. Cefuroxime suspension and tablets are not interchangeable on a mg-for-mg basis. Verify renal function and formulation concentration.",
 
     references: [
-
-        {
-            organization:
-                "U.S. Food and Drug Administration",
-
-            title:
-                "CEFTIN (cefuroxime axetil) Prescribing Information",
-
-            url:
-                "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/050605s051%2C050672s037lbl.pdf"
-        },
 
         {
             organization:
@@ -1073,8 +1054,11 @@ medicines.push(
             title:
                 "Cefuroxime Axetil for Oral Suspension",
 
+            year:
+                2026,
+
             url:
-                "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=135e2dfc-eb47-4d04-a903-a081d36c267e"
+                "https://dailymed.nlm.nih.gov/dailymed/fda/fdaDrugXsl.cfm?setid=135e2dfc-eb47-4d04-a903-a081d36c267e"
         }
 
     ]
@@ -1112,7 +1096,7 @@ medicines.push(
         "acute otitis media",
         "pharyngitis",
         "tonsillitis",
-        "urinary tract infections",
+        "uncomplicated urinary tract infections",
         "susceptible bacterial infections"
     ],
 
@@ -1126,13 +1110,13 @@ medicines.push(
         "Oral suspension",
 
     indications:
-        "Used for susceptible bacterial infections including acute otitis media, pharyngitis/tonsillitis and uncomplicated urinary tract infections.",
+        "Used for susceptible infections including otitis media, pharyngitis/tonsillitis and uncomplicated urinary tract infections.",
 
     moa:
         "Inhibits bacterial cell-wall synthesis by binding to penicillin-binding proteins.",
 
     pediatric:
-        "For children 6 months and older, dosing is generally based on body weight and may be administered once daily or divided into two doses.",
+        "For pediatric patients 6 months and older, the recommended dose is 8 mg/kg/day, administered once daily or as 4 mg/kg every 12 hours.",
 
     formulations: [
 
@@ -1156,96 +1140,38 @@ medicines.push(
     dosing: {
 
         type:
-            "condition_based",
+            "weight_based",
 
-        regimens: {
+        regimen: {
 
-            "acute otitis media": {
+            dose:
+                8,
 
-                dose:
-                    8,
+            frequency:
+                1,
 
-                frequency:
-                    1,
+            alternativeFrequency:
+                2,
 
-                alternativeFrequency:
-                    2,
+            alternativeDose:
+                4,
 
-                unit:
-                    "mg/kg/day",
+            unit:
+                "mg/kg/day",
 
-                maxDailyDose:
-                    400,
-
-                duration:
-                    "10 days"
-
-            },
-
-            "pharyngitis": {
-
-                dose:
-                    8,
-
-                frequency:
-                    1,
-
-                alternativeFrequency:
-                    2,
-
-                unit:
-                    "mg/kg/day",
-
-                maxDailyDose:
-                    400,
-
-                duration:
-                    "10 days"
-
-            },
-
-            "tonsillitis": {
-
-                dose:
-                    8,
-
-                frequency:
-                    1,
-
-                alternativeFrequency:
-                    2,
-
-                unit:
-                    "mg/kg/day",
-
-                maxDailyDose:
-                    400,
-
-                duration:
-                    "10 days"
-
-            },
-
-            "urinary tract infections": {
-
-                dose:
-                    8,
-
-                frequency:
-                    1,
-
-                alternativeFrequency:
-                    2,
-
-                unit:
-                    "mg/kg/day",
-
-                maxDailyDose:
-                    400
-
-            }
+            maxDailyDose:
+                400
 
         },
+
+        conditions:
+
+            [
+                "acute otitis media",
+                "pharyngitis",
+                "tonsillitis",
+                "uncomplicated urinary tract infections"
+            ],
 
         route:
             "oral",
@@ -1259,33 +1185,25 @@ medicines.push(
     },
 
     indicationSpecific:
-        true,
+        false,
 
     notes:
-        "Shake oral suspension well before each dose. Verify formulation concentration, body weight and renal function. Once-daily dosing or divided every-12-hour dosing may be used according to the product labeling and clinical indication.",
+        "Recommended pediatric dose is 8 mg/kg/day. It may be administered once daily or divided as 4 mg/kg every 12 hours. For Streptococcus pyogenes infections, treatment should be given for at least 10 days. Verify renal function when clinically appropriate.",
 
     references: [
-
-        {
-            organization:
-                "U.S. Food and Drug Administration",
-
-            title:
-                "SUPRAX (cefixime) Prescribing Information",
-
-            url:
-                "https://www.accessdata.fda.gov/drugsatfda_docs/label/2010/050662s027lbl.pdf"
-        },
 
         {
             organization:
                 "DailyMed",
 
             title:
-                "Cefixime Oral Suspension",
+                "Cefixime for Oral Suspension",
+
+            year:
+                2024,
 
             url:
-                "https://dailymed.nlm.nih.gov/dailymed/"
+                "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=068e6edd-a5fe-40d8-8dcf-ac82b78dced4&type=pdf"
         }
 
     ]
@@ -1343,7 +1261,7 @@ medicines.push(
         "Binds to the 50S ribosomal subunit and inhibits bacterial protein synthesis.",
 
     pediatric:
-        "Pediatric oral dosing is divided into three or four equal doses and depends on infection severity.",
+        "Pediatric oral dosing is based on total body weight and divided into 3 or 4 equal doses according to infection severity.",
 
     formulations: [
 
@@ -1432,7 +1350,7 @@ medicines.push(
         false,
 
     notes:
-        "Clindamycin should be reserved for appropriate bacterial infections because of the risk of severe antibiotic-associated diarrhea and C. difficile colitis. Stop and seek medical assessment if significant or persistent diarrhea develops. Oral solution should be shaken well before use and stored according to the product label.",
+        "Dose is based on total body weight. Serious infections: 8-12 mg/kg/day; severe infections: 13-16 mg/kg/day; more severe infections: 17-25 mg/kg/day, divided into 3 or 4 equal doses. Significant diarrhea may require discontinuation and medical assessment because of the risk of C. difficile-associated disease.",
 
     references: [
 
@@ -1443,22 +1361,11 @@ medicines.push(
             title:
                 "Clindamycin Palmitate Hydrochloride for Oral Solution",
 
-            url:
-                "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=28ba03fd-0f9c-49c6-9bfb-cda5417801c6&type=pdf"
-        },
-
-        {
-            organization:
-                "World Health Organization",
-
-            title:
-                "WHO AWaRe Antibiotic Book",
-
             year:
-                2022,
+                2024,
 
             url:
-                "https://www.who.int/publications/i/item/9789240062382"
+                "https://dailymed.nlm.nih.gov/dailymed/getFile.cfm?setid=b35e3714-44d1-4e6a-a124-555ad259fec1&type=pdf"
         }
 
     ]
