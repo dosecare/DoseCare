@@ -86,22 +86,6 @@ let selectedMedicine = null;
    MEDICINE FORM HELPERS
 ========================================= */
 
-/*
-    DoseCare currently works ONLY with
-    liquid oral medicines.
-
-    Accepted forms:
-    - syrup
-    - suspension
-    - oral suspension
-    - oral solution
-    - solution
-    - liquid
-
-    Tablets / capsules / injections etc.
-    are intentionally excluded.
-*/
-
 function isLiquidMedicine(medicine) {
 
     if (!medicine) {
@@ -119,7 +103,6 @@ function isLiquidMedicine(medicine) {
 
     ];
 
-
     const forms = possibleForms
         .filter(Boolean)
         .map(value =>
@@ -127,12 +110,6 @@ function isLiquidMedicine(medicine) {
                 .trim()
                 .toLowerCase()
         );
-
-
-    /*
-        If the database explicitly contains
-        a tablet or capsule form, reject it.
-    */
 
     const forbiddenForms = [
 
@@ -152,7 +129,6 @@ function isLiquidMedicine(medicine) {
 
     ];
 
-
     if (
         forms.some(
             form =>
@@ -163,11 +139,6 @@ function isLiquidMedicine(medicine) {
         return false;
 
     }
-
-
-    /*
-        Explicit liquid form
-    */
 
     if (
         forms.some(
@@ -183,13 +154,6 @@ function isLiquidMedicine(medicine) {
 
     }
 
-
-    /*
-        If the medicine has concentration
-        in mg/mL or mg/5mL, it is treated
-        as a liquid medicine.
-    */
-
     if (
         getAvailableConcentrations(
             medicine
@@ -199,7 +163,6 @@ function isLiquidMedicine(medicine) {
         return true;
 
     }
-
 
     return false;
 
@@ -218,7 +181,6 @@ function getMedicineName(
         return "Medicine";
     }
 
-
     return (
         medicine.genericName ||
         medicine.name ||
@@ -233,18 +195,32 @@ function getMedicineName(
 ========================================= */
 
 /*
-    Converts concentration text such as:
+    Supports:
 
     "250 mg/5 mL"
     "125mg/5ml"
     "100 mg / 5 mL"
 
-    into:
+    Also supports combination products:
+
+    "600 mg/42.9 mg per 5 mL"
+
+    For combination products, the first
+    active ingredient concentration is used
+    for dose conversion.
+
+    Example:
+
+    Amoxicillin + Clavulanate
+    600 mg/42.9 mg per 5 mL
+
+    becomes:
 
     {
-        mg: 250,
+        mg: 600,
         ml: 5
     }
+
 */
 
 function parseConcentrationString(
@@ -260,7 +236,6 @@ function parseConcentrationString(
 
     }
 
-
     const text =
         String(value)
             .trim()
@@ -268,7 +243,55 @@ function parseConcentrationString(
             .replace(/\s+/g, "");
 
 
-    const match =
+    /*
+        Combination concentration:
+
+        600mg/42.9mgper5ml
+    */
+
+    let match =
+        text.match(
+            /(\d+(?:\.\d+)?)mg\/(\d+(?:\.\d+)?)mgper(\d+(?:\.\d+)?)ml/
+        );
+
+
+    if (match) {
+
+        const mg =
+            parseFloat(
+                match[1]
+            );
+
+        const ml =
+            parseFloat(
+                match[3]
+            );
+
+
+        if (
+            Number.isFinite(mg) &&
+            Number.isFinite(ml) &&
+            mg > 0 &&
+            ml > 0
+        ) {
+
+            return {
+                mg: mg,
+                ml: ml
+            };
+
+        }
+
+    }
+
+
+    /*
+        Standard concentration:
+
+        250mg/5ml
+    */
+
+    match =
         text.match(
             /(\d+(?:\.\d+)?)mg\/(\d+(?:\.\d+)?)ml/
         );
@@ -283,7 +306,6 @@ function parseConcentrationString(
         parseFloat(
             match[1]
         );
-
 
     const ml =
         parseFloat(
@@ -315,7 +337,7 @@ function parseConcentrationString(
     Read available concentrations from
     different possible database structures.
 
-    Supported examples:
+    Supported:
 
     concentrations: [
         "125 mg/5 mL",
@@ -324,14 +346,14 @@ function parseConcentrationString(
 
     OR:
 
-    concentrations: [
+    availableConcentrations: [...]
+
+    OR:
+
+    formulations: [
         {
-            mg: 125,
-            ml: 5
-        },
-        {
-            mg: 250,
-            ml: 5
+            form: "oral suspension",
+            concentration: "250 mg/5 mL"
         }
     ]
 
@@ -339,6 +361,10 @@ function parseConcentrationString(
 
     concentration:
         "250 mg/5 mL"
+
+    OR:
+
+    concentrationMg + concentrationMl
 */
 
 function getAvailableConcentrations(
@@ -381,6 +407,35 @@ function getAvailableConcentrations(
 
         rawConcentrations =
             medicine.availableConcentrations;
+
+    }
+
+
+    /*
+        Current DoseCare database structure:
+
+        formulations: [
+            {
+                form: "oral suspension",
+                concentration: "250 mg/5 mL"
+            }
+        ]
+    */
+
+    else if (
+        Array.isArray(
+            medicine.formulations
+        )
+    ) {
+
+        rawConcentrations =
+            medicine.formulations
+                .map(
+                    formulation =>
+                        formulation &&
+                        formulation.concentration
+                )
+                .filter(Boolean);
 
     }
 
@@ -582,7 +637,8 @@ function populateConcentrations(
     }
 
 
-    concentrationSelect.innerHTML = "";
+    concentrationSelect.innerHTML =
+        "";
 
 
     const defaultOption =
@@ -591,7 +647,8 @@ function populateConcentrations(
         );
 
 
-    defaultOption.value = "";
+    defaultOption.value =
+        "";
 
 
     defaultOption.textContent =
@@ -641,11 +698,6 @@ function populateConcentrations(
     concentrationSelect.disabled =
         concentrations.length === 0;
 
-
-    /*
-        Keep manual concentration inputs
-        synchronized if they exist.
-    */
 
     if (
         concentrationValue
@@ -1687,19 +1739,21 @@ function validateMedicineAge(
 ========================================= */
 
 /*
-    IMPORTANT:
-
-    The calculator no longer asks for a
-    clinical condition.
-
-    Therefore the medicine database must
-    contain a GENERAL pediatric dosing rule.
-
-    Supported:
+    Supported dosing types:
 
     1. mg_per_kg_per_dose
 
     2. mg_per_kg_per_day
+
+    3. weight_based
+
+    4. condition_based
+       - requires generalRegimen
+       - otherwise does NOT guess indication
+
+    5. severity_based
+       - supports minDose / maxDose
+       - supports frequencyOptions
 */
 
 function calculateDosingRule(
@@ -1908,22 +1962,27 @@ function calculateDosingRule(
 
     /* =====================================
        MG / KG / DAY
+       AND WEIGHT BASED
     ===================================== */
 
     if (
         type ===
-        "mg_per_kg_per_day"
+            "mg_per_kg_per_day" ||
+        type ===
+            "weight_based"
     ) {
 
         const minDailyDose =
             Number(
-                dosing.minDose
+                dosing.minDose ??
+                dosing.dose
             );
 
 
         const maxDailyDose =
             Number(
-                dosing.maxDose
+                dosing.maxDose ??
+                dosing.dose
             );
 
 
@@ -1987,6 +2046,12 @@ function calculateDosingRule(
             ) || 1;
 
 
+        const alternativeFrequency =
+            Number(
+                dosing.alternativeFrequency
+            );
+
+
         const minMg =
             dailyMinMg /
             frequency;
@@ -2020,6 +2085,41 @@ function calculateDosingRule(
         }
 
 
+        let frequencyText =
+            getFrequencyText(
+                dosing,
+                frequency
+            );
+
+
+        /*
+            Example:
+
+            Cefixime:
+
+            8 mg/kg/day
+            once daily
+            OR
+            4 mg/kg every 12 hours
+
+            We keep the primary regimen for
+            calculation and display the alternative.
+        */
+
+        if (
+            Number.isFinite(
+                alternativeFrequency
+            ) &&
+            alternativeFrequency !==
+                frequency
+        ) {
+
+            frequencyText +=
+                ` or ${alternativeFrequency} times daily`;
+
+        }
+
+
         return {
 
             success: true,
@@ -2037,10 +2137,7 @@ function calculateDosingRule(
                 dailyMaxMg,
 
             frequency:
-                getFrequencyText(
-                    dosing,
-                    frequency
-                ),
+                frequencyText,
 
             dosesPerDay:
                 frequency,
@@ -2066,6 +2163,357 @@ function calculateDosingRule(
 
     }
 
+
+    /* =====================================
+       CONDITION BASED
+    ===================================== */
+
+    if (
+        type ===
+        "condition_based"
+    ) {
+
+        /*
+            IMPORTANT:
+
+            The current DoseCare UI does NOT
+            ask the user to select a clinical
+            condition.
+
+            Therefore we MUST NOT automatically
+            select one indication from several
+            indication-specific regimens.
+
+            A medicine can only be calculated
+            here if the database provides an
+            explicitly defined generalRegimen.
+        */
+
+        if (
+            dosing.generalRegimen
+        ) {
+
+            const regimen =
+                dosing.generalRegimen;
+
+
+            const minDose =
+                Number(
+                    regimen.minDose ??
+                    regimen.dose
+                );
+
+
+            const maxDose =
+                Number(
+                    regimen.maxDose ??
+                    regimen.dose
+                );
+
+
+            const frequency =
+                Number(
+                    regimen.frequency
+                ) || 1;
+
+
+            if (
+                !Number.isFinite(
+                    minDose
+                ) ||
+                !Number.isFinite(
+                    maxDose
+                )
+            ) {
+
+                return {
+
+                    success: false,
+
+                    message:
+                        "The general pediatric dosing rule is incomplete."
+
+                };
+
+            }
+
+
+            const dailyMinMg =
+                weight *
+                minDose;
+
+
+            let dailyMaxMg =
+                weight *
+                maxDose;
+
+
+            if (
+                Number.isFinite(
+                    Number(
+                        regimen.maxDailyDose
+                    )
+                )
+            ) {
+
+                dailyMaxMg =
+                    Math.min(
+                        dailyMaxMg,
+                        Number(
+                            regimen.maxDailyDose
+                        )
+                    );
+
+            }
+
+
+            let maxMg =
+                dailyMaxMg /
+                frequency;
+
+
+            if (
+                Number.isFinite(
+                    Number(
+                        regimen.maxPerDose
+                    )
+                )
+            ) {
+
+                maxMg =
+                    Math.min(
+                        maxMg,
+                        Number(
+                            regimen.maxPerDose
+                        )
+                    );
+
+            }
+
+
+            return {
+
+                success: true,
+
+                minMg:
+                    dailyMinMg /
+                    frequency,
+
+                maxMg:
+                    maxMg,
+
+                dailyMinMg:
+                    dailyMinMg,
+
+                dailyMaxMg:
+                    dailyMaxMg,
+
+                frequency:
+                    getFrequencyText(
+                        regimen,
+                        frequency
+                    ),
+
+                dosesPerDay:
+                    frequency,
+
+                unit:
+                    "mg/kg/day",
+
+                duration:
+                    regimen.duration ||
+                    "",
+
+                maxPerDose:
+                    Number(
+                        regimen.maxPerDose
+                    ),
+
+                maxDailyDose:
+                    Number(
+                        regimen.maxDailyDose
+                    )
+
+            };
+
+        }
+
+
+        /*
+            No automatic indication selection.
+
+            This prevents the calculator from
+            giving a pneumonia dose to an ear
+            infection, or vice versa.
+        */
+
+        return {
+
+            success: false,
+
+            message:
+                "This medicine requires an indication-specific dosing regimen. The calculator does not currently select clinical indications automatically."
+
+        };
+
+    }
+
+
+    /* =====================================
+       SEVERITY BASED
+    ===================================== */
+
+    if (
+        type ===
+        "severity_based"
+    ) {
+
+        const minDailyDose =
+            Number(
+                dosing.minDose
+            );
+
+
+        const maxDailyDose =
+            Number(
+                dosing.maxDose
+            );
+
+
+        if (
+            !Number.isFinite(
+                minDailyDose
+            ) ||
+            !Number.isFinite(
+                maxDailyDose
+            )
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "The severity-based dosing rule is incomplete."
+
+            };
+
+        }
+
+
+        const frequencies =
+            Array.isArray(
+                dosing.frequencyOptions
+            )
+                ? dosing.frequencyOptions
+                    .map(Number)
+                    .filter(
+                        Number.isFinite
+                    )
+                : [];
+
+
+        if (
+            frequencies.length === 0
+        ) {
+
+            return {
+
+                success: false,
+
+                message:
+                    "The frequency for this dosing rule has not been configured."
+
+            };
+
+        }
+
+
+        /*
+            No severity selector exists in the
+            current UI.
+
+            Therefore the calculator displays
+            the configured dose range instead of
+            silently choosing a severity.
+
+            First frequency is used for the
+            numerical calculation.
+        */
+
+        const frequency =
+            frequencies[0];
+
+
+        const dailyMinMg =
+            weight *
+            minDailyDose;
+
+
+        const dailyMaxMg =
+            weight *
+            maxDailyDose;
+
+
+        const minMg =
+            dailyMinMg /
+            frequency;
+
+
+        const maxMg =
+            dailyMaxMg /
+            frequency;
+
+
+        return {
+
+            success: true,
+
+            minMg:
+                minMg,
+
+            maxMg:
+                maxMg,
+
+            dailyMinMg:
+                dailyMinMg,
+
+            dailyMaxMg:
+                dailyMaxMg,
+
+            frequency:
+                frequencies.length === 1
+                    ? `${frequency} times daily`
+                    : `${frequencies.join("–")} times daily`,
+
+            dosesPerDay:
+                frequency,
+
+            unit:
+                "mg/kg/day",
+
+            duration:
+                dosing.duration ||
+                "",
+
+            maxPerDose:
+                Number(
+                    dosing.maxPerDose
+                ),
+
+            maxDailyDose:
+                Number(
+                    dosing.maxDailyDose
+                )
+
+        };
+
+    }
+
+
+    /* =====================================
+       UNSUPPORTED TYPE
+    ===================================== */
 
     return {
 
